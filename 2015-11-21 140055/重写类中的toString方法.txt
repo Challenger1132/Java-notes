@@ -1,0 +1,28 @@
+/*
+重写类中的 toString()方法
+*/
+
+class A  //A类中重写了toString()方法
+{
+	public String toString()//Java中的方法第一个单词首字母小写
+	{
+		return "哈哈";
+	}
+	
+}
+class B
+{
+	
+}
+
+class TestA
+{
+	public static void main(String[] args)
+	{
+		B bb = new B();
+		System.out.println(new A());
+		System.out.println(new A().toString());
+		System.out.println(bb);
+		System.out.println(bb.toString());
+	}
+}

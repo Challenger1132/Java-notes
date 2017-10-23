@@ -1,0 +1,95 @@
+/*
+1、ADT是eclipse的一个插件,几乎所有Java，eclipse支持很多插件，开发相应的应用
+2、SDK(software development kit)软件开发环境包，提高开发者的开发效率
+3、								Android 技术结构图
+从宏观上来把握技术结构框架，重点关注application framwork(应用程序框架)&applications
+--------------------------------------------------------------------------------------------------
+									applications
+Home    Contacts    Phone    Browser    ....									
+--------------------------------------------------------------------------------------------------
+								application framwork(应用程序框架)
+别人已经将基本的框架大家完成已经搭建好，所做的工作就是填充代码从而实现完整的功能
+基于应用程序框架来开发，会提高开发效率
+Activity Manager   Window Manager   Content Provider    View System
+Package Manager   Technology Manager  Location Manager   Resource Manager   Notification Manager	
+--------------------------------------------------------------------------------------------------
+		libraries						            Android Runtime
+下面是一些常见的类库,运行在Linux核心之上		Core libraries  DVM
+提供了手机常用的提携基本功能					可以简单理解为针对安卓系统
+Surface Manager   Media Framework   SQL lite    	专门定制的虚拟机以及Java SDK
+OpenGL | ES 	 Free Type   Webkit					
+SGL   SSL  Libc
+---------------------------------------------------------------------------------------------------
+									linux kernel
+Display Driver    Camera Driver    Flash Memory Driver    Binder Driver(装订工，粘合剂，活页夹)
+Keypad Driver    WiFi Driver    Audio Driver    Power Management
+android本身是基于Linux操作系统的,针对手机进行优化，大部分是驱动程序
+Linux核心提供了手机最基本的功能
+---------------------------------------------------------------------------------------------------
+4、基于组件的应用程序开发 
+Activity	整个应用程序的门面，负责与用户进行交互一半有 3--4--5个Activity
+Service		是没有图形化的界面的，用户是看不到Service,
+			完成耗时较长的操作如网络连接，长时间的IO操作 
+Content Provider 	向其他应用程序暴露数据的一种方式，负责向外提供数据，
+					并允许需要的应用程序访问者写数据
+BroadcastReceiver	监听系统行为的
+5、安装Java JDK-->启动eclipse-->生成Android Virtual Device-->创建Android项目
+6、面向过程和面向对象设计思想
+7、View是所有组件类的父类，每一个控件都有与之相对应的类
+8、栈：先进后出
+/*
+9、栈是先进后出，back stack主要是记录了Activity启动的顺序，back stack中可能存放有多个
+Activity对象，但是back stack只显示栈顶端的那个Activity对象
+每当一个Activity被新显示出来的时候，对应的Activity对象就会被压入back stack栈中
+也就是栈中最上面的Activity对象对应的是当前在显示的Activity，当单击返回键的时候，
+back stack栈中最上面的Activity对象就会被移除，对应显示的Activity也会切换
+10、?定义一个Activity的方法
+	！定义一个类，继承类Activity 
+	！！重写里面的onCreate()方法
+	！！！在AndroidManifest.xml文件中注册该Activity
+		public class SecondActivity extends Activity{
+			@Override
+			protected void onCreate(Bundle savedInstanceState) {
+				super.onCreate(savedInstanceState);
+				setContentView(R.layout.secondactivity);
+			}
+		}
+   ?启动一个Activity的方法
+		public void onClick(View arg0) {
+			Intent intent = new Intent();  //定义了一个Intent对象
+			intent.setClass(MainActivity.this, SecondActivity.class);
+			startActivity(intent);
+		}
+    ！所有要做出的动作，完成的功能，都可以抽象成一个Intent对象，先生成一个Intent对象
+	！！用Intent对象调用setClass()方法，intent.setClass(MainActivity.this, SecondActivity.class);
+		该方法第一个参数是Context对象，Activity是Context的子类，所以可以将Activity对象赋予Context类对象
+		第二个参数是class对象，即要启动的Activity类的class对象
+	！！！调用startActivity()方法，startActivity(intent);
+
+	Activity的生命周期相关函数已经存在于Activity类中，我们要做的就是重写这些相关的生命周期函数
+	在Activity对象不同的生命周期来调用相应的函数
+	OnCreat()
+	
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/

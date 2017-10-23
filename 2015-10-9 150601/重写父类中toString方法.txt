@@ -1,0 +1,28 @@
+/*
+所有类都默认继承了Object类,Object类下面有好多方法
+可以直接用println()输出类对象的信息
+*/
+class A 
+{
+	// public String toString()  //重写父类中的toString()方法
+	// {
+		// return "O(∩_∩)O哈哈~";
+	// }
+}
+class TestObject
+{
+	public static void main(String[] args)
+	{
+		A aa1 = new A();
+		A aa2 = new A();
+		A aa3 = new A();
+		System.out.println(aa1.toString());
+		System.out.println(aa2.toString());
+		System.out.println(aa3.toString());
+	}
+}
+//如果不进行toString()方法的重写，
+//A对象aa调用toString()方法输出的是A对象的地址 
+// A@139a55
+// A@1db9742
+// A@106d69c

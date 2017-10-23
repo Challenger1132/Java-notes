@@ -1,0 +1,32 @@
+class TestEquals_2
+{
+	public static void main(String[] args)
+	{
+		A aa1 = new A(1);
+		A aa2 = new A(1);
+		A aa3 = new A(2);
+		System.out.println(aa1.equals(aa2));
+		System.out.println(aa1.equals(aa3));
+	}
+}
+class A
+{
+	public int i;
+	public A(int i)
+	{
+		this.i = i;
+	}
+	public boolean equals(Object obj)
+	{
+		A aa = (A)obj;//因为obj是父类引用，不能访问子类所特有的成员，因此不能用obj.i
+					  //必须将父类引用obj强制转化为子类引用aa 
+		if(this.i == aa.i)
+			return true;
+		else
+			return false;
+	}
+}
+/*
+Object类下面的equals方法，只要是同一块内存的情况下，才会返回true，
+即使不同内存相同内容也会返回false
+*/

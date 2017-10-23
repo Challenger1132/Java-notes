@@ -1,0 +1,183 @@
+/*
+1、异常机制的优点：
+!、强制程序工作人员考虑代码的安全性与健壮性
+!!、增强对程序的可控性
+!!!、有助于代码的调试，把错误代码从常规代码中分离出来
+2、try-catch-finally结构，可以有多个catch语句，但只有一个catch语句被会被执行
+有可能所有catch语句都不被执行
+3、先catch子类异常，再catch父类异常
+因为子类继承父类，先catch父类异常，则根据多态机制所有子类异常
+都能被父类异常对象(引用)所接受，导致后面catch子类异常的语句失效
+例如有A B C三个异常类，C继承B，B继承A，先catch A类异常，则B C类异常都能被A类
+异常接收，后面catch B C类异常失效
+4、重写方法抛出异常的范围不能大于被重写方法抛出异常范围，
+即子类抛出异常的范围不能比父类大
+因为在Java异常中Exception是所有必须捕获处理异常的父类，
+所有异常都可以用Exception类的对象来进行接收，如果子类抛出异常范围比父类大
+就不能做到用Exception类的对象来接收所有可以捕获处理的异常
+
+*/
+
+//没有异常处理机制的程序
+// {
+	// OpenFile;
+	// determineFileSize;
+	// allocateMemory;
+	// readFile;
+	// closeFile;
+// }
+
+// {
+	// try
+	// {
+		// OpenFile;
+		// determineFileSize;
+		// allocateMemory;
+		// readFile;
+		// closeFile;		
+	// }
+	// catch(Exception..  ..)
+	// {
+		// ....
+	// }
+	// catch(Exception..  ..)
+	// {
+		// ....
+	// }
+		// .......
+// }
+//不这样进行异常信息的捕获
+//每一个语句段后面都写一个单独的try--catch语句
+
+
+class A extends Exception
+{
+	
+}
+class B extends Exception
+{
+	
+}	
+class C extends Exception
+{
+	
+}
+class M 
+{
+	public void f() throws A, B
+	{
+		
+	}
+}
+class N extends M 
+{
+	public void f() throws A, B
+	{
+		
+	}
+}
+class Test
+{
+	public void k(M mm)
+	{
+		try
+		{
+			mm.f();
+		}
+		catch(A aa)
+		{
+			System.out.printf("\n异常具体信息是：\n");
+			aa.printStackTrace();
+			System.out.printf("\n异常处理结果是：\n");
+			System.out.printf("\n自定义A类异常，哈哈哈哈哈哈\n");
+		}
+		catch(B bb)
+		{
+			System.out.printf("\n异常具体信息是：\n");
+			bb.printStackTrace();
+			System.out.printf("\n异常处理结果是：\n");
+			System.out.printf("\n自定义B类异常，嘿嘿嘿嘿嘿嘿\n");
+		}		
+	}
+}
+class TestException_7
+{
+	public static void main(String[] args)
+	{
+
+	}
+}
+/*
+这里A B C都是自定义异常类，都继承Exception类，所以都是必须进行捕获处理的异常
+M N都是类，M N里面f()方法后面都有throws A B，表明f()方法比进行异常的处理，
+会将异常的处理抛给被调用者，
+test类中M类的引用调用了f()方法，所以f()方法后面既然有了throws语句，强烈建议
+调用f()方法的时候进行异常的捕获处理，所以要用try-catch语句对mm.f()进行异常捕获处理
+
+catch异常的时候先catch子类异常，然后再catch父类异常
+*/
+
+————————————————————————————————————————————————
+class A extends Exception
+{
+	
+}
+class B extends Exception
+{
+	
+}	
+class C extends Exception
+{
+	
+}
+class M 
+{
+	public void f() throws A, B
+	{
+		
+	}
+}
+class N extends M 
+{
+	public void f() throws A, B
+	{
+		
+	}
+}
+class TestException_9
+{
+	public static void k(M mm)
+	{
+		try
+		{
+			mm.f();
+		}
+		catch(A aa)
+		{
+			System.out.printf("\n异常具体信息是：\n");
+			aa.printStackTrace();
+			System.out.printf("\n异常处理结果是：\n");
+			System.out.printf("\n自定义A类异常，哈哈哈哈哈哈\n");
+		}
+		catch(B bb)
+		{
+			System.out.printf("\n异常具体信息是：\n");
+			bb.printStackTrace();
+			System.out.printf("\n异常处理结果是：\n");
+			System.out.printf("\n自定义B类异常，嘿嘿嘿嘿嘿嘿\n");
+		}		
+	}
+	public static void main(String[] args)
+	{
+		M mm = new M();
+		N nn = new N();
+		k(mm);
+		System.out.printf("\n嘿嘿嘿嘿嘿嘿\n");
+		k(nn);
+	}
+}
+
+
+
+
+

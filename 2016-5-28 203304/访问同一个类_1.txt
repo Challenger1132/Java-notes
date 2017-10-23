@@ -1,0 +1,49 @@
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+
+public class Test {
+	public static void main(String[] args) throws InterruptedException {
+		ThreadA threada = new ThreadA();
+		ThreadB threadb = new ThreadB(threada);
+		Thread tha = new Thread(threada);
+		Thread thb = new Thread(threadb);
+		tha.start();
+		tha.join();  //Timer类为什么不遵守join()方法呢?
+		thb.start();
+		thb.join();
+		System.out.println(Thread.currentThread().getName() + "结束");
+	}
+}
+class PrintTime extends TimerTask{
+	public void run() {
+		Date date = new Date();
+		System.out.println("当前时间是： " + date);
+	}
+}
+class ThreadA implements Runnable{
+	public Timer t = new Timer();
+	public void run() {
+		System.out.println(Thread.currentThread().getName() + "开始");
+		PrintTime pt = new PrintTime();
+		t.schedule(pt,0,2000);  //开启一个任务,这里设置的时间是延迟2秒，为什么没有输出，
+		//t.schedule(pt,0);//因为还没到延迟时间，任务已经被取消了，因此没有输出，若将2000修改为0,则有输出
+	}	
+}
+class ThreadB implements Runnable{
+	public ThreadA thread;
+	public ThreadB(ThreadA thread){  //将构造方法的形参i赋予类的属性i
+		this.thread = thread;
+	}
+	public void run() {
+//		try{
+//			Thread.sleep(10000);  //延迟10000毫秒之后任务才取消
+//		}
+//		catch(Exception e){
+//			e.printStackTrace();  //加上这一段才遵守join()方法
+//		}
+		thread.t.cancel();  //取消任务
+		System.out.println(Thread.currentThread().getName() + "结束");
+	}
+}

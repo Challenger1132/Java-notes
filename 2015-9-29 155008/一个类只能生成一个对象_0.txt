@@ -1,0 +1,60 @@
+/*
+1、一个类之中可以包含另一个类，一个类的对象，可以作为另一个类的属性
+2、将构造方法声明为private，可以防止通过new造出对象，因为创建一个类的对象new出一块空间
+必然会执行构造函数，而构造函数又是私有的不能在类的外部进行访问
+不通过new造出空间
+3、
+public static A getA()//通过getA()方法，获得new出存储单元的地址
+{
+	return aa;
+}
+返回的aa是一个静态指针变量，指向的是在类的内部new出来的空间
+4、注意以往函数(方法)的返回值是int、float、char等现在方法的返回值是类A
+正如C语言中的结构体
+int sum(int a,int b)
+struct node *list_insert(struct node *phead,int n)函数的返回值是struct node *类型
+也就是返回值是结构体指针
+class A
+{
+	.......
+}
+public static A getA()  //函数的返回值是  A
+{
+	.........
+}
+5、构造函数没有返回值，函数名和类名相同
+*/
+/*
+1、设计不能通过new造出类对象，因此必须将构造函数的访问控制符声明为private
+2、因为在启动类之中不能通多new造出类的对象，不能通过类对象名的方式进行访问，
+因此只能通过类名的方式进行访问，所以就决定了类中的方法只能是静态的static
+3、静态方法只能访问静态成员，因此在类中通过new造出对象前面必须声明为static
+4、A aa1 = A.getA();   getA()的返回值是类A类型，要赋予类A的对象aa1
+*/
+class A 
+{
+	public int i = 1;
+	private static A aa = new A();
+	private A()  //类A的构造函数，当在启动类中执行new A()时会自动执行构造函数
+	{
+		
+	}
+	public static A getA()//通过getA()方法，获得new出存储单元的地址
+	{
+		return aa;
+	}
+}
+class TestNew
+{
+	public static void main(String[] args)
+	{
+		A aa1 = A.getA();
+		A aa2 = A.getA();
+		System.out.printf("aa1.i = %d\n",aa1.i);
+		System.out.printf("aa2.i = %d\n",aa2.i);//输出aa1.i和aa2.i值是相等的
+		aa1.i = 2;//将aa1.i的值修改后，输出aa2.i的值也会改变，说明aa1和aa2指向同一块空间
+		System.out.printf("aa2.i = %d\n",aa2.i);
+		if(aa1 == aa2)
+			System.out.printf("aa1和aa2是相等的\n");		
+	}
+}

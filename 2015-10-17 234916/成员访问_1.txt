@@ -1,0 +1,42 @@
+
+
+class A
+{
+	public int i = 10;
+	public int j = 100;
+	public void f()
+	{
+		g();//同类中方法访问方法
+		int i = this.i;//这里的i不一样，第一个是局部变量i，第二个是类的属性i
+					   //因为两个变量在一段语句中同名因此属性i要加this，this指向
+					   //当前正在创建的对象，this.i代表this指向的堆中那块真正的存储空间中的
+					   //成员变量i，将该成员变量i赋予类方法成员的局部变量i
+		System.out.printf("i = %d\n",i);
+	}
+	public void g()
+	{
+		System.out.printf("哈哈哈哈");
+	}
+}
+class B 
+{
+	A aa = new A();
+	public int i = aa.i;//将一个类中的属性访问另一个类中的属性值
+	public void f()
+	{
+		int j = aa.j;//一个类中的方法的局部变量访问另一个类中的属性
+		aa.f();//一个类中的方法访问另一个类中的方法
+		System.out.printf("j = %d\n",j);
+		System.out.printf("i = %d\n",i); //一个类中的方法访问同类中的属性
+	}
+}
+class TestQ
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		aa.f(); //haha  10
+		B bb = new B();
+		bb.f();  //haha  10 100  10
+	}
+}

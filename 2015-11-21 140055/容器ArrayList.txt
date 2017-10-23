@@ -1,0 +1,40 @@
+/*
+     List--> ArrayList LinkedList  里面的元素是有序的，可以重复
+*/
+import java.util.*;
+class TestList
+{
+	public static void main(String[] args)
+	{
+		ArrayList al = new ArrayList();
+		al.add(new Stu("张三",22));//在创建类对象的时候进行类成员的初始化通过调用类的构造函数来实现
+		al.add(new Stu("李四",55));
+		al.add(1111);
+		al.add("hello");
+		al.add(88.88);
+		al.add(true);
+		System.out.println(al);
+		System.out.println(al.get(2));//返回容器中下标为2的元素
+		al.add(2,"hello world");//在下标为2的地方添加新的元素
+		System.out.println(al);
+		System.out.println(al.set(2,"hello SGW"));//将下标为2的元素的置换为"hello world"
+		System.out.println(al);
+		System.out.println(al.indexOf(true));//返回元素为true的下标
+		System.out.println(al.remove(1));//将下标为1的元素从容器中移除
+		System.out.println(al);
+	}
+}
+class Stu
+{
+	public int age;
+	public String name;
+	public Stu(	String name,int age)//将构造函数的形参值符与类的属性值
+	{
+		this.name = name;
+		this.age = age;
+	}
+	public String toString() //同类中访问控制符是透明的，因此toString()方法可以访问类的属性 
+	{
+		return name + age;
+	}
+}

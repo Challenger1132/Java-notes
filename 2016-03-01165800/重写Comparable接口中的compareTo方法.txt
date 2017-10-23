@@ -1,0 +1,39 @@
+import java.util.*;
+class TestConpara
+{
+	public static void main(String[] args)
+	{
+		ArrayList al = new ArrayList();
+		al.add(new Student(22,"西安交通大学"));
+		al.add(new Student(12,"西安电子"));
+		al.add(new Student(32,"清华大学"));
+		al.add(new Student(20,"背景大学"));
+		System.out.println(al);
+		Collections.sort(al);
+		System.out.println(al);		
+	}
+}
+class Student implements Comparable  //Student类实现了Comparable接口
+{
+	public int age;
+	public String name;
+	public Student(int age,String name)
+	{
+		this.age = age;
+		this.name = name;
+	}
+	public String toString()
+	{
+		return name + " : " + age;
+	}
+	public int compareTo(Object obj)
+	{
+		Student stu = (Student)obj;  //将父类引用强制转化为子类引用
+		if(this.age == stu.age)   //逻辑等
+			return 0;
+		else if(this.age > stu.age)
+			return 1;
+		else
+			return -1;
+	}
+}

@@ -1,0 +1,116 @@
+
+/*
+方式四 利用内部类的方式进行实现
+在内部类中可以访问外部类所有的成员
+*/
+import java.awt.*;
+import java.awt.event.*;
+
+class Text_7
+{
+	public static void main(String[] args) //main方法是类中的一个方法
+		{
+			TF tf = new TF();
+			tf.launch();
+		}
+
+}
+class TF //将实现交由一个类来实现，并不都在主方法之中，这样程序逻辑更加清楚
+{
+	public TextField tf1,tf2,tf3;
+	public void launch()
+	{
+		Frame f = new Frame("三个文本框相加"); //f是类的局部变量
+		tf1 = new TextField(15);
+		tf2 = new TextField(15);
+		tf3 = new TextField(15);
+		Button bt = new Button("=");   //如果不定义为类的属性，Button类bt就是类方法的局部变量
+		Label label = new Label("+");  //label是类的局部变量
+		f.setLayout(new FlowLayout());
+		f.add(tf1);
+		f.add(label);
+		f.add(tf2);
+		f.add(bt);
+		f.add(tf3);
+		f.setVisible(true);
+		Monitor mm = new Monitor();
+		bt.addActionListener(mm);
+	}
+	class Monitor implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			int num1 = Integer.parseInt(tf1.getText());
+			int num2 = Integer.parseInt(tf2.getText());
+			int num3 = num1 + num2;
+			tf3.setText(num3 + "");//将num3的值转化为字符串
+		}
+	}
+}
+————————————————————————————————————————
+/*
+Monitor要访问TF类中的成员，但是在Monitor类中没有生成TF类的对象，即
+TF类对象没有定义为Monitor类的属性，而是在Monitor类用TF类的类名来访问TF类成员
+*/
+
+import java.awt.*;
+import java.awt.event.*;
+class TestText_3
+{
+	public static void main(String[] args)
+	{
+		new TF().launch();//一个类中的方法内访问另一个类中的方法
+	}
+}
+class TF
+{
+	public static TextField tf1,tf2,tf3;
+			//因为tf1,tf2,tf3是静态属性因此可以通过类名点成员变量名的方式进行访问
+	public void launch()
+	{
+		Frame f = new Frame("文本框的相加");
+		f.setLayout(new FlowLayout());//流式布局
+		tf1 = new TextField(15);//同类中方法访问类的属性
+		tf2 = new TextField(15);
+		tf3 = new TextField(15);
+		Button bt = new Button("=");
+		Label label = new Label("+");
+		f.add(tf1);
+		f.add(label);
+		f.add(tf2);
+		f.add(bt);
+		f.add(tf3);
+		f.setVisible(true);
+		Monitor mm = new Monitor();
+		bt.addActionListener(mm);
+		f.addWindowListener(mm);
+	}
+	class Monitor extends WindowAdapter implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			int num1 = Integer.parseInt(tf1.getText());//这是Monitor类中的方法，不能定义为属性
+																 //也就是不能加访问控制符
+			int num2 = Integer.parseInt(tf2.getText());
+			int num3 = num2 + num1;
+			tf3.setText(num3 + "");
+		}
+		@Override
+		public void windowClosing(WindowEvent e)
+		{
+			System.exit(-1);
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+

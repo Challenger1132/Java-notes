@@ -1,0 +1,52 @@
+import java.awt.*;
+import java.awt.event.*;
+class TestCanvas
+{
+	public static void main(String[] args)
+	{
+		Wind window = new Wind("hello world");
+	}
+}
+class Mycanvas extends Canvas
+{
+	public Mycanvas()
+	{
+		setSize(200,200);
+		setBackground(Color.cyan);
+	}
+	public void paint(Graphics g)
+	{
+		g.setColor(Color.orange);
+		g.fillOval(12,12,45,45);
+	}
+}
+class Wind extends Frame
+{
+	public Mycanvas canvas;
+	public Wind(String s)
+	{
+		super(s);
+		canvas = new Mycanvas();
+		setLayout(new FlowLayout());
+		setBounds(150,150,250,250);
+		add(canvas);
+		setVisible(true);
+		validate();
+		MyListener listener = new MyListener();
+		addWindowListener(listener);
+		System.out.println("num = " + listener.num);
+	}
+	class MyListener extends WindowAdapter
+	{
+		public int num = 99;
+		@Override
+		public void windowClosing(WindowEvent e)
+		{
+			System.exit(-1);
+		}
+	}
+}
+/*
+内部类可以直接访问外部类的成员，但是外部类不能直接访问内部类成员，和不同类之间成员的访问一样
+外部类要想访问内部类成员，要在外部类中生成内部类的类对象，而不能直接访问外部类成员
+*/

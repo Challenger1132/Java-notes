@@ -1,0 +1,24 @@
+import java.util.LinkedList;
+/* LinkedList实现栈的结构
+ * */
+
+class MyStack {
+	private LinkedList link = null;  //不要在这里new出对象，最好用构造方法来实现new的过程
+	public MyStack(){
+		link = new LinkedList();
+	}
+	public void push(Object obj){
+		link.addFirst(obj);
+	}
+	public Object pop(){
+		if(! isEmpty()){
+			Object obj = link.getFirst();
+			link.remove(obj);
+			return obj;
+		}
+		return null;
+	}
+	public boolean isEmpty(){
+		return link.isEmpty();
+	}
+}

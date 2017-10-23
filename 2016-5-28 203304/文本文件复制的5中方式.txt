@@ -1,0 +1,90 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
+public class Test5Method {
+
+	public static void main(String[] args) throws IOException {
+		String source = new String("C:/Users/xingyue/Desktop/practice/instanceof.txt");
+		String destination = new String("C:/Users/xingyue/Desktop/practice/111111111.txt");
+		Test tt = new Test();
+		try{
+//			tt.method_1(source, destination);
+//			tt.method_2(source, destination);
+//			tt.method_3(source, destination);
+//			tt.method_4(source, destination);
+			tt.method_5(source, destination);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+}
+class Test{
+	public void method_1(String source,String destination) throws IOException{
+		FileReader fr = new FileReader(source);
+		FileWriter fw = new FileWriter(destination);
+		int ch = fr.read();
+		while(ch != -1){
+			System.out.printf("%c", ch);
+			fw.write(ch);
+			ch = fr.read();
+		}
+		fr.close();
+		fw.close();
+	}
+	public void method_2(String source,String destination) throws IOException{
+		FileReader fr = new FileReader(source);
+		FileWriter fw = new FileWriter(destination);
+		char[] ch = new char[1024];
+		int len = fr.read(ch);
+		while(len != -1){
+			System.out.printf("%s", new String(ch));
+			fw.write(ch);
+			len = fr.read(ch);
+		}
+		fr.close();
+		fw.close();
+	}
+	public void method_3(String source,String destination) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(source));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(destination));
+		int ch = br.read();
+		while(ch != -1){
+			System.out.printf("%c", ch);
+			bw.write(ch);
+			ch = br.read();
+		}
+		br.close();
+		bw.close();
+	}
+	public void method_4(String source,String destination) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(source));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(destination));
+		char[] ch = new char[1024];
+		int len = br.read(ch);
+		while(len != -1){
+			System.out.printf("%s", new String(ch));
+			bw.write(ch);
+			len = br.read(ch);
+		}
+		br.close();
+		bw.close();
+	}
+	public void method_5(String source,String destination) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(source));
+		BufferedWriter bw = new BufferedWriter(new FileWriter(destination));
+		String str = br.readLine();
+		while(null != str){
+			System.out.println(str);
+			bw.newLine();
+			str = br.readLine();
+		}
+		br.close();
+		bw.close();
+	}
+}

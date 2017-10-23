@@ -1,0 +1,85 @@
+import java.util.*;
+class TestIterator
+{
+	public static void showContent(Collection c)//该方法的形参是Collection接口的引用
+	{
+		Iterator t = c.iterator();
+		while(t.hasNext())
+		{
+			System.out.println(t.next());
+		}
+	}
+	public static void showContent_1(Collection c)//该方法的形参是Collection接口的引用
+	{
+		
+		for(Iterator t = c.iterator();t.hasNext();System.out.println(t.next()));//
+	}
+	
+	public static void main(String[] args)
+	{
+		ArrayList al = new ArrayList();
+		al.add("hello");
+		al.add(1234);
+		al.add(33.33);
+		al.add(new A("张三",22));
+		al.add(new A("李四",20));
+		al.add(new Point(1,1));
+		al.add(new Point(2,2));
+		al.add(new Point(3,3));
+		System.out.println("直接输出：");
+		System.out.println(al);
+		System.out.println("调用showContent()方法输出：");
+		showContent(al);//将与iterator()方法相关语句封装成函数showContent()
+		System.out.println("调用showContent_1()方法输出：");
+		showContent_1(al);//将与iterator()方法相关语句封装成函数showContent_1()
+		System.out.println("输出：");
+		Iterator it = al.iterator();
+		while (it.hasNext())
+		{
+			System.out.println(it.next());
+		}
+	}
+}
+class A 
+{
+	int age;
+	String name;
+	public A(String name,int age)
+	{
+		this.age = age;
+		this.name = name;
+	}
+	public String toString()
+	{
+		return name + " " + age;
+	}
+}
+class Point 
+{
+	int i,j;
+	public Point(int i,int j)
+	{
+		this.i = i;
+		this.j = j;
+	}
+	public String toString()
+	{
+		return "(" + i + "," + j + ")";
+	}
+}
+
+
+
+
+/*
+迭代器Iterator接口
+方法摘要 
+ boolean hasNext() 
+如果仍有元素可以迭代，则返回true。判断当前游标后面是否有下一个元素，存在返回true，否则返回false 
+ E next() 
+先返回当前游标下面的右面的元素，然后将游标后移一个位置
+ void remove() 不推荐使用
+从迭代器指向的集合中移除迭代器返回的最后一个元素（可选操作）。 
+
+*/
+

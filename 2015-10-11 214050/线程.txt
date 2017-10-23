@@ -1,0 +1,80 @@
+/*
+1、线程是一个程序里的不同执行路径
+在单个程序内部，可以在同一时刻进行多种运算，这就是线程
+2、Thread类中start()方法作用是创建一个新的线程，并自动调用该该线程的run()方法
+直接调用run方法是不会创建新的线程的
+3、执行一个线程其实就是执行run()方法中的代码
+4、执行完aa.start()并不表示aa所对应的线程一定会立即得到执行，只是表明aa所对应
+的线程具有了立即被CPU执行的资格，由于抢占CPU的线程很多，所以aa所对应的线程
+并不一定会立即得到执行
+5、一个Thread对象有且只能代表一个线程，只能调用一个start()方法
+6、异常机制，异常处理完成后下面的代码可以继续得到执行
+所以本程序中下面的while循环可以继续的到执行
+7、创建线程的第二中方法
+   ! 类A实现Runnable接口，class A implements Runnable,重写类A中的run()方法
+   !! 创建类A的对象aa,创建Thread类的对象并将aa发送给Thread类对象的形参
+   !!! 通过Thread类对象调用start()方法
+发送给Thread类对象形参的类对象必须实现了Runnable接口，否则无法创建线程
+8、Thread类的常用方法
+！currentThread();获取当前线程的对象，因为是静态的所以可以通过类名的方式来调用
+！setName("string");将线程的名字设置为string字符串
+！getName();获取当前线程的名字
+9、	设置线程的优先级别
+	java中线程的优先级别分为1--10共10个优先级，缺省是默认为5
+	setPriority()设置线程的优先级 
+	getPriority()获取线程的优先级
+	Thread.MAX_PRIORITY   ---> 10
+	Thread.MIN_PRIORITY   ---> 1
+	Thread.NORM_PRIORITY   ---> 5
+10、！线程的休眠：暂停当前正在执行中的线程，使之进入阻塞状态，待经过设定的
+时间之后醒来并转入就绪状态，sleep()方法会抛出InterruptedException
+public static void sleep(long millis)
+public static void sleep(long millis,int nanos)
+public static void yield()主动放弃获得到的CPU的机会，但是不进入阻塞状态，
+而是进入就绪状态，这是和sleep()方法的区别
+！！只有实现了Runnable接口的类对象才能发送给Thread类的形参，而用第二种方法创建进程
+！！！Thread类中的sleep()方法会抛出InterruptedException异常，该异常必须进行捕获处理
+类A实现了Runnable接口中的run()方法，接口(相当于父类)中的run方法没有抛出异常，
+所以类A(相当于子类)中的run()方法也不能抛出异常，因为子类抛出异常的范围不能比父类大
+无论是一个类继承了Thread类，该子类中的run()方法，还是实现了Runnable接口
+中的类中的run()方法都不能抛出异常
+11、如果调用Thread类中的方法需要处理异常，要在run()方法内部进行捕获处理，不能抛给被调用者
+因为类A要么继承了Thread类要么实现了Runnable接口，Thread类和Runnable接口中run()方法
+没有抛出异常，所以类A中的run()方法也不能抛出异常
+*/
+class A extends Thread
+{
+	public void run()
+	{
+		// while(true)
+		// {
+			// System.out.printf("AAAAAA\n");
+		// }
+		System.out.printf("AAAAAA\n");
+	}
+}
+class TestThread
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		A aa1 = new A();
+		try
+		{
+			aa.start(); //一个Thread对象有且只能代表一个线程，只能调用一个start
+			aa.start();  
+		}
+		catch(Exception e)
+		{
+			System.out.printf("\n异常具体信息是：\n");
+			e.printStackTrace();
+			System.out.printf("\n异常处理方法是：\n");
+			System.out.printf("\n只能调用一个start()方法\n");
+		}  // Java中异常机制，异常处理完成后下面的代码可以继续得到执行
+		   //所以下面的while循环可以继续的到执行
+		while(true)
+		{
+			System.out.printf("BBBBBBBBBBB\n");
+		}
+	}
+}

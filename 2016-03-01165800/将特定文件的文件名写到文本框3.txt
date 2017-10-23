@@ -1,0 +1,72 @@
+import java.io.*;
+import java.io.File;
+import java.awt.*;
+import java.awt.event.*;
+class TestA
+{
+	public static void main(String[] args) throws Exception
+	{
+		Win window = new Win("hello world");
+		window.writefile();
+	}
+}
+class Win extends Frame 
+{
+	public TextArea text;
+	public Win(String s)
+	{
+		super(s);
+		text = new TextArea();
+		add(text);
+		setBounds(100,100,500,500);
+		setLayout(new FlowLayout());
+		setVisible(true);
+		validate();
+		winListener listener = new winListener();
+		addWindowListener(listener);
+	}
+	public void writefile() throws Exception
+	{
+		File file = new File("C:\\Users\\dell\\Desktop\\practice");
+		FileAccept condition = new FileAccept("class");
+		File[] filename = file.listFiles(condition);
+		for(int i = 0;i < filename.length;i ++)
+		{
+			text.append(filename[i] + "\n");
+		}
+	}
+	class winListener extends WindowAdapter
+	{
+		public void windowClosing(WindowEvent e)
+		{
+			System.exit(-1);
+		}
+	}
+}
+class FileAccept implements FilenameFilter
+{
+	public String str = null;
+	public FileAccept(String str)
+	{
+		this.str = str;
+	}
+	public boolean accept(File dir,String name)
+	{
+		return name.endsWith(str);
+	}
+}
+/*
+类Win中的这段代码可以作为外部类，放在Win类的外面，Win类要访问winListener类中的对象，在Win类中生成
+winListener类的类对象，也可以将winListener类作为Win类的内部类，但是外部类不能直接访问内部类，要在外部类中
+生成内部类的类对象
+	class winListener extends WindowAdapter
+	{
+		public void windowClosing(WindowEvent e)
+		{
+			System.exit(-1);
+		}
+	}
+
+A类要访问B类中的成员，要在A类中生成B类的类对象，或者将B类的类对象作为A类的引用，若B类不访问A类成员
+不需要在B类中生成A类的类对象
+*/

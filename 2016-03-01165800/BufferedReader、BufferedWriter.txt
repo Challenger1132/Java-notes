@@ -1,0 +1,27 @@
+import java.io.*;
+class TestFile_3
+{
+	public static void main(String args[]) throws Exception
+	{
+		FileReader fr = new FileReader("C:\\Users\\dell\\Desktop\\practice\\TestWindow.java");
+		FileWriter fw = new FileWriter("C:\\Users\\dell\\Desktop\\practice\\XXXXXXX.java");
+		BufferedReader br = new BufferedReader(fr);
+		BufferedWriter bw = new BufferedWriter(fw);
+		String str = br.readLine();
+		while(str != null)
+		{
+			System.out.println(str);
+			bw.write(str);
+			bw.newLine();
+			str = br.readLine();
+		}
+		bw.flush();
+		br.close();
+		bw.close();
+	}
+}
+/*
+FileReader是输入流，FileWriter是输出流，都属于字符流，只能读写文本文件
+BufferedReader、BufferedWriter是带有缓冲功能的输入输出流，构造方法的形参是Reader类对象和Writer类对象
+readLine()方法可以读取一整行，返回的是String类型的数据
+*/

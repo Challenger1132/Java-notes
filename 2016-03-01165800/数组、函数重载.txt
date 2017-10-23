@@ -1,0 +1,41 @@
+class TestArray_1
+{
+	public static void main(String[] args)
+	{
+		//float[] a1 = new float[] {1,2,3,4};
+		float a1[] = new float[] {1,2,3,4};
+		//boolean[] a2 = new boolean[] {true,false,true,false};
+		boolean a2[] = new boolean[]{true,false,true,false};
+		//char[] a3 = new char[] {'h','e','l','l','o'};
+		char a3[] = new char[] {'h','e','l','l','o'};
+		String[] a4 = new String[] {"hello","world","ÄãºÃ","ÊÀ½ç"};
+		showarray(a1);
+		System.out.printf("\n");
+		showarray(a2);
+		System.out.printf("\n");
+		showarray(a3);
+		System.out.printf("\n");
+		showarray(a4);
+		System.out.printf("\n");
+	}	
+	public static void showarray(float[] a)
+	{
+		for(int i = 0;i < a.length;i ++)
+			System.out.printf("i = %f  ",a[i]);
+	}
+	public static void showarray(char[] a)
+	{
+		for(int i = 0;i < a.length;i ++)
+			System.out.printf("i = %c  ",a[i]);
+	}
+	public static void showarray(boolean[] a)
+	{
+		for(int i = 0;i < a.length;i ++)
+			System.out.printf("i = %b  ",a[i]);
+	}
+	public static void showarray(String[] a)
+	{
+		for(int i = 0;i < a.length;i ++)
+			System.out.printf("i = %s  ",a[i]);	
+	}
+}

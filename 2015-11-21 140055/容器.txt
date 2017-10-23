@@ -1,0 +1,139 @@
+/*
+容器
+1、类对象调用方法，注意前面一定要有类对象
+2、容器是一个类，该类中可以存放其他的类对象，数组长度难以扩充，必须存放相同数据类型的数据
+容器客服了这数组的两个缺点
+————————————————————————————————————————————————————————————
+1、int是基本数据类型，里面没有任何方法，Java中提供了类Integer,
+将基本数据类型封装成一个类，里面有许多方法，可以对数据类型进行大量操作
+2、所有容器里面放的是对象，不能存放一个孤立的值，如果放的是孤立的值
+会自动转化为对该孤立值对应的对象，写的是整型数据1234，但放入进去的是一个Integer对象
+写的是double类型数据88.88，但放入进去的是一个Double类对象，会自动封装成对象
+3、java中设计了三种接口来实现三种集合，Set、List、Map，集合、列表、映射
+4、容器的框架图,位于java.util包中
+                               Collection <interface>					Map <interface>
+									|										|
+			    Set <interface>   	   	  List <interface>			   HashMap
+				      |			                  |
+				   HashSet	            LinkedList  ArrayList    
+5、Set和List都继承自Collection接口，所以Set和List中许多方法都是一样的
+List中元素可以重复，是有序的，Set中的元素不能重复，里面的元素是无序的
+因此List接口中set()、indexOf()方法，Set接口中没有set()、indexOf()方法，因为
+Set中的元素是无序的，不存在某个元素在某个位置这个概念
+5、toString()方法，执行System.out.println(aa);等价于System.out.println(aa.toString());
+由于Java的自动装箱，所有添加到容器中的都是类对象，
+输出的是该类对象调用过toString()方法后的结果
+自己定义的类对象，要添加到容器中，建议重写类的toString()方法,否则输出的是
+该对象的引用，类名@.....的形式，因此要要按我们想要输出的结果重写toString()方法
+对于自定义的类对象，若将其放到容器中，输出的是类对象的地址
+对于用户自定义的类对象，要重写里面的toString()方法，输出的才不至于是类对象的地址
+对于用户自定义类对象，将其
+6、ArrayList 和linckedList的区别：两者都实现了List接口中的方法，但是内部实现不同
+ArrayList 存储速度快，插入删除比较慢
+LinckedList 存储速度比较慢，插入删除比较快
+——————————————————————————————————————————————————————————————
+7、Collections是Collection接口的实现类，里面有很多方法，ArrayList 和linckedList等本身没有
+排序、倒置、查找等实现方法，是通过Collections类来实现的，里面有很多public static方法
+可直接对Collection接口的实现类进行操作，可以查找API文档
+8、一个类继承了抽象类，要将抽象类里面的所有抽象方法实现，可以空实现，即只写花括号，
+否则该类要声明为抽象类，
+抽象类和接口是不能new出对象的，但可以生成引用，可以将抽象类和接口的实现类类对象赋予
+该引用，这是多态机制的运用 
+				List list = new ArrayList(); //ok
+				List list = new List(); //ERROR
+	因为List是抽象类不能new出对象，其引用不能接受new List(),但ArrayList是该接口的
+	实现类，可以将该接口的实现类对象赋予抽象类或者接口的引用，类似还有
+				Set set = new HashSet(); //ok
+				Set set = new Set(); //ERROR
+9、Collections
+ArrayList 和linckedList等本身没有
+排序、倒置、查找等实现方法，是通过Collections类来实现的，里面有很多public static方法
+可直接对Collection接口的实现类进行操作，可以查找API文档
+Collections类中的方法很多是静态的因此可以通过类名的方式进行调用，这些方法的形参是
+// Collections类对象
+10、用户自定义的类对象，放到容器中，如果要进行排序比较，要指定比较的标准，这个类
+要实现Comparable接口，该接口里面有compareTo()方法，要重写里面的compareTo()方法
+class Stu implements Comparable,自定义类实现了Comparable接口，一定要冲写里面的
+抽象方法compareTo(Object obj)方法，不进行重写会提示报错
+11、
+/*
+1、Set里面的数据是无序的，不允许重复，且元素没有固定的位置，
+没有下标，因此没有set()、get()等方法
+2、容器Set里面的元素不允许重复，但是要重写equals()方法和HashCode()方法，
+否则无法实现元素不重复
+3、类对象放到容器中，会计算出元素的hashCode值，根据值找要到存放该元素的地址
+不同类对象的hashCode值是不一样的，
+因此要重写hashCode()方法，该地址后面是元素连接，比如存放了new A(1)对象，可能
+new A(1)对象已将存在，为类保证不存放重复的new A(1)，因此要重写equals()方法
+4、对象放到以哈希表为存储内核的容器hashSet、hashTable、hashMap，要保证容器中没有重复的元素，
+必须要同时重写hashCode()方法和equalsO()方法，放到其他类型容器中如，放到TreeSet、TreeMap
+容器中的元素，则不需要重写hashCode()和equalsO()方法
+5、每个类中都默认有hashCode()和compareTo()方法，因为所有类都继承自Object类，
+并不是所有的类都要重写这两个方法，当要用到时，且提供的方法不满足要求时就要重写这两个方法
+6、Object类的hashCode()方法会返回该对象内存真实地址的整数化表示，
+这种不是真正地址的整数值就是哈希码
+向hashSet中添加元素的时候，先通过该对型的hashCode()方法计算出相应的桶，然后根据equals()方法
+找到相应的元素，如果该元素已经存在，则不添加到容器中，反之，添加到容器中
+因此要重写hashCode()方法，保证一个类new出的对象hashCode()方法返回值是一样的，
+即哈希码指向同一块空间，通过重写equals()方法保证这个空间中不存在相同的元素，不重写
+hashCode()方法，new出一个对象会根据返回的哈希码指向一个的存储空间，不同对象指向不同的
+空间，即使equals()方法判断成功也不能保证元素不重复，同样只重写hashCode()方法，虽然同一个类
+new出的对象在同一个空间，但是由于没有equals()方法，也不能保证这一块空间没有重复元素
+
+*/
+
+
+
+
+
+
+
+
+*/
+import java.util.*;
+class TestContainer
+{
+	public static void main(String[] args)
+	{
+		ArrayList al = new ArrayList();
+		ArrayList al1 = new ArrayList();
+		al1.add("hello");
+		al1.add(12345);
+		al1.add(0.00001);
+		al.add("孙广文");
+		al.add(100); //这里写的是孤立的数据但是，放入时会自动封装成一个类对象
+		al.add(100.00);
+		System.out.println(al1);
+		System.out.println(al);//输出的是元素的对象的，对象自定调用toString()方法
+		System.out.println(al.get(2));//容器不是数组不能直接访问下标，可以用提供的方法
+									   //访问元素下标为2的元素
+		Object[] obj = al.toArray();//将容器转入按为数组的方法，这是就可以用下标的方式进行访问
+		System.out.println(obj[0]);
+		int num = al.size();  //size()方法返回容器中元素的个数
+		System.out.println("num = " + num);
+		boolean flag = al.isEmpty();//isEmpty()方法判断容器是否为空，该方法没有参数
+		System.out.println("flag = " + flag);
+		al.addAll(al1); //将al1容器中的内容全部添加到al所代表的容器中
+		System.out.println(al);
+		al.addAll(al);  //将al容器中的元素全部添加到al所代表的容器中
+		System.out.println(al);
+		al.removeAll(al);  //将al容器中的元素全部删除，输出为空
+		System.out.println(al);
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

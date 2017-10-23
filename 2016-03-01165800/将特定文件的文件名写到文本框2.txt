@@ -1,0 +1,64 @@
+import java.awt.*;
+import java.io.*;
+import java.io.File;
+import java.awt.event.*;
+class TestA
+{
+	public static void main(String[] args)
+	{
+		Wind window = new Wind();
+		window.findFile();
+	}
+}
+class Wind extends WindowAdapter
+{
+	public TextArea text;
+	public Frame f;
+	public Wind()
+	{
+		f = new Frame();
+		text = new TextArea();
+		f.setLayout(new FlowLayout());
+		f.add(text);
+		f.setBounds(200,200,400,400);
+		f.setVisible(true);
+		f.validate();
+		f.addWindowListener(this);
+	}
+	public void findFile()
+	{
+		File dir = new File("C:\\Users\\dell\\Desktop\\practice");
+		FileAccept condition = new FileAccept("java");
+		File[] filename = dir.listFiles(condition);
+		for(int i = 0;i < filename.length;i ++)
+		{
+			text.append(filename[i] + "\n");
+		}
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+}
+class FileAccept implements FilenameFilter
+{
+	public String str = null;
+	public FileAccept(String str)
+	{
+		this.str = str;
+	}
+	public boolean accept(File dir,String name)
+	{
+		return name.endsWith(str);
+	}
+}
+
+
+
+
+
+
+
+
+

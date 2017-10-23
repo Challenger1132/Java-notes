@@ -1,0 +1,99 @@
+import java.awt.*;
+import java.awt.event.*;
+class TestWindow
+{
+	public static void main(String[] args)
+	{
+		Wind window = new Wind("hello world");
+	}
+}
+class Wind extends Frame
+{
+	public TextArea text;
+	public Wind(String s)
+	{
+		super(s);
+		text = new TextArea();
+		add(text,BorderLayout.NORTH);
+		setBounds(200,200,500,500);
+		setVisible(true);
+		validate();
+		WinListener listener = new WinListener(this);
+		addWindowListener(listener);
+	}
+}
+class WinListener implements WindowListener
+{
+	public Wind window = null;
+	public int cnt = 0;
+	public WinListener(Wind window)
+	{
+		this.window = window;
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		cnt ++;
+		window.text.append("\n" + cnt + " 窗口正在被关闭");
+		System.out.println("窗口正在被关闭\n");
+		System.exit(0);
+	}	
+	@Override
+	public void windowClosed(WindowEvent e)
+	{
+		cnt ++;
+		window.text.append("\n" + cnt + " 窗口已经关闭");
+		System.out.println("窗口已经被关闭\n");
+	}
+	@Override
+	public void windowIconified(WindowEvent e)
+	{
+		cnt ++;
+		window.text.append("\n" + cnt + " 窗口被图标化");
+		window.setBounds(0,0,200,200);
+	}
+	@Override
+	public void windowDeiconified(WindowEvent e)
+	{
+		cnt ++;
+		window.text.append("\n" + cnt + " 窗口没有被图标化");
+		window.setBounds(0,0,200,200);
+	}
+	@Override
+	public void windowActivated(WindowEvent e)
+	{
+		cnt ++;
+		window.text.append("\n" + cnt + " 窗口被激活");
+	}	
+	@Override
+	public void windowDeactivated(WindowEvent e)
+	{
+		cnt ++;
+		window.text.append("\n" + cnt + " 窗口不激活");
+	}
+	@Override
+	public void windowOpened(WindowEvent e)
+	{
+		cnt ++;
+		window.text.append("\n" + cnt + " 窗口被打开");
+		System.out.println("窗口被打开\n");
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

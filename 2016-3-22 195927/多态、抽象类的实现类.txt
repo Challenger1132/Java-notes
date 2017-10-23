@@ -1,0 +1,84 @@
+/*
+抽象类或接口不能new出对象，但可以生成抽象类或接口的的引用，可以将抽象类或接口的实现类类对象
+赋予该引用，通过该引用访问继承自抽象类的方法，或者继承自抽象类改写后的方法，或者实现了接口中的方法
+但不能访问子类所特有的方法，从而达到多台的目的
+*/
+abstract class animals 
+{
+	public abstract String cry();
+}
+class sheep extends animals
+{
+	public String cry()
+	{
+		return "mie mie ....";
+	}
+}
+class dog extends animals
+{
+	public String cry()
+	{
+		return "wang wang ....";
+	}
+}
+class pig extends animals
+{
+	public String cry()
+	{
+		return "heng heng ....";
+	}
+}
+//第一种实现方式
+class A 
+{
+	public String fuc(animals ani) //fuc()方法需要animals类对象作为参数，animals是抽象类，不能new出对象，因此可以将
+								   //animals这个抽象类的实现类类对象作为该函数的参数
+	{
+		return ani.cry();
+	}
+}
+//第二种实现方式
+class B 
+{
+	animals ani;  // B类中生成了抽象类的引用
+	public B(animals ani)  //B类的构造方法
+	{
+		this.ani = ani;
+	}
+	public String fuc()  //ani是同类中成员的访问，fuc()方法访问ani属性
+	{
+		return ani.cry();
+	}
+}
+class TestAbstract_1
+{
+	//第三种实现方式,将fuc()函数和main()方法写在同一个类之中，注意该方法是静态的
+	public static String fuc(animals ani)
+	{
+		return ani.cry();
+	}
+	public static void main(String[] args)
+	{
+		sheep shee = new sheep();
+		dog d = new dog();          //A类中抽象类的实现类类对象作为参数是在fuc()中，只需new出一个A类对象
+		pig p = new pig();
+		A a = new A();
+		System.out.println(a.fuc(shee)); //参数传给fuc()函数，传进不同的参数，调用抽象类的不同实现类中的继承自父类中方法
+		System.out.println(a.fuc(d));
+		System.out.println(a.fuc(p));
+		
+		System.out.println("------------------");
+		
+		B b1 = new B(shee);     //参数传给类B的构造方法，
+		System.out.println(b1.fuc());
+		B b2 = new B(d);
+		System.out.println(b2.fuc());  //B类中抽象类的实现类类对象作为参数是在B类的构造方法中，需要new出3个B类对象
+		B b3 = new B(p);
+		System.out.println(b3.fuc());
+		
+		System.out.println("------------------");
+		System.out.println(fuc(shee));//在main()方法中直接调用fuc()方法，不需要生成类对象
+		System.out.println(fuc(d));
+		System.out.println(fuc(p));
+	}
+}

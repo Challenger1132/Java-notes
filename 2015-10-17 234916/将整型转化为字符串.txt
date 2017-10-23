@@ -1,0 +1,35 @@
+/*
+将int类型转化为字符串输出的几种方法
+str = i + "";
+str = Integer.toString(i);
+str = String.valueOf(i);
+*/
+class TestIntToString
+{
+	public static void main(String[] args)
+	{
+		int i = 1234;
+		String str = null;
+		str = i + "";
+		System.out.println("method 1");
+		System.out.println("str = " + str);
+		
+		System.out.println("\nmethod 2");
+		Integer it = new Integer(i);
+		str = it.toString();
+		System.out.println("str = " + str);
+		
+		System.out.println("\nmethod 3");
+		str = Integer.toString(i);
+		System.out.println("str = " + str);
+		
+		System.out.println("\nmethod 4");
+		String str1 = new String();
+		str = str1.valueOf(i);
+		System.out.println("str = " + str);
+		
+		System.out.println("\nmethod 5");
+		str = String.valueOf(i);
+		System.out.println("str = " + str);
+	}
+}

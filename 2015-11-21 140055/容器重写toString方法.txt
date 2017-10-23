@@ -1,0 +1,41 @@
+/*
+对于自定义的类对象，若将其放到容器中，输出的是类对象的地址
+对于用户自定义的类对象，要重写里面的toString()方法，输出的才不至于是类对象的地址
+
+输出类对象，类对象会自动调用toString()方法
+*/
+
+import java.util.*;
+class Student
+{
+	String name;
+	int age;
+	String school;
+	float score = 100;
+	public Student(String name,int age,String school)
+	{
+		this.name = name;
+		this.age = age;
+		this.school = school;		
+	}
+	public String toString()
+	{
+		return name + age + school;
+	}
+}
+class TestContainer_1
+{
+	public static void main(String[] args)
+	{
+		Student stu = new Student("张三",22,"清华大学");
+		float score = stu.score;
+		ArrayList al = new ArrayList();
+		al.add(stu); //输出的是类对象的地址
+		al.add(score);
+		System.out.println(al);
+	}
+	
+}
+//没有重写student的toString()方法输出的结果是
+//[Student@4aa0ce, 100.0],score可以正常输出
+//重写student的toString()方法输出的结果是 

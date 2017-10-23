@@ -1,0 +1,58 @@
+import java.io.IOException;
+public class Try_Catch {
+	private String astring;
+	private String bstring;
+	private String cstring;
+	private String dstring;
+	
+	public String getAstring() {
+		return astring;
+	}
+	public void setAstring(String astring) {
+		this.astring = astring;
+	}
+	public String getBstring() {
+		return bstring;
+	}
+	public void setBstring(String bstring) {
+		this.bstring = bstring;
+	}
+	public String getCstring() {
+		return cstring;
+	}
+	public void setCstring(String cstring) {
+		this.cstring = cstring;
+	}
+	public String getDstring() {
+		return dstring;
+	}
+	public void setDstring(String dstring) {
+		this.dstring = dstring;
+	}
+	public void testdemo(){
+		String str = null;
+		try{
+			
+			setAstring("AAAAAAA");  //会得到执行
+			int i = 2 / 0;  		//会抛出异常
+			setBstring("BBBBBBB");  //由于上一句会抛出异常语句，因此该句没有得到执行
+			
+		}
+		catch(Exception e){
+			setBstring("CCCCCCC");  //抛出了异常，catch语句块得到了执行，若没有抛出异常，就不会得到执行
+			e.printStackTrace();
+		}
+		finally{
+			setDstring("DDDDDDD");  //无论是否抛出异常，若有，finally都会得到执行
+		}
+		System.out.println("hello world !");
+	}
+	public static void main(String[] args) {
+		Try_Catch tc = new Try_Catch();
+		tc.testdemo();
+		System.out.println(tc.getAstring());
+		System.out.println(tc.getBstring());
+		System.out.println(tc.getCstring());
+		System.out.println(tc.getDstring());
+	}
+}

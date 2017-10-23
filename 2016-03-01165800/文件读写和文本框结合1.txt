@@ -1,0 +1,63 @@
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+class TestFile_5
+{
+	public static void main(String args[]) throws Exception
+	{
+		Wind window = new Wind("hello world");
+		window.fileShow();
+		WindowListener listener = new WindowListener(); //0000
+		window.addWindowListener(listener);  //0000
+	}
+}
+class Wind extends Frame //Wind类本身就具有Frame的性质，可以在构造方法中直接添加对象，直接调用方法等等
+{
+	public TextArea text;
+	public Wind(String s)
+	{
+		super(s);
+		text = new TextArea();
+		setLayout(new FlowLayout());
+		add(text);
+		setBounds(200,200,300,300);
+		setVisible(true);
+		validate();
+	}
+	public void fileShow() throws Exception
+	{
+		FileInputStream fis = new FileInputStream("C:/Users/dell/Desktop/practice/TestGraph.java");
+		byte[] buf = new byte[2048];
+		String str = null;
+		int len = 0;
+		while((len = fis.read(buf)) != -1)
+		{
+			str = new String(buf,0,len);
+			text.append(str);
+		}
+		fis.close();
+	}
+}
+class WindowListener extends WindowAdapter 
+{
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+} 
+/*
+1、在WindowListener类中不需要访问Wind类中的成员，因此并不需要在该类中生成Wind类的类对象，
+不需要this指针指向所谓的同一个类的类对象（两个类要访问同一个类的类中的对象）
+2、TestFile_5类要访问WindowListener类中的成员，要在TestFile_5类的main()方法中生成WindowListener类对象
+3、Wind类继承了Frame，本身就具有了Frame的性质，可以在Wind类的构造方法中直接添加对象，
+直接写方法等等，前面不需要再通过类对象来掉用
+4、0000局可以在TestFile_5类的main()方法中，也可以在Wind类的构造方法中，还可以在Wind类的fileShow()方法中
+*/
+
+
+
+
+
+
+

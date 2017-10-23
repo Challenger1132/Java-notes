@@ -1,0 +1,43 @@
+/*
+Collections
+ArrayList 和linckedList等本身没有
+排序、倒置、查找等实现方法，是通过Collections类来实现的，里面有很多public static方法
+可直接对Collection接口的实现类进行操作，可以查找API文档
+Collections类中的方法很多是静态的因此可以通过类名的方式进行调用，这些方法的形参是
+// Collections类对象
+
+*/
+import java.util.*;
+class TestCollections
+{
+	public static void main(String[] args)
+	{
+		List list1 = new LinkedList();
+		List list2 = new LinkedList();
+		for(int i = 0;i < 8;i ++)
+		{
+			list1.add("a" + i);
+			list2.add("b" + i);
+		}
+		System.out.println("容器中元素输出：");
+		System.out.println(list1);
+		Collections.shuffle(list1);//对list所代表的容器中的元素进行顺序的打乱
+		System.out.println("打乱元素输出：");
+		System.out.println(list1);
+		Collections.sort(list1);  //对list所代表的容器中的元素进行排序
+		System.out.println("排序后元素输出：");
+		System.out.println(list1);
+		Collections.reverse(list1);//倒序
+		System.out.println("逆置后元素输出：");
+		System.out.println(list1);
+		System.out.println("将list2中元素复制到list1中输出：");
+		Collections.copy(list1,list2);//将list2中的元素拷贝到list1中
+		System.out.println(list1);
+		System.out.println("折半法查找元素b3，并返回index：");
+		int index = Collections.binarySearch(list1,"b3");
+		System.out.println(index);
+		System.out.println("fill()方法：");
+		Collections.fill(list1,"SGW");//将list1所代表的容器中的所有内容都填为SGW
+		System.out.println(list1);
+	}
+}

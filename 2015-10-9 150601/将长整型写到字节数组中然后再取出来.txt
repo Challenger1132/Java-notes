@@ -1,0 +1,32 @@
+/*
+1、数据流以data开头，有DataInputStream和DataOutputStream
+DataInputStream能够从底层字节输入流读取与Java相关的基本数据类型和String类型
+DataOutputStream能够将Java基本数据类型和String类型写入到其他字节输出流中
+2、注意DataInputStream、DataOutputStream是包裹流必须依附于相应的InputStream和OutputStream
+3、实现将长整型数据写到字节数组中，再从该字节数组中读取出来
+4、ByteArrayOutputStream属于OutputStream类，本身又会创建一个新的字节数组
+注意字节数组会自动创建不需要弄一个byte[]类型的形参传进去
+5、DataOutputstream类的构造函数的形参是一个Outputstream类对象，要将数据写到字节数组中
+只能将DataOutputstream对象作为包裹流搭建在Outputstream类对象这个节点流之上
+6、
+*/
+import java.io.*;
+class TestData
+{
+	public static void main(String[] args) throws Exception
+	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		DataOutputStream dos = new DataOutputStream(baos);
+		long n = 1234567890L;
+		dos.writeLong(n);//将长整型数据n写到dos这个包裹流所依附的节点流所关联的字节数组中
+		dos.flush();
+		byte[] buf = baos.toByteArray();//将baos所关联的字节数组内容拷贝一份放到字节数组buf中
+		ByteArrayInputStream bais = new ByteArrayInputStream(buf);
+		//ByteArrayInputStream类的构造函数是有形参的，形参是byte[]类型的字节数组，含义是
+		//创建一个ByteArrayInputStream类对象，并将byte[]类型的字节数组buf作为其缓冲区
+		DataInputStream dis = new DataInputStream(bais);
+		long m;
+		m = dis.readLong();
+		System.out.println("m = "+ m);
+	}
+}

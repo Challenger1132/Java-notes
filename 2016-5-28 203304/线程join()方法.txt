@@ -1,0 +1,53 @@
+
+public class Test_1 {
+
+	public static void main(String[] args) throws InterruptedException {
+		ThreadA threada = new ThreadA();
+		ThreadB threadb = new ThreadB();
+		Thread tha = new Thread(threada);
+		Thread thb = new Thread(threadb);
+		System.out.println(Thread.currentThread().getName() + "开始");
+		tha.start();
+		tha.join();  //Timer类为什么不遵守join()方法呢?
+		thb.start();
+		thb.join();
+		System.out.println(Thread.currentThread().getName() + "结束");
+	}
+}
+class ThreadA implements Runnable{
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		System.out.println(Thread.currentThread().getName() + "开始");
+		for(int i = 0;i < 5;i ++){
+			try{
+				Thread.sleep(2000);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			System.out.println("##" + i + "##");
+		}
+		System.out.println(Thread.currentThread().getName() + "结束");
+	}
+	
+}
+class ThreadB implements Runnable{
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		System.out.println(Thread.currentThread().getName() + "开始");
+		for(int i = 0;i < 10;i ++){
+			try{
+				Thread.sleep(1000);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			System.out.println("**" + i + "**");
+		}
+		System.out.println(Thread.currentThread().getName() + "结束");
+	}
+}

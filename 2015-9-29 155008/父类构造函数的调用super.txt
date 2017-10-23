@@ -1,0 +1,44 @@
+/*
+1、普通方法中不能调用父类的构造方法，只能在子类构造方法中调用
+且只能用super语句来调用，而不能直接写父类构造函数名
+2、一个构造函数中不能写多个super语句
+3、每个子类的构造方法中第一条语句都隐含地调用super();
+如果父类中没有该类型的构造函数，则会报错,因为类中会默认生成无参的构造函数，所以
+父类中无参的构造函数可以不写，但是也不能写有参数的构造函数，一旦用户写了构造函数，
+编译系统便不会自动生成无参的构造函数
+4、如果写出了super语句，则必须保证super语句是子类构造函数中第一条语句
+5、如果子类构造函数中写出了super();语句，则父类中可以有无参的构造方法，
+也可以没有无参的构造函数
+6、如果子类构造函数中写出了由参的构造函数，则父类中也必须写相应的有参数的构造函数
+7、
+*/
+class A 
+{
+	public int i;
+	public A()
+	{
+		
+	}
+	public A(int i)
+	{
+		this.i = i;		
+	}
+}
+class B extends A
+{
+	public int j;
+	public B(int i,int j)
+	{
+		super();
+		super(i);//通过super的方法调用父类的构造方法
+		this.j = j;
+	}
+}
+class TestSuper
+{
+	public static void main(String[] args)
+	{
+		B bb = new B(1,2);
+		System.out.printf("i = %d  j = %d\n",bb.i,bb.j);
+	}
+}

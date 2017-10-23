@@ -1,0 +1,45 @@
+import java.awt.Button;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+/*	Win类本身继承了WindowAdapter类，实现了ActionListener接口
+	在该类内部就得实现里面的抽象方法
+ * */
+class Win extends WindowAdapter implements ActionListener
+{
+	public TextField text1,text2,text3;  //设为类的属性
+	public void launch()
+	{
+		Frame f = new Frame();
+		text1 = new TextField(15);
+		text2 = new TextField(15);
+		text3 = new TextField(15);
+		Button button = new Button("=");
+		Label label = new Label("+");
+		f.setLayout(new FlowLayout());
+		f.add(text1);
+		f.add(label);
+		f.add(text2);
+		f.add(button);
+		f.add(text3);
+		f.setVisible(true);
+		button.addActionListener(this);  //this
+		f.addWindowListener(this);
+	}
+	public void actionPerformed(ActionEvent arg0) 
+	{
+		int num1 = Integer.parseInt(text1.getText());
+		int num2 = Integer.parseInt(text2.getText());
+		int num3 = num1 + num2;
+		text3.setText(num3 + "");
+	}
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+}

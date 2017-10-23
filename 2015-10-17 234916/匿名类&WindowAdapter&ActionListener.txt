@@ -1,0 +1,76 @@
+
+/*
+内部类
+1 new TF.launch();---------> new TF().launch();new TF()是TF类的类对象
+2 TextField tf = new TextField("15");TextField tf = new TextField(15);
+是不同的，"15"代表文本框内容是15，没有引号代表文本框大小是15
+3 Button bt = new Button(按钮);
+  bt.addActionListener(mm); 为按钮添加监听器对象mm
+4 
+创建监听器类Monitor,Moinitor实现了ActionListener接口
+class Moinitor implements ActionListener()
+{
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		......
+	}
+} //创建监听器类Monitor实现了ActionListener接口
+创建监听器Moinitor，Moinitor继承了WindowAdapter类
+class Monitor extends WindowAdapter()
+{
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1); /// .....
+	}	
+} //
+
+*/
+import java.awt.*;
+import java.awt.event.*;
+class TestInner
+{
+	public static TextField tf = new TextField(15);
+	public static void main(String[] args)
+	{
+		Frame f = new Frame("hello");
+		f.setLayout(new FlowLayout());
+		Button bt1 = new Button("按钮1");
+		Button bt2 = new Button("按钮2");
+		f.add(bt1);
+		f.add(bt2);
+		f.add(tf);
+		f.setVisible(true);
+		bt1.addActionListener(
+			new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					tf.setText("hello world");
+				}
+			}
+		);
+		bt2.addActionListener(
+			new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					tf.setText("hello SGW");
+				}
+			}
+		);
+		f.addWindowListener(
+			new WindowAdapter()
+			{
+				@Override
+				public void windowClosing(WindowEvent e)
+				{
+					System.exit(-1);
+				}
+			}
+		);
+	}
+}

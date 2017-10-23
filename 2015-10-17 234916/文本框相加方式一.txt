@@ -1,0 +1,123 @@
+
+/*
+方式一   代码都在启动类主方法中实现，代码逻辑差
+一个类Monitor中的方法要访问另一个类Text_2中的成员，由于tf1、tf2、tf3是方法中的局部变量
+所以不能在另一个类的方法中进行访问，因此要将tf1、tf2、tf3定义为类的属性
+
+*/
+import java.awt.*;
+import java.awt.event.*;
+
+class Text_3
+{
+	public static TextField tf1,tf2,tf3;  //由于main方法是静态的，要访问同类中的属性，
+										  //因此要将属性定义为静态的
+	public static void main(String[] args) //main方法是类中的一个方法
+	{
+		Frame f = new Frame("三个文本框相加");
+		tf1 = new TextField(15); //TextField tf1 = new TextField(15);这时的tf1就是方法中的局部变量
+		tf2 = new TextField(15); //现在没有类型标志符，tf1、tf2、tf3是类的属性，相当于同类中方法
+		tf3 = new TextField(15); //访问属性
+		Button bt = new Button("=");
+		Label label = new Label("+");
+		f.setLayout(new FlowLayout());
+		f.add(tf1);
+		f.add(label);
+		f.add(tf2);
+		f.add(bt);
+		f.add(tf3);
+		f.setVisible(true);
+	    bt.addActionListener(new Monitor());
+	}
+}
+class Monitor implements ActionListener
+{
+	@Override //表明下面的语句是对方法的重写，因此要保持方法头的相同
+	public void actionPerformed(ActionEvent e)
+	{
+		int num1 = Integer.parseInt(Text_3.tf1.getText());//由于属性tf1、tf2、tf3是静态的，
+										//所以可以通过类名点成员名的方式进行访问
+		int num2 = Integer.parseInt(Text_3.tf2.getText());
+		int num3 = num1 + num2;
+		Text_3.tf3.setText(num3 + "");//将num3的值转化为字符串
+	}
+}
+
+
+================================================
+
+/*
+三个文本框相加的实现
+1、TextField tf1,tf2,tf3;是定义类三个文本框，TextField相当于int、float、struct node *等等
+相当于类A、类Thread、类Exception等等
+2、main方法也是启动类中的一个方法，而且是静态方法，他要访问的成员必须定义为静态成员
+3、int num1 = Integer.parseInt(tt.tf1.getText());
+Integer类类中有parseInt()方法将内容解析为int型数据并赋予变量num1
+4、@Override下面的代码表明是对超类中方法的覆盖或重写
+5、class Monitor extends WindowAdapter implements ActionListener
+先继承后实现
+6、
+*/
+import java.awt.*;
+import java.awt.event.*;
+class TestText
+{
+	public static TextField tf1,tf2,tf3;//main方法要访问tf1,tf2,tf3因此要声明为静态属性
+	public static void main(String[] args)
+	{
+		Frame f = new Frame("文本框的相加");
+		f.setLayout(new FlowLayout());//流式布局
+		tf1 = new TextField(15);//同类中方法访问类的属性
+		tf2 = new TextField(15);
+		tf3 = new TextField(15);
+		Button bt = new Button("=");
+		Label label = new Label("+");
+		f.add(tf1);
+		f.add(label);
+		f.add(tf2);
+		f.add(bt);
+		f.add(tf3);
+		f.setVisible(true);
+		Monitor mm = new Monitor();
+		bt.addActionListener(mm);
+		f.addWindowListener(mm);
+	}
+}
+class Monitor extends WindowAdapter implements ActionListener
+{
+	TestText tt = new TestText(); //tt是在Monitor类中定义TestText类的类对象，
+									  //也就是将TestText类对象定义为Monitor类的属性
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		int num1 = Integer.parseInt(tt.tf1.getText());//这是Monitor类中的方法，不能定义为属性
+															 //也就是不能加访问控制符
+		int num2 = Integer.parseInt(tt.tf2.getText());
+		int num3 = num2 + num1;
+		tt.tf3.setText(num3 + "");
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

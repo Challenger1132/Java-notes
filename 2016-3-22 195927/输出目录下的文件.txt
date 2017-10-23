@@ -1,0 +1,25 @@
+import java.io.*;
+class Test
+{
+	public static void main(String[] args) throws Exception
+	{
+		File file = null;
+		String[] fileList1 = null; 
+		File[] fileList2 = null; 
+		try
+		{
+			file = new File("C:/Users/xingyue/Desktop/practice");
+			fileList1 = file.list();
+			fileList2 = file.listFiles();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		for(int i = 0;i < fileList1.length;i ++)
+			System.out.println(fileList1[i]);
+		System.out.println("------------------");
+		for(int i = 0;i < fileList2.length;i ++)
+			System.out.println(fileList2[i]);
+	}
+}

@@ -1,0 +1,72 @@
+import java.util.*;
+class TesthashMap
+{
+	public static void main(String[] args)
+	{
+		HashMap hm = new HashMap();
+		hm.put(1001,"hello");
+		hm.put(1002,1234);
+		hm.put(1004,new A("张三",22));
+		hm.put(1005,new A("李四",20));
+		hm.put(1006,new Point(1,1));
+		hm.put(1003,new Point(2,2));
+		System.out.println("直接输出：");
+		System.out.println(hm);
+		Set set = hm.keySet();       //c是showHashMap()方法的形参,代表传进来的容器
+									//调用keySet()方法,获取当前容器的键的集合，
+		Iterator t = set.iterator();//Set类对象set调用iterator()方法，
+		while(t.hasNext())          //键值集合下一个元素是否为空
+		{
+			Integer key = (Integer)t.next();//获取当前游标的元素，并转化为Integer类对象，游标向后移一个位置
+			System.out.println(hm.get(key));//输出获取的键值对应的元素
+		}
+		System.out.println("元素的查找：");
+		System.out.println(hm.get(1003));
+		System.out.println(hm.get(1001));
+		System.out.println(hm.get(1002));
+	}
+}
+class A 
+{
+	int age;
+	String name;
+	public A(String name,int age)
+	{
+		this.age = age;
+		this.name = name;
+	}
+	public String toString()
+	{
+		return name + " " + age;
+	}
+}
+class Point 
+{
+	int i,j;
+	public Point(int i,int j)
+	{
+		this.i = i;
+		this.j = j;
+	}
+	public String toString()
+	{
+		return "(" + i + "," + j + ")";
+	}
+}
+/*
+Map是Collection接口的子接口吗？不是吧
+
+哈希冲突 
+映射的地址越界
+
+迭代器Iterator接口
+方法摘要 
+ boolean hasNext() 
+如果仍有元素可以迭代，则返回true。判断当前游标后面是否有下一个元素，存在返回true，否则返回false 
+ E next() 
+先返回当前游标下面的右面的元素，然后将游标后移一个位置
+ void remove() 不推荐使用
+从迭代器指向的集合中移除迭代器返回的最后一个元素（可选操作）。 
+
+*/
+

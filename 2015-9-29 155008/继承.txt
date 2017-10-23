@@ -1,0 +1,95 @@
+/*
+2015年9月26日17:28:36   继承是Java程序设计一个很重要的思想
+1、利用继承可以更好地模拟现实事物之间的结构关系，代码得到极大的重用
+2、子类所有方法内部可以访问父类的非私有的成员，从父类继承的私有成员不能被访问
+在子类外部通过类对象名的方式可以访问父类的非私有的成员，
+子类本身除私有成员意外的所有成员
+3、java中只支持单继承，不允许多重继承
+4、子类可以继承父类所有的属性和方法，但不能继承父类的构造方法
+子类构造方法中可以使用super调用父类的构造方法
+5、子类访问父类的三种方式：
+在子类内部对父类成员进行访问；
+通过子类对象名的方式进行访问；
+通过子类类名的方式进行访问(继承过来的成员必须是静态成员)
+以上三种方式私有成员都无法被访问，即私有成员无法被子类继承
+6、子类通过继承父类的成员，继承之后的成员已经属于子类的成员了，
+子类内部并没 不能被继承的来自父类的成员(父类的私有成员和父类的构造函数)，
+*/
+class A 
+{
+	public int i = 1;//公有属性
+	protected int j = 2;
+	private int k = 3;//私有属性
+	public A()//父类的构造方法不能被子类继承
+	{
+		
+	}
+	public static void f() //公有方法
+	{
+		System.out.printf("public function !\n");
+	}
+	protected void g() //保护型的方法
+	{
+		System.out.printf("protected function !\n");
+	}
+	private void k() //私有方法
+	{
+		System.out.printf("privae function !\n");
+	}
+}
+class B extends A
+{
+	int n = 123;//子类特有的属性，并非来自从父类继承的
+	public void m()//这属于在子类方法内部访问父类成员
+	{
+		i = 10;
+		j = 20;  //i和j已经属于类B本身
+		//k = 30; // error 父类的私有属性不能被继承,因此子类B中也就没有属性k
+		f();
+		g();
+		//A(); // error 子类无法继承父类的构造方法
+		//k(); // error 私有方法即被private修饰，不能被继承
+	}
+	public B()//特别要注意，构造方法也是方法，不能写在类的普通方法之内
+	{
+		
+	}
+	public B(int i,int j,int n)//在这里可以写this，因为通过继承，i,j已经是类B的成员了
+	                   //注意因为在父类中属性k是私有的，子类无法继承，因此在子类B中
+					   //并没有从父类继承的属性k，在构造函数三个形参中，i和j是冲父类
+					   //继承的，参数n是子类B特有的属性
+	{
+		this.i = i;
+		this.j = j;
+		this.n = n;
+	}
+}
+class TestExtends
+{
+	public static void main(String[] args)
+	{
+		B.f(); //可以通过类名的方式进行访问，前提条件是成员必须是静态的，即被static修饰
+		B bb1 = new B();//会执行无参的构造函数，在类中一定要写无参的构造方法
+		B bb2 = new B(11,22,33);//会执行有参数的构造方法
+		bb1.i = 100;
+		bb1.j = 200;
+		System.out.printf("i = %d  j = %d \n",bb1.i,bb1.j);
+		System.out.printf("i = %d  j = %d  n = %d\n",bb2.i,bb2.j,bb2.n);
+		
+		//bb1.k = 300;// error 私有属性不能被继承
+		bb1.f();
+		bb1.g();
+		//bb1.k();// error 私有方法即被private修饰，不能被继承
+	}	
+}
+
+
+
+
+
+
+
+
+
+
+

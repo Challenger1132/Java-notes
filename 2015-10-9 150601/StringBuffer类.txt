@@ -1,0 +1,32 @@
+/*
+1、String对象一旦被创建不可被更改，若经常对字符窜的内容进行更改就要用StringBuffer
+2、经常对字符串内容进行修改用String即消耗时间有占用空间
+3、StringBuffer中的内容允许被修改，String类中没有修改字符串的方法
+但是StringBuffer中有大量修改字符串的方法
+*/
+class TestStringBuffer
+{
+	public static void main(String[] args)
+	{
+		String str = "abcdefg12345";
+		String str1 = "!!!!!";
+		StringBuffer s = new StringBuffer(str);
+							  //创建一个StringBuffer对象，内容是与str相同的字符序列
+		System.out.printf("\n%s\n",str);
+		System.out.printf("\n%s\n",s);
+		StringBuffer s1 = new StringBuffer("张三李四王五");
+		System.out.printf("\n%s\n",s1);
+		s.append("ABCDE");  //在原来字符串后面追加新的字符串
+		System.out.printf("\n%s\n",s);
+		s.delete(0,5);        //删除下标从0到5-1的字符串中的字符
+		System.out.printf("\n%s\n",s);
+		s.insert(4,str1);     //从第4个字符的位置处插入字符串str1
+		System.out.printf("\n%s\n",s);
+		s.reverse();          //将原来的字符串逆置
+		System.out.printf("\n%s\n",s);
+		String str2 = s.substring(6); //将原来的字符串生成子字符串
+		System.out.printf("\n%s\n",str2);
+		System.out.printf("\nlength = %d\n",s.length());
+		
+	}
+}

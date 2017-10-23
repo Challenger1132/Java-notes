@@ -1,0 +1,26 @@
+import java.awt.*;
+import java.util.*;
+class TestA
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		B bb = new B();
+		Thread it = new Thread();
+		Button button = new Button("hello world");
+		System.out.println(aa);
+		System.out.println(bb);
+		System.out.println(button);
+		System.out.println(it);
+	}
+}
+class A 
+{
+	public String toString()
+	{
+		return "哈哈哈哈";  //重写父类的toString()方法
+	}
+}
+class B   //未重写父类的toString()方法
+{
+}

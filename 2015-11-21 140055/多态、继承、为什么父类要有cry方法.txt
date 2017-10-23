@@ -1,0 +1,74 @@
+class Animals
+{
+	public void cry()
+	{
+		System.out.println("wu wu wu ...");
+	}
+}
+class Cat extends Animals
+{
+	public void cry()
+	{
+		System.out.println("miao miao ...");
+	}
+}
+class Dog extends Animals
+{
+	public void cry()
+	{
+		System.out.println("wang wang ...");
+	}
+}
+class Sheep extends Animals
+{
+	public void cry()
+	{
+		System.out.println("mie mie mie ...");
+	}
+}
+class People extends Animals
+{
+	public void cry()
+	{
+		System.out.println("hello world ...");
+	}
+}
+class Male extends People
+{
+	public void cry()
+	{
+		System.out.println("你好...");
+	}
+}
+class TestB
+{
+	public static void f(Animals animals)
+	{
+		animals.cry();
+	}
+	public static void main(String[] args)
+	{
+		Animals ani = new Animals();
+		Cat cat = new Cat();
+		Dog dog = new Dog();
+		Sheep sheep = new Sheep();
+		People pp = new People();
+		Male man = new Male();
+		
+		f(ani);
+		f(cat);
+		f(dog);
+		f(sheep);
+		f(pp);
+		f(man);
+	}
+}
+/*
+这里通过f方法输出类族中所有的cry()方法，
+这里f()和main()方法在同一个类之中
+f()方法的形参是Animals类的类对象，只要是Animals类的对象，子类对象，子类的子类对象
+都可以发送给f()方法的形参animals，通过该形参去调用类族中所有的cry()方法，多态机制
+父类中必须要有cry()方法，如果父类中没有cry()方法，子类继承父类，子类中的算是没有
+重写父类中的cry()方法，因此子类中的所有cry()方法就是子类所特有的方法，通过父类引用不能
+访问
+*/

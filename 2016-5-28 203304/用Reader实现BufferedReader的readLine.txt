@@ -1,0 +1,39 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+
+class TestDemo_3{
+	public static void main(String[] args) throws IOException{
+		MyBufferedReader mbr = new MyBufferedReader(new FileReader("b.txt"));
+		String str = null;
+		while(null != (str = mbr.readLine())){
+			System.out.println(str);
+		}
+	}
+}
+class MyBufferedReader{
+	private Reader r = null;  //类的属性
+	public MyBufferedReader(Reader r){  //构造方法，用于厨师话Reader
+		this.r = r;
+	}
+	public void close() throws IOException{
+		r.close();
+	}
+	public String readLine() throws IOException{
+		StringBuilder sb = new StringBuilder();
+		int ch = 0;
+		while((ch = r.read()) != -1){
+			if(ch == '\r')
+				continue;  //遇到换行继续执行条件
+			if(ch == '\n')
+				return sb.toString();  //遇到回车返回读取的字符串
+			else
+				sb.append((char)ch);
+		}
+		if(sb.length() > 0)   //如果文件末尾没有回车与换行，咋就会造成最后一行无法输出，因此要加上判断
+			return sb.toString();
+		else
+			return null;
+	}
+}

@@ -1,0 +1,54 @@
+/*
+异常处理的两种方式：通过try--catch语句自己进行捕获处理；
+在方法后面加上throws，表示我本方法不处理，抛给被调用者处理
+处理异常要看异常在哪个函数中，例如程序中f()方法抛出了异常在f()方法中
+要进行处理，当主函数调用f()方法时还要进行异常的处理
+*/
+import java.lang.ArithmeticException;
+import java.io.IOException;
+class A 
+{
+	public void f()
+	{
+		throw new ArithmeticException();//ArithmeticException属于RunTimeException的子类可处理可不处理
+	}
+	public void g() throws IOException
+	{
+		throw new IOException();//IOException属于Exception的子类，必须进行处理
+	}
+}
+class Test_4
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		try
+		{   
+			aa.g();
+			aa.f();  // ****
+		}
+		catch(ArithmeticException e)
+		{
+			System.out.printf("\n异常信息是：\n");
+			e.printStackTrace();
+			System.out.printf("\n异常处理结果是：\n");
+			System.out.printf("\n算数异常\n");
+		}
+		catch(IOException e)
+		{
+			System.out.printf("\n异常信息是：\n");
+			e.printStackTrace();
+			System.out.printf("\n异常处理结果是：\n");
+			System.out.printf("\n输入输出异常\n");
+		}
+		finally
+		{
+			System.out.println("哈哈哈哈哈啊哈哈");
+		}
+		
+	}
+}
+/*
+调换****处的两句，执行结果不一样，try-catch-finally语句中，一个try语句可以对应多个catch语句
+但只有一个异常会被catch，或者所有catch语句都不被执行
+*/

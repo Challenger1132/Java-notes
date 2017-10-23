@@ -1,0 +1,48 @@
+/*
+创建线程的第二中方法
+   ! 类A实现Runnable接口，class A implements Runnable,重写类A中的run()方法
+   !! 创建类A的对象aa,创建Thread类的对象并将aa发送给Thread类对象的形参
+   !!! 通过Thread类对象调用start()方法
+发送给Thread类对象形参的类对象必须实现了Runnable接口，否则无法创建线程
+*/
+class A implements Runnable
+{
+	public void run()
+	{
+		// while(true)
+		// {
+			// System.out.printf("AAAAAA\n");
+		// }
+		System.out.printf("AAAAAA\n");
+	}
+}
+class B implements Runnable
+{
+	public void run()
+	{
+		System.out.printf("BBBBBB\n");
+	}
+}
+class C 
+{
+	public void run()
+	{
+		System.out.printf("CCCCC\n");
+	}
+}
+class TestThread_1
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		B bb = new B();
+		C cc = new C();
+		Thread tha = new Thread(aa);
+		Thread thb = new Thread(bb);
+		//Thread thc = new Thread(cc); //ERROR 因为类C没有实现Runnable接口，
+		tha.start();
+		thb.start();
+		//thc.start();
+		System.out.printf("!!!!!!!!!!\n");
+	}
+}

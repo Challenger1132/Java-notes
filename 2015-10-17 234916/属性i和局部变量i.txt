@@ -1,0 +1,32 @@
+/*
+类的属性值和局部变量值是不一样的，类的属性值属于类的成员，局部变量值是函数的
+局部变量，两者可以同名，在内存中占用不同的存储空间
+
+f()方法中的i是局部变量i，属于函数的局部变量,是重新声明的i
+g()方法中的i是属性i,属于类的成员，是对类属性i的访问
+在g()方法中也不能访问f()方法中的局部变量i
+*/
+class A 
+{
+	public int i = 1;
+	public void f()
+	{
+		int i = 2;  //这里的i是局部变量i，属于函数的局部变量,f()方法中的i是重新声明的i
+		System.out.printf("f()方法中i = %d\n",i);
+	}
+	public void g() //这里的i是属性i,属于类的成员，g()方法中的i是对类属性i的访问
+				    //在g()方法中也不能访问f()方法中的局部变量i
+	{
+		i = 100;
+		System.out.printf("g()方法中i = %d\n",i);
+	}
+}
+class TestValue
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		aa.f();
+		aa.g();
+	}
+}

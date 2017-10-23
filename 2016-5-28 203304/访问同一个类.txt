@@ -1,0 +1,82 @@
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+/* 回调设计模式，当用户产生某个事件的时候，与事件源相关的监听类类对象就会自动调用类内部的相关的事件
+ * 处理方法，对事件进行处理，某个类实现监听接口，重写里面的时间处理方法，生成该类的类对象，将该类对象
+ * 传递给事件源的监听设置方法
+ * 等待设置的时间之后，就会打印当前时间，
+ * 类A、B、C,B、C 都要访问类A中的成员，在B类中生成类A的类对象从而访问类A中的属性与方法，如果在类C中
+ * 要“用”在B类中生成的那个A类类对象，那么在C类中生成B类的引用，创建C类的构造方法，在其他类中用到B C类，
+ * 给C类传递B类类对象，通过C类的构造方法，将这个传递的类对象赋予在C类中生成的B类的引用，那么通过这个引用
+ * 就可以访问在B类中创建的A类类对象，且B C 访问的是同一个A类类对象
+ * 
+class A{
+	//....
+}
+class B{
+	public A aa;  // A类对象是类B的属性 
+	public void f(){
+		aa  = new A();
+		aa.start(); // A类下的某个方法
+	}
+}
+class C{
+	public B bb;  // 在C类中生成B类的引用
+	public C(B bb){  // C类的构造方法，将传进来的形参bb赋予C类的属性bb
+		this.bb = bb;  
+	}
+	public void g(){
+		bb.aa.cancel(); // 在C类中也可以访问在B类中生成的A类对象aa,调用A类下的方法aa.start()--aa.cancel();
+	}
+}
+class Test{
+	B bb = new B();  // 在其他类中生成B C 类的类对象
+	C cc = new C(bb);  // 将B类对象bb传递给C类构造器，此时记忆可以访问在B类中的“成员”
+	//.....
+}
+ * */
+
+public class Test {
+	public static void main(String[] args) throws InterruptedException {
+		ThreadA threada = new ThreadA();
+		ThreadB threadb = new ThreadB(threada);
+		Thread tha = new Thread(threada);
+		Thread thb = new Thread(threadb);
+		tha.start();
+		thb.start();
+		tha.join();
+		thb.join();
+		System.out.println(Thread.currentThread().getName() + "运行完毕");
+	}
+}
+class PrintTime extends TimerTask{
+	public void run() {
+		Date date = new Date();
+		System.out.println("现在是： " + date);
+	}
+}
+class ThreadA implements Runnable{
+	Timer time = new Timer();
+	public void run() {
+		PrintTime pt = new PrintTime();
+		time.schedule(pt, 0, 2000);  //会自动执行PrintTime类里面的run()方法
+	}
+}
+class ThreadB implements Runnable{
+	
+	ThreadA thread;
+	public ThreadB(ThreadA thread){
+		this.thread = thread;
+	}
+	public void run() {
+		try{
+			Thread.sleep(20000);
+		}
+		catch(InterruptedException e){
+			e.printStackTrace();
+		}
+		thread.time.cancel();
+		System.out.println(Thread.currentThread().getName() + "运行完毕");
+	}
+}
+

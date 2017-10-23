@@ -1,0 +1,75 @@
+
+
+class A 
+{
+	public int i = 777;
+	int j = 888;
+	public void f()
+	{
+		g();		
+		int i = 10;
+		System.out.printf("i = %d\n",i); //输出的是f()方法的局部变量i
+	}
+	public void g()
+	{
+		i = 999;
+		System.out.printf("i = %d\n",i);//输出的是属性i
+	}
+}
+class B 
+{
+	A aa = new A();
+	int i = aa.i;//一个类中的成员访问另一个类中的属性
+	public void f()
+	{
+		aa.f();  //一个类中的成员访问另一个类中的方法
+		System.out.printf("i = %d\n",aa.i);
+		System.out.printf("i = %d\n",i);
+	}
+}
+class Test 
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		aa.f();
+		aa.g();
+		B bb = new B();
+		bb.f(); // 999 10     999      999 10     999  777  999
+		System.out.printf("aa.i = %d\n",aa.i);
+	}
+}
+
+
+-----------------------------------------
+
+
+class A 
+{
+	public int i = 888;
+	public void f()
+	{
+		i = 222;
+		System.out.printf("i = %d\n",i);
+	}
+}
+class B 
+{
+	A aa = new A();
+	public int i = aa.i;
+	public void f()
+	{
+		System.out.printf("i = %d\n",i);
+	}
+}
+class Test_1 
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		aa.f();
+		B bb = new B();
+		bb.f();
+		System.out.printf("aa.i = %d\n",aa.i);
+	}
+}

@@ -1,0 +1,42 @@
+/*
+Thread类的常用方法
+！currentThread();获取当前线程的对象，因为是静态的所以可以通过类名的方式来调用
+！setName("string");将线程的名字设置为string字符串
+！getName();获取当前线程的名字
+*/
+class A implements Runnable
+{
+	public void run()
+	{
+		System.out.printf("\nAAAAAA\n");
+		System.out.printf("\n%s线程正在执行\n",Thread.currentThread().getName());
+	}
+}
+class B implements Runnable
+{
+	public void run()
+	{
+		System.out.printf("\nBBBBBB\n");
+		System.out.printf("\n%s线程正在执行\n",Thread.currentThread().getName());
+	}
+}
+class TestThread_2
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		B bb = new B();
+		B bb1 = new B();
+		Thread tha = new Thread(aa);
+		tha.setName("haha");//注意这里不能写aa.setName("haha");是tha调用了start()方法
+		Thread thb = new Thread(bb);
+		thb.setName("heihei");//这里不能写bb.setName("haha");是thb调用了start()方法
+		Thread thb1 = new Thread(bb1);
+		thb1.setName("XXX");//这里不能写bb.setName("XXX");是thb调用了start()方法
+		tha.start();
+		thb.start();
+		thb1.start();
+		System.out.printf("\n!!!!!!\n");
+		System.out.printf("\n%s线程正在执行\n",Thread.currentThread().getName());
+	}
+}

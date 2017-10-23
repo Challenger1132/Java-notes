@@ -1,0 +1,38 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+/* 为什么带有汉字的文件用字节流输出操作显示会出现乱码？
+ * 英文字符占一个字节，用字节流可以方便的输出，显示，但是汉字占两个字节，
+ * 但是我们输出的时候是逐个字节进行输出的，也就是将汉字拆开进行输出，且汉字映射的两个
+ * 数字是负的，因此输出是乱码
+ */
+public class IOdemo {
+
+	public static void main(String[] args) throws IOException {
+
+		FileInputStream fis = new FileInputStream("C:/Users/xingyue/Desktop/practice/instanceof.txt");
+		int ch = fis.read();  //逐个字节进行读取
+		while(ch != -1){
+			System.out.printf("%c",(char)ch);  //逐个字节进行输出
+			ch = fis.read();
+		}
+		fis.close();
+		/*
+		 第二种方式，每次读取len个字节，将len个字节封装成字符串进行输出
+		 但是在1023个字节出恰好有汉字出现，这个时候汉字还会被拆开显示，可能会出现乱码
+		 因此用字节流操作字符文件不太方便，所以出现了转换流
+		注意流一旦被关闭，其占据的资源就会被释放，不能再用关闭之后的某个流对象，对文件进行操作
+		如果想再次对文件操作，就要重新建立流的连接，否则会抛出
+		 */
+		FileInputStream fis0 = new FileInputStream("C:/Users/xingyue/Desktop/practice/instanceof.txt");
+		byte[] buff = new byte[1024];
+		int len = fis0.read(buff);
+		while(len != -1){
+			System.out.println(new String(buff,0,len));  //转化为字符串进行输出
+			len = fis0.read(buff);
+		}
+		fis0.close();
+	}
+}

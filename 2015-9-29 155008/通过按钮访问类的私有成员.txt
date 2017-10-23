@@ -1,0 +1,27 @@
+/*
+java设计程序中一个很重要的设计方法是按钮的设计
+在类A中变量i和j是私有的，在类的外部无法访问，因此在类的内部可以设计
+一个公有方法set(),在类的内部set()方法可以访问类内部私有变量i和j，而在类的外部
+可以访问set()方法,进而就访问了类内部私有成员
+*/
+class A 
+{
+	private int i;
+    private int j;
+	public void set(int i,int j)
+	{
+		this.i = i;
+		this.j = j;
+		System.out.printf("哈哈哈哈哈哈\n");
+		System.out.printf("i = %d  j = %d\n",i,j);
+	}	
+}
+class TestMakef
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		aa.set(1,2);
+		
+	}
+}

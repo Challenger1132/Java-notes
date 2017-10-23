@@ -1,0 +1,43 @@
+/*
+函数重载,在类中允许定义多个重名的函数，这些函数只区别于参数列表不一样
+根据实参的不同自动调用响应的函数
+参数个数，数据类型，参数的先后顺序
+	int sum(int a,int b,int c)
+	{
+		return a + b + c;
+	}
+	
+	int sum(int a,int c,int b)// 参数先后顺序不一样
+	{
+		return a + b + c;
+	}
+	当aa.sum()的时候，不知道该调用哪个方法，所以会报错
+*/
+class A
+{
+	int sum(int a,int b)
+	{
+		return a + b;
+	}
+	int sum(int a,int b,int c)
+	{
+		return a + b + c;
+	}
+	
+	int sum(int a,int c,int b)// 参数先后顺序不一样
+	{
+		return a + b + c;
+	}
+	 sum()
+}
+class TestOver
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		// System.out.printf("sum = %d\n",aa.sum(1,1,1));
+		// System.out.printf("sum = %d\n",aa.sum(1,1));
+		System.out.printf("sum = %d\n",aa.sum(1,1,2));
+		System.out.printf("sum = %d\n",aa.sum(1,1,1));
+	}
+}

@@ -1,0 +1,188 @@
+import java.awt.*;
+import java.awt.event.*;
+class TestTextField_1
+{
+	public static void main(String[] args)
+	{
+		TF tf = new TF();
+		tf.launch();
+	}
+}
+class TF
+{
+	public TextField text1,text2,text3;
+	public Button button;
+	public Label label;
+	public Frame f;
+	public void launch()
+	{
+		//Frame f1 = new Frame(); //f1是局部变量，属于方法黑匣子内部的局部变量
+		f = new Frame("文本框相加");//f是类的属性值，属于类成员
+		button = new Button("=");
+		label = new Label("+");
+		text1 = new TextField(10);
+		text2 = new TextField(10);
+		text3 = new TextField(10);
+		f.setLayout(new FlowLayout());
+		f.add(text1);
+		f.add(label);
+		f.add(text2);
+		f.add(button);
+		f.add(text3);
+		f.setVisible(true);
+		f.validate();
+		ButtonListener listener = new ButtonListener(this);// 0000
+		button.addActionListener(listener); //0000
+		f.addWindowListener(listener); //0000
+	}
+}
+class ButtonListener extends WindowAdapter implements ActionListener
+{
+	public TF tf = null;
+	ButtonListener(TF tf)
+	{
+		this.tf = tf;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		int num1 = Integer.parseInt(tf.text1.getText());
+		int num2 = Integer.parseInt(tf.text2.getText());
+		int num3 = num1 + num2;
+		tf.text3.setText(num3 + "");
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+}
+-----------------------------------------------------------------------
+import java.awt.*;
+import java.awt.event.*;
+class TestTextField_1
+{
+	public static void main(String[] args)
+	{
+		TF tf = new TF();
+		tf.launch();
+		tf.f();
+	}
+}
+class TF
+{
+	public TextField text1,text2,text3;
+	public Button button;
+	public Label label;
+	public Frame f;
+	public void launch()
+	{
+		//Frame f1 = new Frame(); //f1是局部变量，属于方法黑匣子内部的局部变量
+		f = new Frame("文本框相加");//f是类的属性值，属于类成员
+		button = new Button("=");
+		label = new Label("+");
+		text1 = new TextField(10);
+		text2 = new TextField(10);
+		text3 = new TextField(10);
+		f.setLayout(new FlowLayout());
+		f.add(text1);
+		f.add(label);
+		f.add(text2);
+		f.add(button);
+		f.add(text3);
+		f.setVisible(true);
+		f.validate();
+	}
+	public void f()
+	{
+		ButtonListener listener = new ButtonListener(this);// 0000
+		button.addActionListener(listener); //0000
+		f.addWindowListener(listener); //0000
+	}
+}
+class ButtonListener extends WindowAdapter implements ActionListener
+{
+	public TF tf = null;
+	ButtonListener(TF tf)
+	{
+		this.tf = tf;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		int num1 = Integer.parseInt(tf.text1.getText());
+		int num2 = Integer.parseInt(tf.text2.getText());
+		int num3 = num1 + num2;
+		tf.text3.setText(num3 + "");
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+}
+/*
+可以将事件源绑定监听器的代码写到一个独立的函数之中，要实现相应的事件处理功能
+要在启动类中生成该方法所在类的类对象，然后通过类对象再调用该方法
+	public void f()
+	{
+		ButtonLitener listener = new ButtonLitener(this);
+		f.addWindowListener(listener);
+		button.addActionListener(listener);
+	}
+将0000这几行写到f()方法中但是要在启动类的main()方法中掉用该方法，才能实现相应的事件处理
+
+/*
+变量能够被同类中的方法访问，能够被另一个类中的方法访问，要将该变量定义为类的属性
+通类中访问控制符是透明的，各个成员可以相互访问，直接进行访问
+不同类中成员之间的访问，要在该类中定义另一个类的类对象，通过该类对象进行访问，或者将另一个类的类对象
+定义为该类的属性成员，而不能直接对另一个类中的成员进行访问
+
+两个类要访问同一个类中的成员，要在两个类中都定义另一个类的类对象，或者将
+要访问的类的类对象定义为两个类的属性，如何保证在两个类中定义的另一个类的
+类对象是同一个类对象？通过this指针构造方法等
+
+ButtonListener类中的成员要访问TF类中的成员，要在ButtonListener类中定义TF类的类对象tf，
+通过类对象tf去访问TF类的成员，而不能在ButtonListener类内部直接访问TF类的成员
+同时TF类中的成员也要访问ButtonListener类中的成员，要在TF类中定义ButtonListener类的类对象listener，
+通过类对象listene去访问ButtonListener类的成员，而不能在TF类内部直接访问ButtonListener类的成员
+启动类TestTextField_1中的main方法成员也要访问TF类中的成员，要在TestTextField_1类中
+定义TF类的类对象tf，如何保证TestTextField_1类中的TF类对象tf和ButtonListener类中的TF类对象tf
+是同一个对象？
+*/
+/*
+在一个类内部可以定义另一个类的类对象，
+在一个类的方法内部，也可以定义另一个类的类对象，这些类和基本数据类型是等价的
+class A
+{
+	public int i; //属性，成员 
+	public void f()
+	{
+		int i; //类A中f()方法中的局部变量
+	}
+}
+class A 
+{
+	public TextField text1; //text1是属性，成员
+	public void f()
+	{
+		TextField text2;// text2是类A中f()方法中的局部变量
+	}
+} 
+只是int和TextField都是数据类型是等价的，
+text1是在类中定义的另一个类的类对象
+text2在一个类的方法内部，定义另一个类的类对象
+例如在一个类内部或者类内部的方法中定义 TextField text1; Button button; Frame f;
+Thread thread; String str; int i; float f;等等都是等价的，都可以看成是各种形式的数据类型
+class TF
+{
+	Button button;
+	Frame f;
+	public void launch()
+	{
+		//Frame f1 = new Frame(); //f1是局部变量，属于方法黑匣子内部的局部变量
+		f = new Frame()；        //f是类的属性值，属于类成员
+		button = new Button();
+	}
+}
+*/

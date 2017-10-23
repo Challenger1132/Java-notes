@@ -1,0 +1,25 @@
+import java.util.Scanner;
+class TestException_1 
+{
+	public static void main(String[] args)
+	{
+		int i = 0;
+		Scanner sc = new Scanner(System.in);//System.in代表键盘；System.out代表屏幕
+		//i = sc.nextInt();//如果不进行异常的捕获处理，那么程序只能输入整型数据，
+		//当输入的是字符的时候，会抛出异常
+		try
+		{
+			i = sc.nextInt();
+		}
+		catch(InputMismatchException e)//InputMismatchException是输入不匹配异常类
+		//e是InputMismatchException类的对象
+		{
+			System.out.printf("异常信息如下：\n");
+			e.printStackTrace();
+			System.out.printf("异常处理结果如下：\n");
+			System.out.printf("只能输入整型数据，不能输入字符！\n");
+		}
+		System.out.printf("处理异常后继续输出如下：\n");
+		System.out.printf("i = %d\n",i);
+	}
+}

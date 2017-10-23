@@ -1,0 +1,62 @@
+import java.util.*;
+class TestComparable 
+{
+	public static void main(String[] args)
+	{
+		List li = new ArrayList();
+		li.add(new Stu("张三",1001));//创建了类对象，并自动调用了有参的构造方法，
+									 //完成了进行了对类对象的初始化
+		li.add(new Stu("李四",1002));
+		li.add(new Stu("孙六",1004));
+		li.add(new Stu("王五",1003));
+		li.add(new Stu("张强",1005));
+		System.out.println(li);
+		Collections.sort(li);
+		System.out.println(li);
+	}
+}
+class Stu implements Comparable
+{
+	public int id;
+	public String name;
+	public Stu(String name,int id)
+	{
+		this.id = id;
+		this.name = name;
+	}
+	public String toString()
+	{
+		return name + " " + id;
+	}
+	@Override
+	public int compareTo(Object obj) //重写Comparable接口里面的compareTo()方法
+									 //该方法会被Collections类中的sort()自动调用
+	{
+		Stu stu = (Stu)obj;//将compareTo()方法的形参强制转化为Stu类对象
+		if(this.id == stu.id)//this指向当前正在调用compareTo()方法的Stu类对象，
+							 //this语句在compareTo()方法中
+			return 0;
+		else if(this.id > stu.id)//compareTo()方法是Stu类的成员，因此可以访问同类中的属性id
+			return 1;
+		else
+			return -1;
+	}	
+}
+
+
+
+
+/*
+用户自定义的类对象，放到容器中，如果要进行排序比较，要指定比较的标准，这个类
+要实现Comparable接口，该接口里面有compareTo()方法，要重写里面的compareTo()方法
+class Stu implements Comparable,自定义类实现了Comparable接口，一定要重写里面的
+抽象方法compareTo(Object obj)方法，不进行重写会提示报错
+*/
+
+
+
+
+
+
+
+

@@ -1,0 +1,79 @@
+import java.awt.*;
+import java.awt.event.*;
+class TestAction_3
+{
+	public static void main(String[] args)
+	{
+		Wins window = new Wins("hello world");
+	}
+}
+class Wins extends Frame
+{
+	public TextField text1,text2,text3;
+	public Wins(String s)
+	{
+		super(s);
+		setLayout(new FlowLayout());
+		text1 = new TextField(15);
+		text2 = new TextField(15);
+		text3 = new TextField(15);
+		add(text1);     //直接掉用方法
+		add(text2);
+		add(text3);
+		setVisible(true);
+		setBounds(200,200,200,200);
+		validate();
+		TextListener listener = new TextListener();
+		text1.addActionListener(listener);
+		addWindowListener(listener);
+	}
+	// public void f()
+	// {
+		// TextListener listener = new TextListener();
+		// text1.addActionListener(listener);
+		// addWindowListener(listener);
+	// }  //在Wins()方法中添加该段代码，也就是f()方法试图访问内部类，不会报错，可以处理事件
+	class TextListener extends WindowAdapter implements ActionListener
+	{
+		@Override
+		public void windowClosing(WindowEvent e)
+		{
+			System.exit(-1);
+		}
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			int num1 = Integer.parseInt(text1.getText());
+			int num2 = num1 * num1;
+			int num3 = num1 * num1 * num1;
+			text2.setText(num1 + "的平方是   " + num2);
+			text3.setText(num1 + "的立方是   " + num3);
+		}
+	}
+}
+/*
+	public void f()
+	{
+		TextListener listener = new TextListener();
+		text1.addActionListener(listener);
+		addWindowListener(listener);
+	}  //在Wins()方法中添加该段代码，也就是f()方法试图访问内部类
+*/
+
+/*
+1、为了让监视器对象能够对事件源发生的事件进行处理，创建该监视器对象的类必须实现相应的接口
+即必须在类的类体中给出该接口的所有方法的方法体，监视器类是自定义的类，该类要实现某个接口
+例如 class ButtonListener implements ActionListener{   .....}
+
+2、java的事件处理就是基于这种授权模式
+comp.addXXXListener(XXXListener listener); 该方法的参数是一个接口，listener可以是任何
+实现了XXXListener接口的类所创建的对象，当事件源发生事件时，接口listener立刻被回调给
+被类实现的接口中的某个方法
+java.awt.event包中提供了许多事件类和处理事件的各种接口，例如ActionListener接口，
+该接口下面的方法 actionPerformed(ActionEvent e)当某个事件源产生事件的时候，java.awt.event包
+中的ActionEvent类会自动创建一个事件对象，并将它传递给actionPerformed(ActionEvent e)方法的参数e
+监视器将自动调用actionPerformed(ActionEvent e)方法
+我们称某个事件源(文本框、按钮等)可以发生ActionEvent(还有其他类型的事件)类型的事件
+事件处理方法的形参是某个事件类型(ActionEvent)的类对象，为了能够监视到这个类型的事件
+某事件源必须使用addXXXListener()方法来获得监视器,创建监视器的类必须实现某个接口
+*/

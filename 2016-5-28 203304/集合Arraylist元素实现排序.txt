@@ -1,0 +1,47 @@
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+public class TestTreeSetDemo {
+	public static void main(String[] args) {
+		List<Student> list = new ArrayList<Student>();
+		list.add(new Student("qwqwqwqwq",545));
+		list.add(new Student("ew",5));
+		list.add(new Student("qwqwqwqwq",5));
+		list.add(new Student("qwqw",545));
+		list.add(new Student("qwqwqwqwq",44));
+		
+		Collections.sort(list);
+		for(Student s : list){
+			System.out.println(s);
+		}
+	}
+
+}
+class Student implements Comparable<Student>{
+	private int age;
+	private String name;
+	public Student(String name,int age){
+		this.age = age;
+		this.name = name;
+	}
+	
+	public int getAge() {
+		return age;
+	}
+
+	public String getName() {
+		return name;
+	}
+	public String toString(){
+		return name + "," + age;
+	}
+	@Override
+	public int compareTo(Student arg0) {
+		int con = this.age - arg0.age;
+		return con == 0 ? this.name.length() - arg0.name.length() : con;
+	}
+	
+}

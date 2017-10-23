@@ -1,0 +1,58 @@
+import java.awt.*;
+import java.awt.event.*;
+
+class TestAction_1 
+{
+	public static void main(String[] args)
+	{
+		new TF().launch();
+	}
+}
+class TF
+{
+	public TextField text1,text2,text3;
+	public Button button;
+	public Label label;
+	Frame f;
+	public void launch()
+	{
+		text1 = new TextField(10);
+		text2 = new TextField(10);
+		text3 = new TextField(10);
+		label = new Label("+");
+		button = new Button("=");
+		f = new Frame("三个文本框相加");
+		f.setLayout(new FlowLayout());
+		f.add(text1);
+		f.add(label);
+		f.add(text2);
+		f.add(button);
+		f.add(text3);
+		f.setVisible(true);
+		f.validate();
+		ButtonLitener listener = new ButtonLitener(this);
+		f.addWindowListener(listener);
+		button.addActionListener(listener);	
+	}
+}
+class ButtonLitener extends WindowAdapter implements ActionListener
+{
+	public TF tf; //将TF类的类对象定义为该类ButtonLitener类的属性，通过TF类的类对象去访问另TF类的成员
+	ButtonLitener(TF tf)
+	{
+		this.tf = tf;
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		int num1 = Integer.parseInt(tf.text1.getText());
+		int num2 = Integer.parseInt(tf.text2.getText());
+		int num3 = num1 + num2;
+		tf.text3.setText(num3 + "");
+	}
+}

@@ -1,0 +1,100 @@
+字符串直接赋值的方式是在先到字符串常量池里面去找有，有返回引用，没有，先创建字符串，再返回(方法区的中的字符串常量池)
+	public static void main(String[] args) {
+		/* 直接赋值的方式先在方法区的字符串常量池里面找是否有字符串"hello"，有就直接返回，
+		 * 没有先创建，再返回，开辟空间创建" world"，再创建空间将"hello"和" world"拼接
+		 * 最后栈中的str指向的创建的空间，指向"hello"和" world"拼接
+		 * 因此字符串一旦被创建就不能被改变，是指创建的"hello"
+		 */
+		String str = "hello";  
+		str = str + " world"; 
+		System.out.println(str); // hello world
+		String string = new String("hello");
+		String string0 = "hello";
+		/* 两者内存中的变化，String string在栈中，new String()在堆中开辟空间，首先在方法区的
+		 * 字符串常量池中寻找是否有"hello"，没有就在常量池创建该字符串常量"hello"，并将其地址(假设0x001)赋予
+		 * 堆中开辟的空间，但堆中开辟的空间本身也有地址(假设0x0001),将其赋予栈中string
+		 * String string0同样在栈中，直接赋值同样在字符串常量池中找是否有字符串常量，有，就使 string0
+		 * 指向该字符串常量，也就是将地址0x001赋予string0，因此，string与string0内容分别是0x0001与0x001
+		 * 不一样，但是两者指向的内容都是"hello"，前者创建两个对象，后者创建一个对象   */
+		//引用类型比较的是==两端是否指向堆内存中同一块存储空间，因为两者指向不同的空间，因此返回false
+		System.out.println(string == string0); 
+		//String类型重写了里面的equals()方法，比较的是内容，不论引用指向是否相同，因此返回true
+		System.out.println(string.equals(string0));
+		String string1 = "hello";
+		String string2 = "hello";
+		 //都是在方法区的静态常量池中直接拿过来的因此string1与string2相同，指向的内容也相同
+		System.out.println(string1 == string2);
+	}
+
+字符串一旦被复制就不能被改变(指的是字符串的内容("hello")不改变，但是引用指向(str)可以改变)
+	public static void main(String[] args) {
+		String str1 = "hello";
+		String str2 = " world";
+		String str3 = "hello world";
+		//字符串变量相加，先开辟空间，再进行拼接
+		System.out.println(str1 == str2 + str3);
+		//字符串常量相加，先拼接成hello world，在字符串常量池中寻找是否有，发现和str3所指向的一样，就返回str3
+		System.out.println(str3 == "hello" + " world");
+		System.out.println(str3.equals(str1 + str2));
+		System.out.println(str3.equals("hello" + " world"));
+		System.out.println(str1 == "hello"); //引用可以和字符串常量进行逻辑判断
+	}
+
+数据结构
+栈：先进后出,“子弹夹”，push压栈，pop取出最上面的一个元素，并返回该元素，判断栈是否为空
+队列：先进先出，“检票”
+数组：查找比较方便，插入删除不方便
+	arr = [2,4,3,6,898,54,32,66,33];
+	如何获取 4 这个元素？  --->  arr[1]
+	如何在 4 这个元素之后插入一个新的元素 88？
+		定义一个新的数组，大小为原来数组大小 + 1,元素4之前的元素，按照之前的索引直接复制过来
+		元素4继续复制，元素4之后，先在新的数组中插入元素 88 ,然后将之前 4 之后的元素的索引 +１后复制到新的数组中
+	如何删除某个元素　如元素　4 ? 
+		定义一个新的数组，大小为原来数组大小 - 1,元素4之前的元素，按照之前的索引直接复制过来
+		元素4不添加，然后将之前 4 之后的元素的索引 -１后复制到新的数组中
+链表：每个节点包含数据域和指针域，查询慢，插入删除比较快
+	查询一个元素？ --> 从头开始遍历
+	在某个元素之后插入一个元素，将该元素的？？？？？
+
+ArrayList : 底层实现是数组，查询快，增删慢，是线程不安全的，效率高
+LinkedList : 底层实现是链表，查询慢，增删快，是线程不安全的，效率高
+Vector : 底层实现是数组，查询快，增删慢，是线程安全的，效率低
+Java中数组和集合的区别，数组能存储基本数据类型和引用类型，且只能是同一种类型，而集合只能存储引用类型，能存储多种类型
+当集合中存储的是基本数据类型的时候，会通过自动装箱直接转化为基本数据类型对应的构造器类型
+
+重写equals()方法
+	public boolean equals(Object obj){ 
+		if(this == obj)  //如果引用相等，那么堆空间中的内容一定相等
+			return true;
+		else{
+			boolean con = obj instanceof Student; 
+			if(con){  // 属于同一类，才有比较的必要
+				//父类引用实际指向的是子类引用，可以将父类引用强制转化为子类引用而不出错
+				//父类引用不能访问子类所特有的成员，因此要将父类引用转化为子类引用
+				Student s = (Student)obj;
+				if(this.age == s.age && this.name.equals(s.name)) //String类型已经重写了equals方法
+					return true;
+				else
+					return false;
+			}
+			else
+				return false;
+		}
+
+在进行设计的时候，如果传递的参数少于等于3，就直接传递具体的参数，如果传递的参数过多，就直接传递类对象
+对于一个项目的分析：
+	1、需要哪些类来实现？
+	2、每个类中有哪些的东西？
+	3、类与类之间的关系是什么？
+	对于一个用户注册访问的demo可以进行如下的划分
+		1、用户基本描述类  
+		2、用户操作类
+	如何对项目进行分包？
+		1、用户基本描述类包 cn.example.user.pojo
+		2、用户操作接口,将接口打包， cn.example.dao
+		3、用户操作类包  cn.example.dao.userImpl
+	思考为什么将操作进行接口单独进行打包？
+		将接口单独打包是为了将来实现的方便，将来更换实现方式的时候直接实现提供的接口就行了，也就是对外需求是不变的
+		改变的是实现这种需求的方式
+
+	//更新至 2016年6月2日17:41:29

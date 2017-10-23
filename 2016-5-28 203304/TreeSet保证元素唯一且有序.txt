@@ -1,0 +1,45 @@
+import java.util.Set;
+import java.util.TreeSet;
+
+
+public class TreeSetDemo {
+/* 对于自定义的类，比较是依赖于compareTo()方法的，该方法在接口Comparable接口里面，因此
+ * 要实现排序应该先实现Comparable接口
+ * Integer与String类实现了 Comparable接口，因此可将Integer与String类对象转化为Comparable引用来接收
+ * 这里是多态的实现，但是对于自定义的类，因为没有实现Comparable接口，因此不能讲类对象用Comparable引用来接收
+ * TreeSet的add方法的实现依赖于TreeMap的put方法，里面涉及将类对象转化为Comparable引用的过程，对于Integer
+ * 和String类型，因为已经实现了Comparable接口所以不会出现异常，但是对于自定义的类，必须要实现Comparable接口
+ * 否则会抛出异常 
+ * java.lang.ClassCastException: Students cannot be cast to java.lang.Comparable
+ * 
+ * */
+	public static void main(String[] args) {
+		Set<Students> s = new TreeSet<Students>();
+		s.add(new Students("张三",22));
+		s.add(new Students("李四",22));
+		s.add(new Students("张三",21));
+		s.add(new Students("王五",21));
+		System.out.println(s);
+//		TreeMap;
+	}
+}
+class Students implements Comparable<Students>{
+	private int age;
+	private String name;
+	public Students(String name,int age){
+		this.name = name;
+		this.age = age;
+	}
+	public String toString(){
+		return "[" + name + "," + age + "]";
+	}
+	public int compareTo(Students o) {
+		/* 如果这里指定按照年龄作为排序的条件，但还要考虑，当有年龄相同名字不同的时候，这也是不同元素的情况，
+		 * 这时只会添加到集合中其中 一个元素，这时就要考虑姓名也作为排序条件*/
+		int condition = this.age - o.age;
+		return condition == 0 ? this.name.compareTo(o.name) : condition;
+		/* 如果condition等于0表示年龄相同，这时候就返回this.name.compareTo(o.name)
+		 * 否则，表示年龄不相同，就按年龄为第一条件进行排序，返货condition，name是String已经重写了
+		 * compareTo()方法，因此可以直接调用  */
+	}
+}

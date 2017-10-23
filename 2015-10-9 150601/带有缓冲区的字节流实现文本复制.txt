@@ -1,0 +1,26 @@
+/*
+带有缓冲区的流实现文本文件的复制
+*/
+import java.io.*;
+class TestBufferedReader
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedReader br = new BufferedReader
+			(new FileReader("C:\\Users\\dell\\Desktop\\practice\\TestBufferedReader.java"));
+		//BufferedReader类的构造函数的形参是Reader类的一个对象，FileReader类对象属于Reader
+		//类对象，可以将FileReader类对象发送给BufferedReader类构造函数的形参
+		//不能直接写输入流所关联的文件，这里体现了多态，节点流与包裹流等相关知识
+		BufferedWriter bw = new BufferedWriter
+		    (new FileWriter("C:\\Users\\dell\\Desktop\\practice\\TTTTTTTTTTTTTTT.java"));
+		String str = null;
+		while((str = br.readLine()) != null)
+		{
+			bw.write(str);
+			bw.newLine();//写入一个换行符
+		}
+		bw.flush();
+		br.close();
+		bw.close();
+	}
+}

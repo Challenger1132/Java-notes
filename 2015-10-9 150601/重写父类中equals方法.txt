@@ -1,0 +1,42 @@
+/*
+通过父类引用可以访问子类从父类继承(或继承改写之后)的成员，
+但不能访问子类中特有的成员
+因为i是子类中特有的成员，obj是父类引用,
+通过父类引用不能访问子类中特有的成员，因此不能用obj.i
+
+Object类中的equals方法，如果比进行重写，他会判断this和obj是否
+是同一块内存空间，如果是则返回true，否则返回false
+重写后的equals方法就会判断两块内存中的值是否相等
+*/
+class A 
+{
+	public int i;
+	public A(int i)  //构造函数
+	{
+		this.i = i;
+	}
+	public boolean equals(Object obj)  //重写父类中equals方法
+	{
+		A aa = (A)obj;//将一个类的对象引用赋予obj，那么父类引用本身就指向子类引用，
+					  //可以将父类引用强制转化为子类引用
+		//if(i == obj.i)//error通过父类引用可以访问子类从父类继承(或继承改写之后)的
+						//成员，但不能访问子类中特有的成员，因为i是子类中特有的成员，
+						//obj是父类引用通过父类引用不能访问，因此不能用obj.i
+		if(this.i == aa.i)
+			return true;
+		else 
+			return false;
+	}
+}
+class TestEquals
+{
+	public static void main(String[] args)
+	{
+		A aa1 = new A(1);
+		A aa2 = new A(1);
+		A aa3 = new A(2);
+		A aa4 = new A(3);
+		System.out.printf("\n%b\n",aa1.equals(aa2));
+		System.out.printf("\n%b\n",aa3.equals(aa4));
+	}
+}

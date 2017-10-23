@@ -1,0 +1,48 @@
+import java.awt.*;
+import java.awt.event.*;
+class GUI_4
+{
+	public static void main(String[] args)
+	{
+		new TF().launch();
+	}
+}
+class TF
+{
+	public TextField text1,text2,text3;
+	public void launch()
+	{
+		Frame f = new Frame("三个文本框相加");
+		text1 = new TextField(15);
+		text2 = new TextField(15);
+		text3 = new TextField(15);
+		Button bn = new Button("=");
+		Label label = new Label("+");
+		f.setLayout(new FlowLayout());
+		f.setVisible(true);
+		f.add(text1);
+		f.add(label);
+		f.add(text2);
+		f.add(bn);
+		f.add(text3);
+		Monitor mm = new Monitor();
+		f.addWindowListener(mm);
+		bn.addActionListener(mm);
+	}
+	class Monitor extends WindowAdapter implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			int num1 = Integer.parseInt(text1.getText());
+			int num2 = Integer.parseInt(text2.getText());
+			int num3 = num1 + num2;
+			text3.setText(num3 + "");
+		}
+		@Override
+		public void windowClosing(WindowEvent e)
+		{
+			System.exit(-1);
+		}
+	}
+}

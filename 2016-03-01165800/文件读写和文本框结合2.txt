@@ -1,0 +1,90 @@
+import java.io.*;
+import java.awt.*;
+import java.awt.event.*;
+class TestFile_6
+{
+	public static void main(String args[]) throws Exception
+	{
+		Wind window = new Wind("hello world");
+		window.fileShow();
+	}
+}
+class Wind extends WindowAdapter   //这里Wind类中的构造方法写的形式和Wind类继承了Frame类的构造方法中的写法不一样
+{
+	public TextArea text;
+	public Frame frame;
+	public Wind(String s)
+	{
+		//super(s); // 注意若是Wind类继承的是Frame可以用super()方法，因为Wind类的父类中可以为Frame添加标题
+		//但是Wind类继承的是WindowAdapter类便不能使用super()方法，因为在WindowAdapter类中没有添加字符串相应的方法
+		frame = new Frame();
+		text = new TextArea();
+		frame.setLayout(new FlowLayout());
+		frame.add(text);
+		frame.setBounds(200,200,300,300);
+		frame.setVisible(true);
+		frame.validate();
+		frame.addWindowListener(this);
+	}
+	public void fileShow() throws Exception
+	{
+		FileInputStream fis = new FileInputStream("C:/Users/dell/Desktop/practice/TestGraph.java");
+		byte[] buf = new byte[2048];
+		String str = null;
+		int len = 0;
+		while((len = fis.read(buf)) != -1)
+		{
+			str = new String(buf,0,len);
+			text.setText(str);
+		}
+		fis.close();
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+}
+/*
+class Wind   //这里Wind类中的构造方法写的形式和Wind类继承了Frame类的构造方法中的写法不一样
+{
+	public TextArea text;
+	public Frame frame;
+	public Wind(String s)
+	{
+		super(s);
+		frame = new Frame();
+		text = new TextArea();
+		frame.setLayout(new FlowLayout());
+		frame.add(text);
+		frame.setBounds(200,200,300,300);
+		frame.setVisible(true);
+		frame.validate();
+		frame.addWindowListener(this);
+	}
+}
+---------
+class Wind extends Frame //Wind类本身就具有Frame的性质，可以在构造方法中直接添加对象，直接调用方法等等
+{
+	public TextArea text;
+	public Wind(String s)
+	{
+		super(s);
+		text = new TextArea();
+		setLayout(new FlowLayout());
+		add(text);
+		setBounds(200,200,300,300);
+		setVisible(true);
+		validate();
+	}
+}
+*/
+
+
+
+
+
+
+
+
+

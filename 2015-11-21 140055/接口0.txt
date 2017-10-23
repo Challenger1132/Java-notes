@@ -1,0 +1,86 @@
+interface shape  //定义接口
+{
+	public abstract double areas(); //接口里面的抽象方法
+}
+class Circle implements shape
+{
+	public int radius;
+	public Circle(int radius) //构造方法
+	{
+		this.radius = radius;
+	}
+	public double areas() //将接口里面的方法实现，也就是添加方法头
+	{
+		return 3.14*radius*radius;
+	}
+}
+class Triangle implements shape
+{
+	public int bottom_length,height;
+	public Triangle(int bottom_length,int height)
+	{
+		this.bottom_length = bottom_length;
+		this.height = height;
+	}
+	public double areas()
+	{
+		return 0.5*bottom_length*height;
+	}
+}
+class Rectangle implements shape
+{
+	public int a,b;
+	public Rectangle(int a,int b)
+	{
+		this.a = a;
+		this.b = b;
+	}
+	public double areas()
+	{
+		return a*b;
+	}
+}
+class TestAreas_1
+{
+	public static void main(String[] args)
+	{
+		// Circle circle = new Circle(5);
+		// Triangle tri = new Triangle(5,8);
+		// Rectangle rec = new Rectangle(4,5);
+		// System.out.println("半径为" + circle.radius + "的圆的面积是" + circle.areas());
+		// System.out.println("底边长为" + tri.bottom_length + "高为" + tri.height + "的三角形的面积是"+ tri.areas());
+		// System.out.println("长为" + rec.a + "宽为" + rec.b + "的矩形的面积是" + rec.areas());
+		
+		shape ss; //生成接口的应用ss
+		ss = new Circle(5);
+		//System.out.println("半径为" + ss.radius + "的圆的面积是" + ss.areas());
+		System.out.println(ss.areas());
+		ss = new Triangle(5,8);
+		//System.out.println("底边长为" + ss.bottom_length + "高为" + ss.height + "的三角形的面积是"+ ss.areas());
+		System.out.println(ss.areas());
+		ss = new Rectangle(4,5);
+		//System.out.println("长为" + ss.a + "宽为" + ss.b + "的矩形的面积是" + ss.areas());
+		System.out.println(ss.areas());
+		//以上会编译出错，因为可口不能new出对象，但是可以生成引用，将接口的实现类类对象
+		//发送给该引用，通过该引用调用实现类接口的类中的方法，但是要注意，这些方法是实现了接口的方法
+		//子类中特有的成员还是不能通过该引用来访问，所以不能通过该接口来访问
+		//radius、bottom_length、height、a等子类特有成员
+	}
+}
+/*
+接口interface  
+1、接口是一个更加严格的抽象类
+2、接口中定义属性必须是public static final类型的，定义方法必须是public abstract类型的
+这些符号可以部分或者全部省略,便决定了接口是一个抽象类，
+如果一个类实现了接口的部分方法,则该类必须声明为抽象类
+当然(抽象类)也不能生成接口的对象，但是可以生成接口的引用，
+将其指向实现接口的对象，从而达到多态的目的
+3、类对于接口是实现
+4、
+interface it3 extends it1,it2
+class B extends A implemrents it1  都是允许的
+
+接口的存在在于接口可以增加许多类都需要实现的功能，不同类可以实现相同的接口，一个类
+也可以实现不同的接口，接口只强调具体的功能，不关心功能的具体实现过程
+一个类实现了某个接口要给出接口方法的具体实现，也就是给接口中的所有方法添加方法体
+*/

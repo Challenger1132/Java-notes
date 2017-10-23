@@ -1,0 +1,52 @@
+/*
+接口interface  
+1、接口是一个更加严格的抽象类
+2、接口中定义属性必须是public static final类型的，定义方法必须是public abstract类型的
+这些符号可以部分或者全部省略,便决定了接口是一个抽象类，
+如果一个类实现了接口的部分方法,则该类必须声明为抽象类
+当然(抽象类)也不能生成接口的对象，但是可以生成接口的引用，
+将其指向实现接口的对象，从而达到多态的目的
+3、类对于接口是实现
+4、
+interface it3 extends it1,it2
+class B extends A implemrents it1  都是允许的
+*/
+interface It1
+{
+	public static final int  i = 1;  //属性必须是public static final类型
+	public abstract void f();//方法必须是public abstract类型
+}
+interface It2
+{
+	int  i = 1;  //可以将public static final省略
+	void f();
+}
+abstract class A implements It1  //类A实现了it1接口，但是类A是抽象方法
+{
+	
+}
+class B implements It2  //类A实现了it2接口，但是类A是抽象方法，
+//但是没有abstract，必须将抽象方法中所有抽象方法实现
+{
+	public void f()  //将接口中的抽象方法实现，但是public不能省略
+	                //因为接口中f()方法已经是public类型，子类继承不写public
+					//就是默认的protected类型，导致低于被重写方法的权限
+	{
+		System.out.printf("i = %d\n",i);
+	}
+}
+class TestInterface
+{
+	public static void main(String[] args)
+	{
+		B bb = new B(); 
+		bb.f();//通过类的引用调用f()方法 
+		//It1 it1 = new It1();//error 接口本身就是一个抽象类，不能生成对象
+		It1 it1;//接口也不能生成接口的对象，但是可以生成接口的引用，
+		//it1 = new A();//error因为类B实现了接口It2，而不是It1
+		              //所以只能将类B new出的对象赋予It2的引用,而不能赋予It1的引用
+		It2 it2;
+        it2 = new B();		
+		it2.f();//通过接口的引用调用f()方法 
+	}
+}

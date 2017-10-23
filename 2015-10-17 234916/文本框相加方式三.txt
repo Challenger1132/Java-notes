@@ -1,0 +1,159 @@
+
+/*
+方式三  一个类中的成员访问另一个类中的成员，要在一个类中生成另一个类的对象，
+在该类中通过类名点成员变量名的方式进行访问，不能在该类中直接调用另一个类中的成员
+也就是将一个类定义为另一个类的属性
+但是两个类中的成员都要访问同一个类中的成员呢？类B、C都要访问类A中的成员，
+在类B、C中都要生成类A的对象aa，将类A的对象定义为类B、C的属性，但是B、C中的类A对象
+是同一对象吗？  答案不是  要实现就要添加额外代码
+一个类Monitor中的方法要访问另一个类Text_2中的成员，由于tf1、tf2、tf3是方法中的局部变量
+所以不能在另一个类的方法中进行访问，因此要将tf1、tf2、tf3定义为类的属性
+	Monitor mm = new Monitor(this);
+			.
+			.
+			.
+	public TF aa = null;  //
+	public Monitor(TF aa) //
+						
+	{
+		this.aa = aa;//
+	}
+构造方法中的形参aa就是Monitor类的参数this，this指向当前调用方法的对象，也就是调用
+launch()方法的TF类对象，通过构造方法将形参aa赋予赋予Monitor类的属性aa,因此在Text_5
+类中的main方法中生成的TF对象和Monitor类中的定义的TF类的对象是同一对象
+
+this指向当前调用方法的对象，也就是调用launch()方法的TF类对象，将该对象发送给
+Monitor类的构造方法的形参aa，构造方法中又将形参aa赋予类的属性aa，因此Monitor类
+中的属性TF类对象就是Text_5类中的main方法中生成的TF对象
+
+将实现交由一个类来实现，并不都在主方法之中，这样程序逻辑更加清楚
+可以将Button bt定义为TF类的属性，也可以直接是类方法的局部变量
+*/
+import java.awt.*;
+import java.awt.event.*;
+
+class Text_5
+{
+	public static void main(String[] args) //main方法是类中的一个方法
+		{
+			TF tf = new TF();
+			tf.launch();
+		}
+
+}
+class TF //将实现交由一个类来实现，并不都在主方法之中，这样程序逻辑更加清楚
+{
+	public TextField tf1,tf2,tf3;  //tf1,tf2,tf3定义为类的属性，在另一类中可以进行访问
+										  //可由另一个类中的属性访问，另一个类的方法访问
+    //public static Button bt = new Button("=");
+	public void launch()
+	{
+		Frame f = new Frame("三个文本框相加"); //f是类的局部变量
+		tf1 = new TextField(15);
+		tf2 = new TextField(15);
+		tf3 = new TextField(15);
+		Button bt = new Button("=");   //如果不定义为类的属性，Button类bt就是类方法的局部变量
+		Label label = new Label("+");  //label是类的局部变量
+		f.setLayout(new FlowLayout());
+		f.add(tf1);
+		f.add(label);
+		f.add(tf2);
+		f.add(bt);
+		f.add(tf3);
+		f.setVisible(true);
+		Monitor mm = new Monitor(this);//这里的this指向调用launch()方法的类对象
+											    //也就是TF类的类对象
+		bt.addActionListener(mm);
+	}
+} 			//Monitor类中的成员访问TF类中的成员，并不像视频里面所讲不能进行访问
+
+class Monitor implements ActionListener
+{
+	public TF aa = null;  //注意这里tf是类对象相当于A aa 
+	public Monitor(TF aa) //Monitor类的构造方法，形参是TF类的对象
+						
+	{
+		this.aa = aa;//将构造函数的形参aa赋予this指针所指向的堆中那块真正存储空间中的aa成员
+	}					//构造方法的形参aa赋予类的属性aa 
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		int num1 = Integer.parseInt(aa.tf1.getText());//有与属性tf1、tf2、tf3是静态的，
+						//所以可以通过类名点成员名的方式进行访问
+						//这里是一个类中的方法(actionPerformed)访问另一个类中的属性(tf1)
+		int num2 = Integer.parseInt(aa.tf2.getText());
+		int num3 = num1 + num2;
+		aa.tf3.setText(num3 + "");//将num3的值转化为字符串
+	}
+}
+————————————————————————————————————————————————————
+/*
+Monitor要访问TF类中的成员，但是在Monitor类中没有生成TF类的对象，即
+TF类对象没有定义为Monitor类的属性，而是在Monitor类用TF类的类名来访问TF类成员
+*/
+
+import java.awt.*;
+import java.awt.event.*;
+class TestText_2
+{
+	public static void main(String[] args)
+	{
+		new TF().launch();
+	}
+}
+class TF
+{
+	public static TextField tf1,tf2,tf3;
+			//因为tf1,tf2,tf3是静态属性因此可以通过类名点成员变量名的方式进行访问
+	public void launch()
+	{
+		Frame f = new Frame("文本框的相加");
+		f.setLayout(new FlowLayout());//流式布局
+		tf1 = new TextField(15);//同类中方法访问类的属性
+		tf2 = new TextField(15);
+		tf3 = new TextField(15);
+		Button bt = new Button("=");
+		Label label = new Label("+");
+		f.add(tf1);
+		f.add(label);
+		f.add(tf2);
+		f.add(bt);
+		f.add(tf3);
+		f.setVisible(true);
+		Monitor mm = new Monitor(this);
+		bt.addActionListener(mm);
+		f.addWindowListener(mm);
+	}
+}
+class Monitor extends WindowAdapter implements ActionListener//要访问的不是启动类中的成员
+															 //而是TF类中的成员
+{
+	public TF tf;
+	public Monitor(TF tf)
+	{
+		this.tf = tf;//将构造函数的形参tf赋予Monitor类中的属性tf，所以可以用过tf访问TF类中的成员
+	}
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		int num1 = Integer.parseInt(tf.tf1.getText());//这是Monitor类中的方法，不能定义为属性
+															 //也就是不能加访问控制符
+		int num2 = Integer.parseInt(tf.tf2.getText());
+		int num3 = num2 + num1;
+		tf.tf3.setText(num3 + "");
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+}
+
+
+
+
+
+
+
+
+

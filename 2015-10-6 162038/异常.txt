@@ -1,0 +1,137 @@
+/*
+异常 Exception
+1、try语句块中：程序中可能会出错的语句
+catch语句中：可以在catch语句中给出程序处理结果，处理完毕，还可以继续执行程序
+2、当某行代码出错，就会生成一个异常对象
+3、error是系统错误，程序员不可处理，编译时就会发生的错误
+所有运行错误的异常都是Exception的子类，
+Error和Exception都是Trowable的子类
+所有继承自Exception但又不是RunTimeException的异常都需要进行捕获并进行处理
+RunTimeException类异常继承自Exception但是可处理可不处理
+4、异常机制增强了程序员处理异常的能力
+5、printStackTrace()；输出错误的具体信息，是一个方法
+6、异常中finally的用法：try--catch--finally无论是否捕获到异常都会执行finally中的代码
+finally为异常处理提供一个统一的接口，使得程序流程转到其他程序部分之前，能够
+对程序的状态做统一的管理，通常finally终语句做资源清除的工作，如关闭打开的文件
+清除临时文件等等
+7、异常处理的两种方式：通过try--catch语句自己进行捕获处理；
+在方法后面加上throws，表示我本方法不处理，抛给被调用者处理
+处理异常要看异常在哪个函数中，例如程序中f()方法抛出了异常在f()方法中
+要进行处理，当主函数调用f()方法时还要进行异常的处理
+
+1、异常中finally的用法：try--catch--finally无论是否捕获到异常都会执行finally中的代码
+finally为异常处理提供一个统一的接口，使得程序流程转到其他程序部分之前，能够
+对程序的状态做统一的管理，通常finally中的语句做资源清除的工作，如关闭打开的文件
+清除临时文件等等
+2、可以自定义异常，自定义的异常必须要继承Exception父类,但是不能继承Throwable类，
+因为自定义异常类如果继承了Throwable类，就是该类的子类，和Exception是同一级别的
+对该异常进行接受时就不能用Exception的对象进行接收，这里运用了多态的知识，即
+只能将子类引用赋给父类引用
+3、throw表示抛出一个异常，throws A表示对于f()方法抛出的异常
+抛给被调用者来处理，f()本身不对异常进行处理
+void f() throws A //表示对于f()方法抛出的异常抛给被调用者来处理，f()本身不对异常处理
+{
+	......
+}
+void f() throws A表示调用f()方法时可能会抛出异常，
+建议调用f()方法时对f()方法可能抛出的异常进行捕获处理
+但是f()方法也可能不抛出异常，throws A不表示调用f()方法时必须对抛出的异常捕获处理
+因此给出的建议是：
+throws A就代表f()方法本身不对异常进行处理，会将异常抛给被调用者，
+有throws A时调用f()方法都对throws出的异常进行处理
+(无论f()方法会不会抛出异常，或者抛出的异常是否都需要捕获处理)
+如果一个方法内(注意是方法内部)已经对A异常进行了捕获处理，就不要再用throws了
+简而言之，对throws出的异常都进行捕获处理，已处理，不要再有throws A
+4、一个方法对于异常能处理就自行处理，自己无法自行处理就抛给被调用者
+
+/*
+
+1、异常机制的优点：
+!、强制程序工作人员考虑代码的安全性与健壮性
+!!、增强对程序的可控性
+!!!、有助于代码的调试，把错误代码从常规代码中分离出来
+2、try-catch-finally结构，可以有多个catch语句，但只有一个catch语句被会被执行
+有可能所有catch语句都不被执行
+3、先catch子类异常，再catch父类异常
+因为子类继承父类，先catch父类异常，则根据多态机制所有子类异常
+都能被父类异常对象(引用)所接受，导致后面catch子类异常的语句失效
+例如有A B C三个异常类，C继承B，B继承A，先catch A类异常，则B C类异常都能被A类
+异常接收，后面catch B C类异常失效
+4、重写方法抛出异常的范围不能大于被重写方法抛出异常范围，
+即子类抛出异常的范围不能比父类大
+因为在Java异常中Exception是所有必须捕获处理异常的父类，
+所有异常都可以用Exception类的对象来进行接收，如果子类抛出异常范围比父类大
+就不能做到用Exception类的对象来接收所有可以捕获处理的异常
+
+*/
+
+//没有异常处理机制的程序
+{
+	OpenFile;
+	determineFileSize;
+	allocateMemory;
+	readFile;
+	closeFile;
+}
+//
+{
+	try
+	{
+		OpenFile;
+		determineFileSize;
+		allocateMemory;
+		readFile;
+		closeFile;		
+	}
+	catch(Exception..  ..)
+	{
+		....
+	}
+	catch(Exception..  ..)
+	{
+		....
+	}
+		.......
+}
+//不这样进行异常信息的捕获
+//每一个语句段后面都写一个单独的try--catch语句
+
+class A 
+{
+	public int divide(int m,int n)
+	{
+		int result = 0;
+		result = m / n;
+		return result;
+	}
+	public void hello()
+	{
+		System.out.printf("Hello World !\n");
+	}
+}
+class TestException
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		//aa.divide(2,0);//ERROR 
+		try    //程序中可能会出错的语句
+		{
+			aa.divide(2,0);//  **
+		}
+		catch(ArithmeticException e)//**行出错抛出的异常被e接受，e是一个对象
+		           //ArithmeticException是一个类,e是ArithmeticException的对象
+		{
+			e.printStackTrace(); // 输出错误信息
+			System.out.printf("除数不能为0\n");
+		}      //可以在catch语句中给出程序处理结果，处理完毕，还可以继续执行程序
+		
+		aa.hello();		
+	}
+}
+/*
+没有try-catch语句时的运行结果：
+Exception in thread "main" java.lang.ArithmeticExcept
+        at A.divide(TestException.java:9)
+        at TestException.main(TestException.java:22)
+*/

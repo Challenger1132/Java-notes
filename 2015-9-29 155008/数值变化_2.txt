@@ -1,0 +1,22 @@
+/*
+类的属性值和类的局部变量值是不一样的，类的属性值属于类的成员，
+类的局部变量值属于局部变量，不能被访问控制符修饰
+*/
+class A
+{
+	public int i = 1;
+	public void show()
+	{
+		int i = 1000;
+		System.out.printf("局部变量值i = %d\n",i);
+	}
+}
+class Testvalue_2
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		System.out.printf("类的属性值i = %d\n",aa.i);
+		aa.show();
+	}
+}

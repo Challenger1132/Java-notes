@@ -1,0 +1,53 @@
+package com.xiain.animals;
+public class Animals
+{
+	protected String cry = "wang wang";
+}
+//------------------------------
+package com.xidian.dog;
+import com.xiain.animals.*;  //子类要用到另一个包中的类，因此要导入包
+class Dog extends Animals
+{
+	public void f(String str)
+	{
+		System.out.println(super.cry);  //输出父类中cry成员的值为 wang wang
+		cry = str; 		 //子类可以访问父类的protected权限的成员cry
+		System.out.println(str);
+		System.out.println(super.cry);  //父类中cry成员的值被修改	
+	}
+}
+//--------------------------------
+package com.xidian.dog;
+class Test
+{
+	public static void main(String[] args)
+	{
+		Dog dog = new Dog();
+		dog.f("dog dog");
+	}
+}
+//--------------------------------
+package com.xidian.dog;
+import com.xiain.animals.*;  //子类要用到另一个包中的类，因此要导入包
+class Dog extends Animals
+{
+	public void f(String str)
+	{
+		Animals animals = new Animals();
+		animals.cry = str; 		 //error 在父类所在包的包外，通过父类应用反而不能访问父类中protected权限的成员cry
+		System.out.println(str);
+	}
+}
+//------------------------------
+package com.xidian.dog;
+import com.xiain.animals.*;  //子类要用到另一个包中的类，因此要导入包
+class Cat extends Animals
+{
+	public void f(String str)
+	{
+		Dog dog = new Dog();
+		dog.cry = str;  //在子类中用同包中的另外一个子类对象也不能访问父类中具有protected权限的成员
+		System.out.println(dog.cry);
+	}
+}
+//--------------------------------

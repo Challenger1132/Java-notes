@@ -1,0 +1,53 @@
+/*
+1、线程的休眠：暂停当前正在执行中的线程，使之进入阻塞状态，待经过设定的
+时间之后醒来并转入就绪状态，sleep()方法会抛出InterruptedException
+public static void sleep(long millis)
+public static void sleep(long millis,int nanos)
+2、只有实现了Runnable接口的类对象才能发送给Thread类的形参，而用第二种方法创建进程
+3、Thread类中的sleep()方法会抛出InterruptedException异常，该异常必须进行捕获处理
+类A实现了Runnable接口中的run()方法，接口(相当于父类)中的run方法没有抛出异常，
+所以类A(相当于子类)中的run()方法也不能抛出异常，因为子类抛出异常的范围不能比父类大
+无论是一个类继承了Thread类，该子类中的run()方法，还是实现了Runnable接口
+中的类中的run()方法都不能抛出异常
+*/
+class A implements Runnable
+{
+	public void run() //throws Exception
+	{
+		for(int i = 0;i < 10;i ++)
+		{
+			System.out.printf("%s--%d\n",Thread.currentThread().getName(),i);
+					//输出当前线程的名字
+			try  //sleep()方法会抛出异常要用try--catch语句进行捕获处理
+			{
+				Thread.sleep(1500);//使线程睡眠1500毫秒，
+			}
+			catch(InterruptedException e)
+			{
+				System.out.printf("\n异常的具体信息是：\n");
+				e.printStackTrace();
+				System.out.printf("\n异常处理方法是：\n");
+				System.out.printf("\n线程的休眠\n");
+			}
+		}
+	}
+}
+class B implements Runnable //类B实现了Runnable接口，只有实现了Runnable接口的类对象才能发送给
+{
+	public void run()
+	{
+		System.out.printf("哈哈哈\n");
+	}
+}
+class TestThread_4
+{
+	public static void main(String[] args)
+	{
+		Thread t1 = new Thread(new A());
+		Thread t2 = new Thread(new B());
+		t1.start();
+		t2.start();
+		System.out.printf("---------\n");	
+
+	}
+}

@@ -1,0 +1,20 @@
+/*
+1、整型数组，每个数组元素相当于一个整型变量
+指针数组，每个数组元素可以当做一个指针变量来使用
+2、引用类型的数组在使用的过程中一半存在着两级指向关系
+*/
+class TestArray
+{
+	public static void main(String[] args)
+	{
+		int[] arr = new int[]{1,2,3,4,5,6};//注意给数组初始化赋值的时候，不要指定数组大小
+		showArray(arr);
+		
+	}
+	public static void showArray(int[] a)  //该方法必须是静态方法
+	{
+		int i;
+		for(i = 0;i < a.length; i ++)
+			System.out.printf("%d\n",a[i]);
+	}
+}

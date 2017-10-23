@@ -1,0 +1,37 @@
+/*
+1、write(int b)将指定的字节写入此缓冲的输出流
+write(byte[] buf,int off,int len)将字节数组buf中的字节
+从off位置开始len个长度写入输出流中
+2、read(buf);//read函数重载的另一个用法，将输入流读取的字节存放在字节数组中，
+并返回实际读取字节的个数
+3、
+*/
+import java.io.*;
+class TestCopy_2 
+{
+	public static void main(String[] args) throws Exception
+	{
+		BufferedInputStream bis = new BufferedInputStream
+			(new FileInputStream("C:\\Users\\dell\\Desktop\\practice\\JAVA API官方文档中文版.CHM"));
+		BufferedOutputStream bos = new BufferedOutputStream
+			(new FileOutputStream("C:\\Users\\dell\\Desktop\\practice\\hello.CHM"));
+			//BufferedInputStream类构造方法中形参是InputStream类的对象，所以不能直接写所
+			//关联的文件路径，要写一个OutputStream的类对象
+			//FileInputStream是InputStream的类的子类，可以将FileInputStream类的对象发送给
+			//InputStream类的对象(也就是BufferedInputStream类构造函数的形参)这里体现了多态
+			//FileInputStream类的对象相当于节点流，BufferedInputStream的类对象bis
+			//相当于包裹流并依附于内部的节点流，使输入流具有了缓冲区的功能
+		int len;
+		byte[] buf = new byte[4096];//创建字节数组，并指定其大小为4096
+		len = bis.read(buf);//read函数重载的另一个用法，将输入流读取的字节存放在字节数组中，
+		//并返回实际读取字节的个数
+		while(-1 != len)
+		{
+			bos.write(buf,0,len);
+			len = bis.read(buf);
+		}
+		bos.flush();
+		bis.close();
+		bos.close();
+	}
+}

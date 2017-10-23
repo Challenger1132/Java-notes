@@ -1,0 +1,18 @@
+/*
+printStreamÁ÷
+*/
+import java.io.*;
+class TestPrintStream
+{
+	public static void main(String[] args) throws IOException
+	{
+		String str = "hello world !";
+		PrintStream ps = new PrintStream(new FileOutputStream("C:\\Users\\dell\\Desktop\\practice\\11111.txt"));
+		ps.println(12345);
+		ps.close();
+		DataOutputStream dos = new DataOutputStream(new FileOutputStream("C:\\Users\\dell\\Desktop\\practice\\2222.txt"));
+		dos.writeLong(12345);
+		System.out.printf("%#x\n",12345);
+		dos.close();
+	}
+}

@@ -1,0 +1,58 @@
+
+public class Test_1 {
+		
+		public static void main(String[] args) {
+			Son1 son1 = new Son1();
+			System.out.println("-----------");
+			Son2 son2 = new Son2();
+			System.out.println("-----------");
+			Son1 son11 = new Son1(1);
+			System.out.println("-----------");
+			Son2 son22 = new Son2(1);
+			System.out.println("-----------");
+			Son2 son222 = new Son2("hello");
+		}
+	}
+/*
+ 子类继承父类，子类只能继承父类的非私有权限的成员，父类构造方法不能被继承，但是可以通过super语句访问父类成员
+子类中所有构造方法执行前都会默认先执行父类的无参的构造方法，(注意是子类中所有的构造方法)
+因为子类继承父类中的成员，可能会使用父类中的成员，子类初始化之前一定要先完成父类的初始化，
+实际上子类每一个构造方法第一条语句都默认是super();调用父类的空参构造方法
+但是父类如果没有无参的构造方法，就会报错(例如不写父类的无参构造方法，就会默认有一个无参的构造方法，一旦写了有参数
+的构造方法，父类无参的构造方法就会不存在，子类继承父类编译会报错)
+
+当父类没有无参的构造方法的时候，如何解决呢？
+为父类添加一个无参数的构造方法
+可以通过super语句显式的调用父类有参的构造方法，注意子类中所有的构造方法  都  要显示的调用父类有参数的构造方法
+通过this()，调用本类中的其他构造方法 无论如何，子类中总得有一个去访问父类中的构造方法，否则父类对象无法进行初始化
+只能在子类构造方法中通过super语句调用父类的构造方法  super语句只能是第一条语句
+*/
+	class Father {
+		public Father(int i){  //只定义有参数的构造方法，此时父类无参的构造方法便不存在，父类没有无参数的构造方法
+			System.out.println("父类有参构造方法");
+		}
+	}
+	class Son1 extends Father{
+		public Son1(){
+			super(1);   //通过super语句显式的调用父类带参数的构造方法，总之是访问了父类中的构造方法
+			System.out.println("子类Son1的无参构造方法");
+		}
+		public Son1(int i){  //子类中另外一个构造方法
+			super(1);  //也要通过super语句显式的调用父类带参数的构造方法，所有子类都要显示的调用父类有参数的构造方法
+			System.out.println("子类Son1的   有   参构造方法");
+		}
+	}
+	class Son2 extends Father{
+		public Son2(){
+			super(1000);  //通过super语句显式的调用父类的带参数构造方法，总之是访问了父类中的构造方法
+			System.out.println("子类Son2的无参构造方法");
+		}
+		public Son2(int i){
+			this();  //回到用本类中的无参数的构造方法
+			System.out.println("子类Son2的   有   参构造方法");
+		}
+		public Son2(String i){
+			this(2);  //回到用本类中的有参数的构造方法
+			System.out.println("String  子类Son2的   有   参构造方法");
+		}
+	}

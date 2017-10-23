@@ -1,0 +1,89 @@
+/*
+transient
+*/
+import java.io.*;
+
+class User implements Serializable
+{
+	private transient String username;  //被关键字transient修饰的成员不能被序列化
+	private transient String account;
+	private transient String password;
+	public void setName(String username)
+	{
+		this.username = username;	
+	}
+	public String getName()
+	{
+		return username;
+	}
+	public void setAccount(String account)
+	{
+		this.account = account;	
+	}
+	public String getAccount()
+	{
+		return account;
+	}
+	public void setPassword(String password)
+	{
+		this.password = password;
+	}
+	public String getPassword()
+	{
+		return password;
+	}
+}
+class transientTest
+{
+	public static void main(String[] args)
+	{
+		User user = new User();
+		user.setName("张三");
+		user.setAccount("1010101022334");
+		user.setPassword("12345678");
+		System.out.println("before serialized !");
+		
+		System.out.println("username = " + user.getName());
+		System.out.println("account = " + user.getAccount());
+		System.out.println("password = " + user.getPassword());
+		try
+		{
+			ObjectOutputStream obs = new ObjectOutputStream(new FileOutputStream
+			("C:/Users/xingyue/Desktop/practice/user.txt"));
+			obs.writeObject(user);
+			obs.flush();
+			obs.close();
+		}
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		try
+		{
+			ObjectInputStream ois = new ObjectInputStream
+			(new FileInputStream("C:/Users/xingyue/Desktop/practice/user.txt"));
+			user = (User)ois.readObject(); //将读取的对象转化为User类型
+			ois.close();		
+		}
+		catch(FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		catch(ClassNotFoundException e)  //ClassNotFoundException
+		{
+			e.printStackTrace();
+		}
+		System.out.println("after serialized !");
+		System.out.println("username = " + user.getName());
+		System.out.println("account = " + user.getAccount());
+		System.out.println("password = " + user.getPassword());		
+	}
+}

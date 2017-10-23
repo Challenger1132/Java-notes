@@ -1,0 +1,43 @@
+import java.util.*;
+class TestHashMap
+{
+	public static void main(String args[])
+	{
+		HashMap hm = new HashMap();
+		hm.put(1001,new Point(1,2));
+		hm.put(1002,new Point(3,2));
+		hm.put(1003,new Point(1,5));
+		hm.put(1004,new Point(2,2));
+		hm.put(1005,"hello world");
+		hm.put(1005,50);
+		hm.put(1006,'c');
+		System.out.println("直接输出结果是:");
+		System.out.println(hm);
+		Set s = hm.keySet();  //使用keySet()方法获得键的集合
+		Iterator iterator = s.iterator();
+		while(iterator.hasNext())
+		{
+			Integer key_value = (Integer)iterator.next();
+			System.out.println(hm.get(key_value));
+		}
+	}
+}
+class Point
+{
+	public int x,y;
+	public Point(int x,int y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+	public String toString()
+	{
+		return "[" + x + "," + y + "]";		
+	}
+}
+/*
+首先Hashmap类对象hm,调用keySet()方法获得键的集合，将其赋予集合类的对象s，
+该对象去调用iterator()方法，将其赋予Iterator类对象iterator，对象iterator调用
+hasNext()方法作为讯黄的判定条件，对象iterator调用next()方法获得元素，将其强制转化为Integer对象
+hm调用get()方法来获得键是key_value的键对应的值
+*/

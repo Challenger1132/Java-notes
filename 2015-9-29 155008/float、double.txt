@@ -1,0 +1,8 @@
+public class A
+{
+	public static void main(String[] args)
+	{
+		float i = 2.2f;//后面应该加f，否则报错
+		System.out.printf("i = %f\n",i);
+	}	
+}

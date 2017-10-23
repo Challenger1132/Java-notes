@@ -1,0 +1,70 @@
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
+
+
+public class TreeSetDemo_1 {
+	/* 对于自定义的类，比较是依赖于compareTo()方法的，该方法在接口Comparable接口里面，因此
+	 * 要实现排序应该先实现Comparable接口
+	 * Integer与String类实现了 Comparable接口，因此可将Integer与String类对象转化为Comparable引用来接收
+	 * 这里是多态的实现，但是对于自定义的类，因为没有实现Comparable接口，因此不能讲类对象用Comparable引用来接收
+	 * TreeSet的add方法的实现依赖于TreeMap的put方法，里面涉及将类对象转化为Comparable引用的过程，对于Integer
+	 * 和String类型，因为已经实现了Comparable接口所以不会出现异常，但是对于自定义的类，必须要实现Comparable接口
+	 * 否则会抛出异常 
+	 * java.lang.ClassCastException: SSS cannot be cast to java.lang.Comparable
+	 * 
+	 * */
+		public static void main(String[] args) {  
+			Set<SSS> s = new TreeSet<SSS>(new Comparator<SSS>(){  
+				/* 这里是用构造器的方式实现添加到TreeSet集合中的元素的排序,用匿名类来实现
+				 * 要重写里面的compare()方法，这里参数parameter1相当于Comparable接口中，compareTo()方法
+				 * 中的this，parameter2参数相当于o,这里还要注意SSS类中属性是私有的不能直接用药用户get以及set方法来获取
+				 * */
+				public int compare(SSS para1, SSS para2) {  
+					int con = para1.getName().length() - para2.getName().length();
+					return con == 0 ? para1.getAge() - para2.getAge() : con;
+				}
+			});
+			
+			s.add(new SSS("张三",103));
+			s.add(new SSS("李四",22));
+			s.add(new SSS("张三",99));
+			s.add(new SSS("王五",21));
+			
+			s.add(new SSS("赵州桥",21));
+			s.add(new SSS("武松打虎",21));
+			s.add(new SSS("liuliuliu",21));
+			s.add(new SSS("王",55));
+			System.out.println(s);
+		}
+	}
+	class SSS{  //这里不实现Comparable接口，而是用构造器进行排序
+		private int age;
+		private String name;
+		public int getAge() {
+			return age;
+		}
+		public String getName() {
+			return name;
+		}
+		public SSS(String name,int age){
+			this.name = name;
+			this.age = age;
+		}
+		public String toString(){
+			return "[" + name + "," + age + "]";
+		}
+//		public int compareTo(SSS o) {
+//			/* 如果这里指定按照年龄作为排序的条件，但还要考虑，当有年龄相同名字不同的时候，这也是不同元素的情况，
+//			 * 这时只会添加到集合中其中 一个元素，这时就要考虑姓名也作为排序条件*/
+//			/* 如果condition等于0表示年龄相同，这时候就返回this.name.compareTo(o.name)
+//			 * 否则，表示年龄不相同，就按年龄为第一条件进行排序，返货condition，name是String已经重写了
+//			 * compareTo()方法，因此可以直接调用  */
+////			int condition = this.age - o.age;
+////			return condition == 0 ? this.name.compareTo(o.name) : condition;
+//		
+//			/*如果按照姓名的长短进行排序呢？*/
+//			int con = this.name.length() - o.name.length();
+//			return con == 0 ? this.age - o.age : con;
+//		}
+	}

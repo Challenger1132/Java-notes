@@ -1,0 +1,55 @@
+/*
+1、老祖宗有一个f()方法，且是非私有的，那么子孙中都有f()方法
+2、一个父类引用，既可以指向父类引用，也可以指向子类引用，
+父类引用会根据当前时刻指向的不同，而自动调用不同对象中的方法---->多态
+
+*/
+class A 
+{
+	public int i = 1;
+	public void f()
+	{
+		System.out.printf("i = %d\n",i);
+		System.out.printf("AAAA\n");
+	}
+}
+class B extends A
+{
+	int i ;  //这里的属性i是对父类属性进行再次赋值  //未进行初始化，输出的值是0
+	public void f()//该f()方法是对父类f()方法的重写
+	{
+		System.out.printf("i = %d\n",i);
+		System.out.printf("BBBB\n");
+	}
+}
+class C extends B
+{
+	int i ;//未进行初始化，输出的值是0
+	public void f()
+	{
+		System.out.printf("i = %d\n",i);
+		System.out.printf("CCCC\n");
+	}
+}
+class TestPloy
+{
+	public static void g(A aa)//启动类中有一个g()方法，该方法的形参是父类引用
+	{
+		aa.f();
+	}
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		B bb = new B();
+		C cc = new C();
+		g(aa);
+		g(bb); //类B继承类A是A的子类，g(bb)，就是将子类引用bb(作为实参)
+		//赋予父类引用aa(作为形参),aa.f();此时父类引用就指向子类方法
+		g(cc); //		
+	}
+}
+
+
+
+
+

@@ -1,0 +1,44 @@
+/*
+1、String类，Java中用双括号括起来的也视为Strng类的对象
+2、String类中已经对equals()方法进行了重写，aa1.equals(aa2)比较的是aa1与aa2
+所指向的内容，而不是aa1与aa2本身
+*/
+class TestString
+{
+	public static void main(String[] args)
+	{
+		String str1 = new String("hello");
+		String str2 = new String("hello");
+		String str3 = new String("good");
+		String str4 = new String("bad");
+		System.out.printf("\nThe Result is :\n");
+		System.out.printf("\n%b\n",str1.equals(str2));//String类中已经对equals方法进行了
+		//重写str1.equals(str2)判断的是str1与str2所指向的内容,但是str1与str2本身并不相等
+		System.out.printf("\n%b\n",str3.equals(str4));
+		if(str1 == str2)
+			System.out.printf("\nstr1与str2相等\n");
+		else
+			System.out.printf("\nstr1与str2不相等\n");
+		String str5 = "computer";//字符串常量是在数据区存放的，所以“computer”只有一份拷贝
+							     //str5和str6都指向“computer”
+		String str6 = "computer";
+		System.out.printf("\n%b\n",str5.equals(str6));
+		if(str5 == str6)
+			System.out.printf("\nstr5与str6相等\n");
+		else
+			System.out.printf("\nstr5与str6不相等\n");
+	}
+}
+/*运行结果
+The Result is :
+
+true
+
+false
+
+str1与str2不相等
+
+true
+
+str5与str6相等
+*/

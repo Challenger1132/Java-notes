@@ -1,0 +1,54 @@
+abstract class shape
+{
+	public abstract double areas(); //没有方法体的方法是抽象方法
+}
+class Circle extends shape
+{
+	public int radius;
+	public Circle(int radius) //构造方法
+	{
+		this.radius = radius;
+	}
+	public double areas() //对父类抽象方法的实现
+	{
+		return 3.14*radius*radius;
+	}
+}
+class Triangle extends shape
+{
+	public int bottom_length,height;
+	public Triangle(int bottom_length,int height)
+	{
+		this.bottom_length = bottom_length;
+		this.height = height;
+	}
+	public double areas()
+	{
+		return 0.5*bottom_length*height;
+	}
+}
+class Rectangle extends shape
+{
+	public int a,b;
+	public Rectangle(int a,int b)
+	{
+		this.a = a;
+		this.b = b;
+	}
+	public double areas()
+	{
+		return a*b;
+	}
+}
+class TestAreas
+{
+	public static void main(String[] args)
+	{
+		Circle circle = new Circle(5);
+		Triangle tri = new Triangle(5,8);
+		Rectangle rec = new Rectangle(4,5);
+		System.out.println("半径为" + circle.radius + "的圆的面积是" + circle.areas());
+		System.out.println("底边长为" + tri.bottom_length + "高为" + tri.height + "的三角形的面积是"+ tri.areas());
+		System.out.println("长为" + rec.a + "宽为" + rec.b + "的矩形的面积是" + rec.areas());
+	}
+}

@@ -1,0 +1,97 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+import java.io.IOException;
+class Readnum
+{
+	public int num = 0;
+	public int f() throws InputMismatchException
+	{
+		System.out.println("请输入一个整数:");
+		Scanner sc = new Scanner(System.in);
+		num = sc.nextInt();
+		return num;
+	}
+	public void g() throws IOException
+	{
+		throw new IOException();
+	}
+}
+class Test_6
+{
+	public static void main(String[] args)
+	{
+		Readnum rm = new Readnum();
+		try
+		{
+			rm.f();
+		}
+		catch(InputMismatchException e)
+		{
+			System.out.println("异常信息是:");
+			e.printStackTrace();
+			System.out.println("输入的不是整数");
+		}
+		System.out.println("输入的整数是:");
+		System.out.println(rm.num);
+		
+		
+		try
+		{
+			rm.g();
+		}
+		catch(Exception e)
+		{
+			System.out.println("异常信息是:");
+			e.printStackTrace();
+			System.out.println("输入输出不正确");
+		}
+	}
+}
+-----------------------------------------------------------------
+import java.util.InputMismatchException;
+import java.util.Scanner;
+import java.io.IOException;
+class Readnum
+{
+	public int num = 0;
+	public int f()
+	{
+		System.out.println("请输入一个整数:");
+		try
+		{
+			Scanner sc = new Scanner(System.in);
+			num = sc.nextInt();
+		}
+		catch(InputMismatchException e)
+		{
+			System.out.println("异常信息是:");
+			e.printStackTrace();
+			System.out.println("输入的不是整数");
+		}
+		System.out.println("输入的整数是:");
+		System.out.println(num);
+		return num;
+	}
+	public void g()
+	{
+		try
+		{
+			throw new IOException();
+		}
+		catch(Exception e)
+		{
+			System.out.println("异常信息是:");
+			e.printStackTrace();
+			System.out.println("输入输出不正确");
+		}	
+	}
+}
+class Test_6
+{
+	public static void main(String[] args)
+	{
+		Readnum rm = new Readnum();
+		rm.f();
+		rm.g();
+	}
+}

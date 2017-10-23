@@ -1,0 +1,25 @@
+
+import java.awt.*;  //写GUI相关的程序要导入java.awt.*这个包
+class TestFlowLayout
+{
+	public static void main(String[] args)
+	{
+		Frame f = new Frame("窗口");
+		//f.setLayout(new FlowLayout(FlowLayout.CENTER,10,20));
+		//设置Frame对象f的布局为流式布局，CENTER为居中，LEFT左，RIGHT右，
+		//第一个数值为控件水平之间的距离，第二个数值为垂直之间的距离
+		f.setLayout(new FlowLayout(FlowLayout.LEFT,10,20));
+		//f.setLayout(new FlowLayout(FlowLayout.RIGHT,10,20));
+		Button b1 = new Button("确定");
+		Button b2 = new Button("取消");
+		Button b3 = new Button("OK");
+		Button b4 = new Button("CANCEL");
+		f.add(b1);
+		f.add(b2);
+		f.add(b3);
+		f.add(b4);
+		f.setSize(800,500);
+		f.setBackground(Color.RED);
+		f.setVisible(true);
+	}
+}

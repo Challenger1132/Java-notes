@@ -1,0 +1,87 @@
+/*
+
+*/
+class A
+{
+	private int i = 1;
+	private int j = 2;
+	public A(int i,int j)
+	{
+		this.i = i;
+		this.j = j;
+		System.out.printf("哈哈哈哈哈\n");
+	}
+	public void show()
+	{
+		System.out.printf("i = %d   j = %d\n",i,j);
+	}
+}
+class Testbutton
+{
+	public static void main(String[] args)
+	{
+		A aa = new A(5,6);//i和j原来的数值是1和2，通过构造函数将i和j的修改
+		//aa.i = 10;//	ERROE i和j是私有成员，在类的外部不能直接访问
+		//aa.j = 20;
+		aa.show();	// 通过show方法将改变后的值输出
+	}		
+}
+
+======================================================================
+/*
+构造函数无返回值，函数名就是类名，作用是对累的属性进行初始化
+当不写构造函数，编译系统会默认生成无参的构造函数，一旦用户写了构造函数
+编译系统便不会自动生成无参的构造函数
+一个类可以有多个构造函数，这些构造函数的参数个数不同
+*/
+class A 
+{
+	private int i = 0;
+    private int j = 1;
+	public A(int i,int j)
+	{
+		this.i = i;
+		this.j = j;
+		System.out.printf("哈哈哈哈哈哈\n");
+		System.out.printf("i = %d  j = %d\n",i,j);
+	}
+	public void show()
+	{
+		System.out.printf("哈哈哈哈  i = %d  j = %d\n",i,j);
+	}
+}
+class Testmakef_1
+{
+	public static void main(String[] args)
+	{
+		A aa = new A(5,6);
+		aa.show();
+		//aa.set(1,2);
+		
+	}
+}
+=========================================================
+class A
+{
+	public int i = 1;
+	public void show()
+	{
+		System.out.printf("i = %d\n",i);
+	}
+}
+class Testvalue
+{
+	public static void main(String[] args)
+	{
+		A aa1 = new A();
+		A aa2 = new A();// aa1与aa2指向的是不同的内存单元
+		// aa1 = aa2;//将aa2的引用赋予aa1,aa1与aa2指向通一块内存单元
+		// aa1.i = 100;
+		// aa2.show();//所以aa2.show()输出值是 100
+		//
+		aa1.i = 10;
+		aa2.show();//aa1.i和aa2.i是不同的内存单元，所以输出值是1
+		
+		
+	}
+}

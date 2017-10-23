@@ -1,0 +1,46 @@
+字符流和字节流是不一样的，字符流不能处理非文本文件，字节流可以处理所有格式的设备，字节流相对于字节流有更大的用途，用字符流处理音频，图像文件报错不能渲染
+当字节流处理字符时，如果字符中有汉字就会出现乱码
+通过字节流可以完成图像时频等任意格式的文件
+带有缓冲区的字节流处理速度远大于不带缓冲区的字节流
+FileInputStream  FileOutputStream 是字节流
+FileReader  FileWriter  是字符流   以上两种流不带有缓冲区
+BufferedInputStream   BufferedOutputStream 是带有缓冲区的字节流
+BufferedReader   BufferedWriter   是带有缓冲区的字符流
+没有缓冲区的流以File开头，带有缓冲区的流以Buffered开头，而InputStream、OutputStream、Reader、Writer是四大基本抽象流
+包裹流需要依附于节点流
+
+java语言提供输入/输出功能，使得一个java程序能与外界交流数据信息。例如，从键盘读取数据，从文件中读数据或向文件中写数据，将数据输出到打印机，以及在一个网络连接上进行读写操作等。
+所谓“数据流”指的是所有数据通信通道之中，数据的起点和终点。如，执行程序后常会输出各种信息到显示器，使用户可以随时了解程序的状态信息。总之，只要是数据从一个地方流到另外一个地方，这种数据流动的通道都可以称为数据流。程序在使用数据时扮演两种角色：源和目的。若程序是数据流的源，即数据的提供者，这个数据流对程序来说就是一个“输出数据流”（数据从程序流出）。若程序是数据流的终点，这个数据流对程序而言就是一个“输入数据流”（数据从程序外流向程序）。
+java.io包中提供了60多个类（流），从功能上分为两大类：输入流（输入数据）和输出流（输出数据）。从流结构上分为：字节流和字符流。字节流的输入输出操作由InputStream和OutputStream这两个抽象类的子类实现，字符流的输入输出操作由Reader和Writer两个抽象类的子类实现。
+所谓抽象（abstract修饰），举例：只有函数的定义，没有函数体的函数被称为抽象函数；只包含一些公共的类属性，而没有具体的计算方法，这样的类成为抽象类。
+关于抽象类，下面拿一个人举例说明：
+abstract class person{
+   String name;
+   int age;
+   abstract void talk();
+   person(String n,int a){
+      name=n;
+      age=a;
+   }
+}
+class man extends person{
+   man(String n,int a){
+      super(n,a);
+   }
+}
+class Test{
+   public static void main(String args[]){
+      man m=new man("kimi",5);
+      m.talk();
+   }
+}
+这个例子中有错误，需要大家编译后自己体会，例如在子类man中加上：
+void talk(){
+      System.ou.println("My name is "+name+",I am "+age+" years old.");
+   }
+即对所继承的抽象类中的 抽象方法进行重写函数进行复写，才可编译通过。
+关于封装，继承，多态等特性，以后会一一分享，今天看到大家讨论IO方面的知识，所以就绕到那个上面去了。
+************************************************
+DOS命令下进入文件用命令 cd 文件名
+直接输入硬盘名然后冒号，会直接进入该硬盘
+cls 清屏命令

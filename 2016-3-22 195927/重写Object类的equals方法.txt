@@ -1,0 +1,49 @@
+class TestEquals
+{
+	public static void main(String[] args)
+	{
+		Stu ss1 = new Stu(22,"张三");
+		Stu ss2 = new Stu(22,"李四");
+		Stu ss3 = new Stu(22,"张三");
+		System.out.println(ss1.equals(ss2));
+		System.out.println(ss1.equals(ss3));
+	}
+}
+class Stu 
+{
+	public int age;
+	public String name;
+	public Stu(int age,String name)
+	{
+		this.age = age;
+		this.name = name;
+	}
+	public boolean equals(Object obj)
+	{
+		if(this == obj) //如果调用equals的类对象和该方法的形参指向堆内存中同一块空间，那么里面的内容一定相等
+		return true;
+		else
+		{
+			if(obj instanceof Stu)
+			{
+				Stu stu = (Stu)obj;
+				if(this.age == stu.age && this.name.equals(stu.name)) //这里this.name和stu.name属于String类型
+																	//String类型已经重写了里面的equals方法.
+				return true;
+				else
+					return false;
+			}
+			else
+				return false;			
+		}
+	}
+}
+/*
+重写equals方法的先判断调用equals方法的引用和该方法的形参是否是同一类型，是-->堆空间里面的内容肯定相等
+不是-->判断两个引用是否是同种类型，是---->判断里面的内容是否相等，不是---->引用不是同种类型，没有比较的必要
+基本数据类型 == 比较的是值是否相等
+引用数据类型中 == 是比较双等号两端是否指向的是堆内存中的同一块儿存储空间，
+是否是堆内存中的同一个对象，引用就相当于地址，地址是用来指向的是其他变量的
+指针变量也是一种变量，他存储的是其他变量的地址(该指针所指向变量的地址)
+指针变量本身也有地址
+*/

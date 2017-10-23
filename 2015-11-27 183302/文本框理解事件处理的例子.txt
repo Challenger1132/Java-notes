@@ -1,0 +1,114 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.lang.Exception;
+class TestAction_4
+{
+	public static void main(String[] args)
+	{
+		Wins windows = new Wins("hello world");
+	}
+}
+class Wins extends Frame implements ActionListener
+{
+	public TextListener listener;
+	public TextField text1,text2,text3;
+	public Wins(String s)
+	{
+		super(s);
+		text1 = new TextField(10);
+		text2 = new TextField(10);
+		text3 = new TextField(10);
+		setLayout(new FlowLayout());
+		setBounds(200,200,200,200);
+		setVisible(true);
+		add(text1);
+		add(text2);
+		add(text3);
+		validate();	
+		text1.addActionListener(this);
+		text2.addActionListener(this);
+		text3.addActionListener(this);
+		// TextListener listener = new TextListener();//或者这样定义，出现了TextListener类的类对象
+		listener = new TextListener(this);
+		text1.addActionListener(listener);
+		addWindowListener(listener);
+	}
+/*
+Wins类要访问TextListener类中的属性（成员），要在Wins类中定义TextListener类的类对象，通过TextListener类的类对象
+来访问TextListener类中的成员，或者将TextListener类的类对象定义为Wins类的属性（成员），而不能直接去访问TextListener类的成员
+*/
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		
+		if(e.getSource() == text1)
+		{
+			int num1,num2;
+			try
+			{
+				num1 = Integer.parseInt(text1.getText());
+				num2 = num1 * num1;
+				text2.setText(num2 + "");
+			}
+			catch(Exception ee)
+			{
+				text1.setText("请输入数字");
+			}
+		}
+		else if(e.getSource() == text2)
+		{
+			text1.setText("");
+			text2.setText("");
+			text3.setText("");
+		}
+		else if(e.getSource() == text3)
+		{
+			text1.setText("");
+			text2.setText("");
+			text3.setText("");
+		}
+	}
+}
+class TextListener extends WindowAdapter implements ActionListener
+{
+	public Wins windows;
+	public TextListener(Wins windows)
+	{
+		this.windows = windows;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		int num1,num3;
+		try
+		{
+			num1 = Integer.parseInt(windows.text1.getText());
+			num3 = num1 * num1 *num1;
+			windows.text3.setText(num3 + "");
+		}
+		catch(Exception ee)
+		{
+			windows.text1.setText("请输入数字");
+		}
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+}
+
+/*
+TextListener类要访问Wins类中的属性（成员），要在TextListener类中定义Wins类的类对象，通过Wins类的类对象
+来访问Wins类中的成员，或者将Wins类的类对象定义为TextListener类的属性（成员），而不能直接去访问Wins类的成员
+
+不同事件源可以绑定同一个监听器，这个监听器实现了不同的接口
+不同事件源可以绑定同一个监听器，可以同getSource()方法来执行不同的代码块
+一个事件源可以绑定不同的监听器
+
+ButtonListener类中的成员要访问TF类中的成员，要在ButtonListener类中定义TF类的类对象tf，
+通过类对象tf去访问TF类的成员，而不能在ButtonListener类内部直接访问TF类的成员
+
+不同类成员之间的相互访问    数据类型(类的属性值，函数局部变量值)  指向通以对象   方法打包  内部类外部类
+*/
+

@@ -1,0 +1,44 @@
+/*
+GUI 
+1、组件的概念    组件的分类 java.awt.Component和java.awt.MenuComponent
+2、组件通常是不能独立显示的，必须放在容器中，容器也是组件，是可以存放其他组件的组件
+java.awt.Container是所有容器的父类，继承自java.awt.Component
+3、布局管理器对容器内部的空间进行布局，每个容器都有一个默认的布局管理器，
+当容器需要对组件的位置大小进行设置的时候
+就会自动调用相应的布局管理器，为了是Java GUI具有良好的平台无关性，Java语言提供
+布局管理器来管理容器上的控件，因此不建议直接设置组件在容器中位置和大小
+当已经设置了容器的布局管理器之后，在设置容器上的控件位置和大小就会失效
+4、Frame默认的布局管理器是BorderLayout,东西南北中的方式进行分布
+Panel默认的布局管理器是FlowLayout，流式布局方式
+Frame是顶级窗口，Panel无法独立显示，必须放到某个容器之中
+一旦某个容器设置了布局管理器，则就不能对容器上面的控件位置大小进行设置
+若用户希望自己设置控件的位置和大小，就需要取消布局管理器 setLayout(null)
+5、	f.setLayout(new FlowLayout(FlowLayout.CENTER,10,20));
+设置Frame对象f的布局为流式布局，CENTER为居中，LEFT左，RIGHT右，
+第一个数值为控件水平之间的距离，第二个数值为垂直之间的距离
+6、试讲处理相关概念
+  事件：用户对组件的操作称为事件，例如一次点击就是一个事件，一次滑动也是一个事件
+  事件源：能够产生事件的GUI对象，例如按钮，滑动条，单选框，复选框等
+  事件处理方法：能够接受、处理和解析事件的类对象，实现与用户的交互的方法
+  事件监听器：可以处理事件的一个类
+事件处理的过程：
+得到代表控件的对象aa;写一个类实现某个监听器接口，并生成实现了监听器接口的类对象
+将该对象发送给设置监听器方法的形参
+*/
+import java.awt.*;
+class TestGUI
+{
+	public static void main(String[] args)
+	{
+		Frame f = new Frame("Java GUI初步");
+		Panel p = new Panel();
+		f.setLayout(null);
+		f.add(p);
+		f.setBounds(300,300,500,500);
+		f.setBackground(Color.RED);
+		p.setBounds(150,150,250,250);
+		p.setBackground(Color.GREEN);
+	    f.setVisible(true);
+	    p.setVisible(true);
+	}
+}

@@ -1,0 +1,60 @@
+import java.io.*;
+import java.io.File;
+class TestFile
+{
+	public static void main (String[] args)
+	{
+		//FileAccept fileaccept = new FileAccept("mp3");
+		File dir = new File("C:/Users/dell/Desktop/practice");
+		File filename[] = dir.listFiles();
+		//String filename[] = dir.listFiles();
+		for(int i = 0;i < filename.length;i ++)
+		{
+			System.out.println("file " + i + ": " + filename[i]);
+		}
+	}
+}
+class FileAccept implements FilenameFilter
+{
+	public String s = null;
+	public FileAccept(String s)
+	{
+		this.s = s;
+	}
+	public boolean accept(File dir,String name)
+	{
+		return name.endsWith(s);
+	}	
+}
+/*
+		FileAccept fileaccept = new FileAccept("mp3"); 	//FileAccept是实现了FilenameFilter接口的类
+		File dir = new File("C:/Users/dell/Desktop/practice"); 	//生成File类的类对象dir
+		String filename[] = dir.listFiles();	 //File类的类对象调用list()方法，
+											//该方法的参数是实现了FilenameFilter接口的类的类对象
+
+一个类实现某个接口，必须给出该接口中所有抽象方法的实现，即必须实现（重写）接口中所有的抽象方法
+（可以空实现，只加括号，里面不写具体的实现过程，实现方法）即使不准备用接口中的某个方法
+实现了某个接口的类，重写了接口中的方法，这些方法是如何调用的呢？
+一个类实现了ActionListener接口，要重写里面的actionPerformed()方法、
+一个类实现了Runnable接口，要重写里面的Run()方法、
+一个类实现了Comparable接口，要重写里面的compareTo()方法、
+一个类实现了FileMameFilter接口，要重写里面的accept()方法，但是这些接口中的方法是如何调用的呢？
+一个类对象调用某个方法，该方法的形参是实现了某个接口的类对象，在该类对象中给出了接口中抽象
+方法的实现
+public String[] accept(File dir,String name) 
+获取指定文件名的文件要重写FilenameFilter接口中的accept()方法
+File类的类对象调用list()或者listFiles()方法，返回值是File类型的数组或者是String类型的数组
+如果要指定输出的文件类型，要给list()或者listFiles()方法一个形参，该参数是实现了FilenameFilter
+接口的类对象，该类要重写FilenameFilter接口中的accept()方法
+*/
+
+
+
+
+
+
+
+
+
+
+

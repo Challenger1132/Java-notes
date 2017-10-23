@@ -1,0 +1,43 @@
+/*
+	设置线程的优先级别
+	java中线程的优先级别分为1--10共10个优先级，缺省是默认为5
+	setPriority()设置线程的优先级 
+	getPriority()获取线程的优先级
+	Thread.MAX_PRIORITY   ---> 10
+	Thread.MIN_PRIORITY   ---> 1
+	Thread.NORM_PRIORITY   ---> 5
+	*/
+class A implements Runnable
+{
+	public void run()
+	{
+		for(int i = 0;i < 100;i ++)
+		{
+			System.out.printf("S:%d\n",i);
+		}
+	}
+}
+class B implements Runnable
+{
+	public void run()
+	{
+		for(int i = 0;i < 100;i ++)
+		{
+			System.out.printf("T:%d\n",i);
+		}
+	}
+}
+class TestThread_3
+{
+	public static void main(String[] args)
+	{
+		Thread t1 = new Thread(new A());
+		Thread t2 = new Thread(new B());
+		t1.setName("thread-one");
+		t2.setName("thread-two");
+		t1.setPriority(Thread.NORM_PRIORITY + 3);//设置t1线程的优先级为5+3
+												 //t2的优先级不设置，默认为5
+		t1.start();
+		t2.start();
+	}
+}

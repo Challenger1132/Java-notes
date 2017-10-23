@@ -1,0 +1,48 @@
+import java.util.Scanner;
+import java.util.InputMismatchException;
+class A 
+{
+	public void f()
+	{
+		int i = 0;
+		Scanner sc = new Scanner(System.in);
+		i = sc.nextInt();   //Scanner类的对象sc调用nextInt()方法
+		System.out.printf("i = %d\n",i);
+	}
+	public void g()
+	{
+		f();
+	}
+	public void t()
+	{
+		g();
+	}
+	public void s()
+	{
+		t();
+	}
+	public void w()
+	{
+		s();
+	}
+}
+class TestprintStackTrace
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		try
+		{
+			aa.w();
+		}
+		catch(Exception e)//这里捕获输入不匹配异常对象；catch语句块是对异常的处理
+		{
+			System.out.printf("\n异常的具体信息如下:\n");
+			e.printStackTrace();//InputMismatchException类的对象e调用printStackTrace()方法
+			System.out.printf("\n异常处理结果如下:\n");
+			System.out.printf("\n只能输入整型数据，不能输入字符 ！\n");
+			System.out.printf("\n继续执行程序，输出结果是：\n");			
+		}
+		System.out.printf("\nHello World !\n");
+	}
+}

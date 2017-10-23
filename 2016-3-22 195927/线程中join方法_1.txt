@@ -1,0 +1,55 @@
+/*
+无论是Thread类中的run()方法还是Runnable接口中的run()方法，都没有抛出异常
+因此一个类继承了Thread类，或者是实现了Runnable借口，该类中的方法都不能抛出异常
+如果run()方法内要进行异常处理，要在run()方法内部进行异常的捕获处理
+*/
+class ThreadTesterA implements Runnable
+{
+	public String name;
+	public ThreadTesterA(String name)
+	{
+		this.name = name;
+	}
+	public void run()
+	{
+		System.out.println(Thread.currentThread().getName() + "Thread start");
+		try
+		{
+			Thread.sleep(5000);
+		}
+		catch(InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		System.out.println(Thread.currentThread().getName() + "Thread end");
+	}
+}
+class TestJoin
+{
+	public static void main(String[] args) throws InterruptedException
+	{  									//这里调用join()方法要抛出异常，可以直接抛给被调用者
+		System.out.println(Thread.currentThread().getName() + "主线程开始");
+		ThreadTesterA threadtestera = new ThreadTesterA("线程1");
+		ThreadTesterA threadtesterb = new ThreadTesterA("线程2");
+		Thread tha = new Thread(threadtestera);
+		Thread thb = new Thread(threadtesterb);
+		tha.start();  //tha与thb线程执行，可能顺序混乱，主线程等待这两个线程执行完毕再执行，与下面的方式不一样
+		thb.start();
+		tha.join();
+		thb.join();
+		// tha.start();
+		// tha.join();  //tha线程执行完毕后，再执行主线程，主线程调用thb线程，该线程执行完毕，再执行主线程
+		// thb.start();
+		// thb.join();
+		System.out.println(Thread.currentThread().getName() + "主线程结束");
+	}
+}
+/*
+注意join()方法，tha.join(),改行代码所在的线程等待调用join()方法的tha线程所设定的时间，
+而不管tha线程什么时候结束，就等待tha线程所设定的时间，如果join()方法没有设定时间，
+则等待tha所代表的线程执行完毕，再执行tha.join()代码所在的线程
+为什么要用join()方法
+在很多情况下，主线程生成并起动了子线程，如果子线程里要进行大量的耗时的运算，
+主线程往往将于子线程之前结束，但是如果主线程处理完其他的事务后，需要用到子线程的处理结果，
+也就是主线程需要等待子线程执行完成之后再结束，这个时候就要用到join()方法了，让主线程等待子线程执行完毕主线程再结束。
+*/

@@ -1,0 +1,51 @@
+/*
+首先InputStream ---- Reader    OutputStream ---- Writer是字节流与相对应的字符流  
+	OutputStreamWriter是将OutputStream流转化为Writer流OutputStreamWriter类的形参需要OutputStream流
+	InputStreamReader是将InputStream流转化为Reader流,InputStreamReader类的形参需要InputStream流
+	OutputStreamWriter和InputStreamReader都是包裹流
+	System.in是InputStream流，System.out是OutputStream流
+将键盘输入的System.in(InputStream流)赋予字符串BufferedReader流(Reader流)
+需要将InputStream流转化为Reader流就要用InputStreamReader流
+--------------------------------------------------------------------------------------
+readLine()方法读取一行，遇到回车则终止读取，并将回车对弃掉,返回的是字符串
+如果只敲回车返回的是空字符串
+newLine()方法是换行即相当于敲击一次回车
+要在屏幕上输出回车可以用newLine()方法，但是该方法必须要用字符输出流的对象来调用
+因此要创建字符输出流，可以用BufferedWriter，屏幕是System.out是OutputStream流，因此
+要用OutputStreamWriter这个转换流
+---------------------------------------------------------------------------------------
+print流只有输出，没有输入分为printwriter和printStream
+i = 123
+System.out.printfln(i);//输出的是i的字符串形式
+DataOutputStream.writeInt(i);//是将i的二进制代码输出
+printStream是在OutputStream流的基础上增加了许多功能，而且还重载了printf和println方法
+用于不同数据的各种格式化输出，格式化输出是将数据以其字符串的格式输出
+---------------------------------------------------------------------------------------
+Writer流的write()方法可以在输出流中写入一个字符，字符数组，字符数组的一部分
+一个字符串，字符串的一部分
+OutputStream流的write()方法可以在输出流中写入一个字节，字节数组，字界数组的一部分
+DataOutputStream可以在输出流中写入一个字节，字节数组，字节数组的一部分，
+还可以写入所有基本类型数据的二进制代码WriteDouble(8.8);写入的是8.8的二进制代码，共占8个字节
+printStream流可以写入所有基本类型数据的字符串表示形式
+print(8.8);//写入的是'8','.','8'这三个字符，共占据3个字节
+关键是DataOutputStream和printStream的特殊输出形式
+---------------------------------------------------------------------------------------
+*/
+import java.io.*;
+class TestInputStreamReader
+{
+	public static void main(String[] args) throws IOException
+	{
+		String str = null;
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+				//首先BufferedReader是Reader流，形参需要Reader流，而InputStreamReader是Reader流，
+				//形参需要InputStream流，刚好System.in是InputStream流
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		while(true)
+		{
+			str = br.readLine();
+			System.out.println("str = " + str);
+			bw.newLine();
+		}
+	}
+}

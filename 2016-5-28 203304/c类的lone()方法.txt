@@ -1,0 +1,64 @@
+
+public class TestClone {
+	/*	protected  Object clone() ：创建并返回此对象的一个副本，要实现某个类对象的clone,必须实现Cloneable接口
+		public interface Cloneable
+		此类实现了 Cloneable 接口，以指示 Object.clone() 方法可以合法地对该类实例进行按字段复制。 
+		如果在没有实现 Cloneable 接口的实例上调用 Object 的 clone 方法，则会导致抛出 CloneNotSupportedException异常。
+		此外还有Serializable等，此类接口中没有方法，是标记接口
+	 * */
+	public static void main(String[] args) throws CloneNotSupportedException {
+		Dog lovelydog = new Dog();  //创建对象
+		lovelydog.setName("大黄");
+		lovelydog.setWeight(50);
+		System.out.println(lovelydog.getName() + " : " + lovelydog.getWeight());
+		Object obj = lovelydog.clone();   //对Dog类对象lovelydog克隆
+		Dog adog = (Dog)obj;
+		System.out.println(adog.getName() + " : " + adog.getWeight());
+		
+		adog.setName("青青");
+		adog.setWeight(300);
+		System.out.println(adog.getName() + " : " + adog.getWeight());
+		System.out.println(lovelydog.getName() + " : " + lovelydog.getWeight());
+		System.out.println("----------------");
+		
+		Dog baddog = new Dog();
+		baddog.setName("汪汪");
+		baddog.setWeight(100);
+		System.out.println(baddog.getName() + " : " + baddog.getWeight());
+		Dog baddogcolne = (Dog) baddog.clone();
+		System.out.println(baddogcolne.getName() + " : " + baddogcolne.getWeight());
+		Dog dog = baddog;
+		System.out.println(dog.getName() + " : " + dog.getWeight());
+		System.out.println("----------------");
+		dog.setName("花花");
+		dog.setWeight(200);
+		System.out.println(dog.getName() + " : " + dog.getWeight());
+		System.out.println(baddog.getName() + " : " + baddog.getWeight());
+		//克隆的对象和原来对象相互独立，没有关系
+		System.out.println(baddogcolne.getName() + " : " + baddogcolne.getWeight());
+		
+
+	}
+}
+class Dog implements Cloneable{  //Dog类实现了Cloneable接口,标记接口
+	public int getWeight() {
+		return weight;
+	}
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	private int weight;
+	private String name;
+	@Override
+	protected Object clone() throws CloneNotSupportedException {  //重写clone()方法
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+	
+}

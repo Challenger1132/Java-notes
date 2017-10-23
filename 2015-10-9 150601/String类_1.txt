@@ -1,0 +1,42 @@
+/*
+j将整型数据转化为字符串输出
+valueOf()方法 将整型数据i转化为String类型的数据
+public static String valueOf(int i)  //valueOf()方法原型
+{
+	
+}
+*/
+class TestString_2
+{
+	public static void main(String[] args)
+	{
+		String str1 = new String("hello world !");
+		String str2 = new String("good!");
+		String str3 = new String("GOOD!");
+		String str4 = new String("C:Users：dell：Desktop：practice：TestBufferedReader.java");
+		System.out.println(str1.equals(str2));  //false
+		System.out.println(str1.charAt(2));     //l
+		System.out.println(str1.indexOf("wo")); //6
+		System.out.println(str1.toUpperCase()); //HELLO WORLD !
+		System.out.println(str3.toLowerCase()); //good !
+		System.out.println(str2.equalsIgnoreCase(str3));//true
+		System.out.println(str1.replace("world","*****"));//hello ***** !
+		System.out.println(str1.startsWith("hell"));//true
+		System.out.println(str1.endsWith("!"));//true
+		System.out.println(str4.substring(4));//从第4个字符开始截取子字符串
+		System.out.println(str4.substring(4,10));//从第4个开始到第10个字符结束截取子字符串
+	}
+}
+/*
+false
+l
+6
+HELLO WORLD !
+good!
+true
+hello ***** !
+true
+true
+ers：dell：Desktop：practice：TestBufferedReader.java
+ers：de
+*/

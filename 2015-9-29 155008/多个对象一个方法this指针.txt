@@ -1,0 +1,33 @@
+/*
+一个类的多个对象可以调用同一个方法，是通过this指针来实现的
+show方法以及aa1.show();  aa2.show();里面都隐含有this指针
+public show()----> public show(A *this)//show()方法里面隐含有this指针
+aa1.show();---->    aa1.show(aa1);将指针aa1赋予了show()方法的形参this指针
+哪个对象调用该方法，this指针就指向调用该方法的对象，aa1.show()this就指向aa1
+aa2.show()this就指向aa2,也就是谁调用该方法，this就指向该对象，this只指向当前对象
+每一个非静态的方法内都隐含一个参数this指针，
+普通方法中，this指针就指向调用该方法的对象
+构造方法中，this代表当前正在创建的对象，将形参i赋予了当前正在创建对象中的属性i
+*/
+class A
+{
+	private int i = 100;
+	public A(int i)//构造方法
+	{
+		this.i = i;//this代表当前正在创建的对象，将形参i赋予了当前正在创建对象中的属性i
+	}
+	public void show()   //普通方法中 public void show(A *this)
+	{
+		System.out.printf("i = %d\n",i);
+	}
+}
+class TestThis
+{
+	public static void main(String[] args)
+	{
+		A aa1 = new A(10);
+		A aa2 = new A(20);
+		aa1.show();  //aa1.show(aa1);
+		aa2.show();  //aa2.show(aa2);
+	}
+}

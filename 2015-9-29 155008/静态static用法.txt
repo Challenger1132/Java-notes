@@ -1,0 +1,46 @@
+/*
+2015年9月25日11:09:35  java中static的用法
+A类的多像个对象共用一个static属性i
+static属性i以及方法属于类本身，没有类对象，可以直接通过类名的方式访问属性i和方法
+静态成员虽然属于类的本身，但仍然可以通过类对象名的方式进行访问
+类被static修饰，只是表明类的成员具有了可以通过类名进行访问的条件，是否可以进行访问，
+还要看访问控制符的作用
+虽然被static修饰的类成员，可以通过类名进行访问,但是该成员是私有的，在类的外部不能直接进行访问
+//非静态方法可以访问静态方法和属性，反之不行;静态方法可以访问静态方法
+*/
+class A
+{
+	public static int i = 1;
+	private static int j = 1;
+	public static void show()
+	{
+		g();
+		System.out.printf("当前时间是：2015年9月25日11:47:46\n");
+	}
+	public static void g()
+	{
+		System.out.printf("AAAAAAAAAAAAAAAA\n");
+	}
+	public void f()
+	{
+		show();//非静态方法可以访问静态方法
+		System.out.printf("j = %d\n",j);//非静态方法可以访问静态属性
+	}
+}
+class TestStatic
+{
+	public static void main(String[] args)
+	{
+		System.out.printf("i的值是：%d\n",A.i);
+		//System.out.printf("j的值是：%d\n",A.j);//ERROR 虽然被static修饰的类成员
+		//可以通过类名进行访问,但是该成员是私有的，在类的外部不能直接进行访问
+		A.show();
+		A aa1 = new A();
+		A aa2 = new A();
+		aa1.i = 20;//对类原来的属性值i进行了修改，
+		System.out.printf("aa1.i的值是：%d\n",aa1.i);
+		System.out.printf("aa2.i的值是：%d\n",aa2.i);
+		aa1.show();//可以通过类对象名的方式访问被static修饰的成员
+        aa1.f();
+	}
+}

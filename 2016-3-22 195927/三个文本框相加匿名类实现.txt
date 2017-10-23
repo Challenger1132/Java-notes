@@ -1,0 +1,58 @@
+/*
+三个文本框相加---匿名类实现
+*/
+import java.awt.*;
+import java.awt.event.*;
+class GUI_3
+{
+	public static void main(String[] args)
+	{
+		new TF().launch();
+	}
+}
+class TF extends Frame
+{
+	public TextField tf1,tf2,tf3;
+	public void launch()
+	{
+		Frame f = new Frame();
+		Button bn = new Button("=");
+		tf1 = new TextField(15);
+		tf2 = new TextField(15);
+		tf3 = new TextField(15);
+		Label label = new Label("+");
+		f.setLayout(new FlowLayout());
+		f.add(tf1);
+		f.add(label);
+		f.add(tf2);
+		f.add(bn);
+		f.add(tf3);
+		f.setVisible(true);
+		f.addWindowListener
+		(
+			new WindowAdapter() //这里不能写WindowListener() 因为WindowListener中有好多抽象方法，
+								//这里只实现了windowClosing()这一个抽象方法，若一个类继承了抽象类，
+								//要将里面所有抽象方法实现(可以只空实现),否则要声明为abstract类
+			{
+				@Override
+				public void windowClosing(WindowEvent e)
+				{
+					System.exit(-1);
+				}
+			}
+		);
+		bn.addActionListener
+		(
+			new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					int num1 = Integer.parseInt(tf1.getText());
+					int num2 = Integer.parseInt(tf2.getText());
+					int num3 = num1 + num2;
+					tf3.setText(num3 + "");
+				}
+			}
+		);		
+	}
+}

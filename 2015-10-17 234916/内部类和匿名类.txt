@@ -1,0 +1,52 @@
+/*
+内部类：内部类可以看做外部类的一个成员
+在A类的内部但是A的所有方法外部定义一个类B，类B是类A的内部类
+内部类访问原则：内部类可以访问外部类所有的成员，外部类不能直接访问内部类的成员
+内部类优点：可以方便访问外部类的所有成员，可以增加程序的安全性，避免不相关类的访问
+类A要访问类B的所有成员，但是类A有不允许被类B以外的其他类访问，则可以将类A定义为类B的内部类
+
+匿名类：匿名类是一种特殊的内部类，如果在一个类的方法内部定义了一个匿名类，
+该匿名类可以访问外部类的所有成员，包裹该匿名类的方法内被final修饰的局部变量，
+非final修饰的局部变量不能被匿名类访问
+1、
+如果A是一个匿名类
+new A()
+{
+	实现接口中方法的代码
+}//功能是生成了一个实现了A接口的对象
+2、
+假设A是抽象类
+new A()
+{
+	实现了A中所有抽象方法的代码
+}//功能是生成一个匿名类，该匿名类要实现类A中所有抽象方法
+3、
+假设类A是一个普通类
+new A()
+{
+	代码
+}//功能是生成类A的一个子类对象，该匿名类对象继承了A中所有非private成员
+
+*/
+import java.awt.*;
+import java.awt.event.*;
+class TestInnerClass
+{
+	public  static void main(String[] args)
+	{
+		Frame f = new Frame("窗口");
+		f.setSize(200,200);
+		// f.setBackground(Color.RED);
+		f.addWindowListener(
+			new WindowAdapter()
+			{
+				@Override
+				public void WindowClosing(WindowEvent e)
+				{
+					System.exit(-1);
+				}				
+			}
+		);
+		f.setVisible(true);
+	}
+}

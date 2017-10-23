@@ -1,0 +1,57 @@
+/*
+三个文本框相加
+ActionListener接口下有一个void actionPerformed(ActionEvent e)方法，要给出该接口的方法体
+
+Integer 类在对象中包装了一个基本类型 int 的值。Integer 类型的对象包含一个 int 类型的字段。 
+此外，该类提供了多个方法，能在 int 类型和 String 类型之间互相转换，还提供了处理 int 类型时非常有用的其他一些常量和方法。
+构造方法：  
+Integer(int value)  作用是构造一个新分配的 Integer 对象，它表示指定的 int 值。
+Integer(String s)   作用是构造一个新分配的 Integer 对象，它表示 String 参数所指示的 int 值。
+static int parseInt(String s, int radix) 使用第二个参数指定的基数，将字符串参数解析为有符号的整数。 
+
+*/
+import java.awt.*;
+import java.awt.event.*;
+class GUI_1
+{
+	public static TextField tf1,tf2,tf3;
+	public static void main(String[] args)  //main方法要访问同类中的属性，main方法是静态的，因此
+	{
+		Frame f = new Frame("三个文本框相加"); 
+		Button bn = new Button("=");
+		tf1 = new TextField(15);
+		tf2 = new TextField(15);
+		tf3 = new TextField(15);
+		Label label = new Label("+");
+		f.setLayout(new FlowLayout());
+		f.add(tf1);
+		f.add(label);
+		f.add(tf2);
+		f.add(bn);
+		f.add(tf3);
+		f.setVisible(true);
+		
+		Monitor mm = new Monitor(); 
+		bn.addActionListener(mm);		//****
+		f.addWindowListener(wm);		
+		//创建监听类对象mm,这里实际是GUI_1类访问Monitor类，
+		//在GUI_1类中生成Monitor类的类对象,****句还可以换成 bn.addActionListener(new Monitor());
+	}
+}
+class Monitor extends WindowAdapter implements ActionListener  //创建监听类，该类要实现ActionListener接口
+{
+	GUI_1 gg = new GUI_1();  //在Monitor类中要访问GUI_1类中的类对象，因此在该类中生成GUI_1类的类对象gg
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		int num1 = Integer.parseInt(gg.tf1.getText());
+		int num2 = Integer.parseInt(gg.tf2.getText());
+		int num3 = num1 + num2;
+		gg.tf3.setText(num3 + "");
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+}

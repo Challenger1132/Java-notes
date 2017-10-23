@@ -1,0 +1,51 @@
+/*
+10个按钮的设计实现
+*/
+import java.awt.*;
+class TestTenButton
+{
+	public static void main(String[] args)
+	{
+		Frame f = new Frame("10个按钮的设计");
+		f.setLayout(new GridLayout(2,1));
+		Panel p1 = new Panel();
+		//p1.setBackground(Color.BLUE);
+		p1.setLayout(new BorderLayout());
+		Panel p2 = new Panel();
+		p2.setLayout(new BorderLayout());
+		//p2.setBackground(Color.RED);
+		f.add(p1);
+		f.add(p2);
+		Button b1 = new Button("1");
+		Button b2 = new Button("2");
+		Button b3 = new Button("3");
+		Button b4 = new Button("4");
+		Panel p1_1 = new Panel();
+		p1_1.setLayout(new GridLayout(2,1));
+		p1_1.add(b2);
+		p1_1.add(b3);
+		p1.add(b1,BorderLayout.WEST);
+		p1.add(b4,BorderLayout.EAST);
+		p1.add(p1_1,BorderLayout.CENTER);
+		
+		Panel p2_1 = new Panel();
+		p2_1.setLayout(new GridLayout(2,2));
+		Button b5 = new Button("5");
+		Button b6 = new Button("6");
+		Button b7 = new Button("7");
+		Button b8 = new Button("8");
+		Button b9 = new Button("9");
+		Button b10 = new Button("10");
+		p2_1.add(b7);
+		p2_1.add(b8);
+		p2_1.add(b9);
+		p2_1.add(b10);
+		p2.add(b5,BorderLayout.WEST);
+		p2.add(b6,BorderLayout.EAST);
+		p2.add(p2_1,BorderLayout.CENTER);
+		f.pack();		
+		f.setSize(600,400);
+		f.setVisible(true);
+		
+	}
+}

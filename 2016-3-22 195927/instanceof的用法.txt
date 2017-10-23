@@ -1,0 +1,53 @@
+class Test_1
+{}
+class Test_2 extends Test_1
+{}
+class Test_3 extends Test_2
+{}
+class Test_4 extends Test_3
+{}
+class Test_5
+{}
+class Tester
+{
+	public static void main(String[] args)
+	{
+		Test_1 t1 = new Test_1();
+		Test_4 t4 = new Test_4();
+		Test_5 t5 = new Test_5();
+		System.out.println("Test_1");
+		System.out.println(t1 instanceof Test_1);
+		System.out.println(t1 instanceof Test_2);
+		System.out.println(t1 instanceof Test_3);
+		System.out.println(t1 instanceof Test_4);
+		System.out.println(t1 instanceof Object);
+
+		System.out.println("Test_4");
+		System.out.println(t4 instanceof Test_1);
+		System.out.println(t4 instanceof Test_2);
+		System.out.println(t4 instanceof Test_3);
+		System.out.println(t4 instanceof Test_4);
+
+		System.out.println("Test_5");
+		// System.out.println(t5 instanceof Test_1);
+		// System.out.println(t5 instanceof Test_2);
+		// System.out.println(t5 instanceof Test_3);
+		// System.out.println(t5 instanceof Test_4);
+		// System.out.println(t5 instanceof Test_5);
+	}
+}
+/*
+instanceof 左边是类对象右边是类，判断左边的类对象是不是右边的类型
+两个不相关的类之间无法用instanceof
+出现这种情况经常是需要强制转换的时候
+class Dog extends Animal
+{}
+譬如dog定义了自己的方法wangwang()
+Animal anAnimal = new Dog();
+此时不能直接调用anAnimal.wangwang()方法
+但是可以
+if(anAnimal instanceof Dog){
+Dog dog = (Dog)anAnimal;
+dog.wangwang  //就可以调用了
+}
+*/

@@ -1,0 +1,157 @@
+/*
+1、异常中finally的用法：try--catch--finally无论是否捕获到异常都会执行finally中的代码
+finally为异常处理提供一个统一的接口，使得程序流程转到其他程序部分之前，能够
+对程序的状态做统一的管理，通常finally中的语句做资源清除的工作，如关闭打开的文件
+清除临时文件等等
+2、可以自定义异常，自定义的异常必须要继承Exception父类,但是不能继承Throwable类，
+因为自定义异常类如果继承了Throwable类，就是该类的子类，和Exception是同一级别的
+对该异常进行接受时就不能用Exception的对象进行接收，这里运用了多态的知识，即
+只能将子类引用赋给父类引用
+3、throw表示抛出一个异常，throws A表示对于f()方法抛出的异常
+抛给被调用者来处理，f()本身不对异常进行处理
+void f() throws A //表示对于f()方法抛出的异常抛给被调用者来处理，f()本身不对异常处理
+{
+	......
+}
+void f() throws A表示调用f()方法时可能会抛出异常，
+建议调用f()方法时对f()方法可能抛出的异常进行捕获处理
+但是f()方法也可能不抛出异常，throws A不表示调用f()方法时必须对抛出的异常捕获处理
+因此给出的建议是：
+throws A就代表f()方法本身不对异常进行处理，会将异常抛给被调用者，
+有throws A时调用f()方法都对throws出的异常进行处理
+(无论f()方法会不会抛出异常，或者抛出的异常是否都需要捕获处理)
+如果一个方法内(注意是方法内部)已经对A异常进行了捕获处理，就不要再用throws了
+简而言之，对throws出的异常都进行捕获处理，已处理，不要再有throws A
+4、一个方法对于异常能处理就自行处理，自己无法自行处理就抛给被调用者
+*/
+
+import java.lang.ArithmeticException;
+class A 
+{
+	public void f() throws ArithmeticException//虽然有throws ArithmeticException
+	//但是调用f()方法是不一定要进行捕获处理
+	{
+		throw new ArithmeticException();//f()方法抛出一个异常
+	}
+}
+class TestException_5
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		try
+		{
+			aa.f();
+		}
+		catch(ArithmeticException e)
+		{
+			System.out.printf("\n异常的具体信息是：\n");
+			e.printStackTrace();
+			System.out.printf("\n异常处理方法是：\n");
+			System.out.printf("\n输入输出错误\n");
+		}
+	}
+}
+
+// 虽然有throws ArithmeticException但是f()方法不一定会抛出异常，
+// 即使抛出异常,可能是可不处理异常
+// 调用f()方法时不一定要进行捕获处理
+// 但是方法后面有throws A 既然有throws A强烈建议对调用f()方法时对异常进行捕获处理
+
+import java.lang.ArithmeticException;
+class A 
+{
+	public void f()//f()方法内(注意是方法内部)已经对A异常进行了捕获处理，
+					、、就不要再用throws了
+	{		
+		try
+		{
+			throw new ArithmeticException();//f()方法抛出一个异常
+		}
+		catch(ArithmeticException e)
+		{
+			System.out.printf("\n异常的具体信息是：\n");
+			e.printStackTrace();
+			System.out.printf("\n异常处理方法是：\n");
+			System.out.printf("\n输入输出错误\n");
+		}		
+	}
+}
+class TestException_5
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		aa.f();
+	}
+}
+//f()方法内(注意是方法内部)已经对A异常进行了捕获处理，就不要再用throws了
+==========================================================================
+/*
+注意throw后面是异常的对象
+throws后面是某个异常类
+*/
+// import java.util.InputMismatchException;
+// class A  
+// {
+	// public void f() throws InputMismatchException
+	// {
+		// throw new InputMismatchException();
+	// }
+// }
+// class TestException_6
+// {
+	// public static void main(String[] args)
+	// {
+		// A aa = new A();
+		// try
+		// {
+			// aa.f();
+		// }
+		// catch(InputMismatchException e)
+		// {
+			// System.out.printf("\n异常信息是：\n");
+			// e.printStackTrace();
+			// System.out.printf("\n异常处理结果是：\n");
+			// System.out.printf("\n输入数据类型不匹配\n");
+		// }		
+	// }
+// }
+//虽然有throws InputMismatchException语句，但并不代表f()方法一定会抛出异常
+//f()方法也可以不抛出异常，或者抛出可不处理的异常
+//有throws语句仅仅代表，f()本身并不处理异常，而是抛给被调用者
+//有throws语句无论是否抛出异常，抛出异常是否需要处理，都强烈建议调用
+//f()方法的时候对异常进行捕获处理
+import java.util.InputMismatchException;
+class A 
+{
+	public void f()
+	{
+		try
+		{
+			throw new InputMismatchException();
+		}
+		catch(InputMismatchException e)
+		{
+			System.out.printf("\n异常信息是：\n");
+			e.printStackTrace();
+			System.out.printf("\n异常处理结果是：\n");
+			System.out.printf("\n输入数据类型不匹配\n");			
+		}
+	}
+}
+class TestException_6
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		aa.f();		
+	}	
+}
+//f()方法内部已经对抛出的异常进行了处理因此，异常就不会抛给被调用者
+//f()方法后面就不用再写throws A语句了
+
+
+
+
+

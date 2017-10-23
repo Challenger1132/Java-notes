@@ -1,0 +1,31 @@
+class Animals
+{
+	private int age = 10;
+	public void crySpeak(String s)
+	{
+		System.out.println(s);
+	}
+}
+class People extends Animals
+{
+	public void crySpeak(String s)  //对父类crySpeak()方法的重写
+	{
+		System.out.println("hello world " + s);
+	}
+	public void useTool(String s)
+	{
+		System.out.println(s);
+	}
+}
+class TestB
+{
+	public static void main(String[] args)
+	{
+		Animals pp = new People(); //将子类引用赋予父类引用，也就是向上转型
+		//pp.age;  					//error因为子类没有继承父类的age属性，因此不能访问age
+		//pp.useTool("我能应工具！");  //error，将子类引用赋予父类引用，通过父类引用不能访问
+										//子类特有的成员
+		pp.crySpeak("hahahhahahahahh");  //将子类引用赋予父类引用，这里通过父类引用
+									//访问子类中从父类继承或继承改写的方法,不能访问子类特有的方法
+	}
+}

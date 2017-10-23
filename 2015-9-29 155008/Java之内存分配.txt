@@ -1,0 +1,29 @@
+class A
+{
+	int i = 1;
+	int j = 2;
+}
+class demo
+{
+	public static void main(String[] args)
+	{
+		A aa1 = new A();//
+		A aa2 = new A();
+		aa2 = aa1;//将aa1赋予aa2，那么aa1和aa2指向的是同一块存储空间
+		aa1.i = 10;
+		aa1.j = 20;
+		//new A()相当于(A *)malloc(sizeof(A));A在C中就是一个数据类型
+		//    (struct node *)malloc(sizeof(struct node));
+		//new A()是在堆中分配的一块空间，被当做了A的对象,这块空间的地址赋给了aa
+		//aa本身所占的空间是在栈中分配的，存储的是new A()这块空间的首地址
+		//aa指向堆中内存，代表这块存储空间
+		//aa.i代表aa这个引用（指针变量，所占空间是在栈中分配的）
+		//所指向的堆中分配的存储空间中i这个成员
+		//aa（指针变量，所占空间是在栈中分配的）和newA()（是在栈中分配的）在不同的存储空间，
+		//aa本身并没有i和j成员,aa.i代表aa这个指针变量所指向的堆里面的
+		//真正的内存空间中的成员
+		System.out.printf("i = %d  j = %d\n",aa1.i,aa1.j);
+		System.out.printf("i = %d  j = %d\n",aa2.i,aa2.j);
+		
+	}
+}

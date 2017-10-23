@@ -1,0 +1,38 @@
+class A 
+{
+	public int i = 10;
+	public void f()
+	{
+		int j = 100;
+		System.out.println("j = " + j);
+	}
+	class C 
+	{
+		public int num = i;
+	}
+}
+class C extends A //C类继承类A中的成员，这些成员已经存在于C类之中了
+				 //虽然类C中看起来没有属性和方法，但是只是存而未现而已
+{
+	public C(int i) //构造方法对继承来的属性i进行初始化
+	{
+		this.i = i;
+	}
+	public void f() //对继承来的f()方法重写
+	{
+		System.out.println("哈哈哈哈哈");
+	}
+}
+class B 
+{
+	public static void main(String[] args)
+	{
+		C cc = new C(1000); //生成类对象同时调用有参的构造方法完成类对象的初始化
+		System.out.println("i = " + cc.i);
+		cc.f();
+	}
+}
+// static this 继承 构造方法 函数重写 等等
+//子类继承父类继承成功，父类中的成员已经存在子类之中了，在子类中只是存而未现而已
+//在子类中可以通过构造函数对继承而来的成员进行初始化，还可以在另一个类中生成
+//该类的类对象，调用继承过来的成员

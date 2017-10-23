@@ -1,0 +1,24 @@
+import java.io.*;
+class TestFile_2
+{
+	public static void main(String[] args) throws Exception
+	{
+		FileInputStream fis = new FileInputStream("C:\\Users\\dell\\Desktop\\practice\\不是因为寂寞才想你.mp3");
+		FileOutputStream fos = new FileOutputStream("C:\\Users\\dell\\Desktop\\practice\\不是.mp3");
+		BufferedInputStream bis = new BufferedInputStream(fis);//BufferedInputStream流的形参是一个InputStream流对象
+		BufferedOutputStream bos = new BufferedOutputStream(fos);
+		byte[] buf = new byte[4096];  //创建字节数组
+		int len = bis.read(buf);
+		while(-1 != len)
+		{
+			bos.write(buf,0,len);//将字节数组buf中的数据写到bos输出流所关联的文件中去
+			len = bis.read(buf); //将读取的数据存放在字节数组buf中，并返回实际读取字节的个数，是read()的重载方法
+		}
+		bos.flush();
+		bis.close();
+		bos.close();
+	}
+}
+/*
+FileInputStream相当于节点流，BufferedInputStream相当于包裹流，包裹流必须依附于节点流，使输入流具有了缓冲区的功能
+*/

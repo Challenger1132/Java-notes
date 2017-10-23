@@ -1,0 +1,68 @@
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class TestStudent {
+	public static void main(String[] args) {
+		List list = new ArrayList();
+		list.add(new Student("张三",22));
+		list.add(new Student("张三",22));
+		list.add(new Student("李四",22));
+		list.add(new Student("张三",22));
+		list.add(new Student("赵无",28));
+		list.add(new Student("张三",22));
+		list.add(new Student("李四",20));
+		list.add(new Student("张三",22));
+		list.add(new Student("赵无",28));
+		ArrPrint.print(list);
+	}
+}
+class Student{
+	public int getAge() {
+		return age;
+	}
+	public String getName() {
+		return name;
+	}
+	private int age;
+	private String name;
+	public Student(String name,int age){
+		this.name = name;
+		this.age = age;
+	}
+	public String toString(){
+		return "[" + name + "," + age + "]";
+	}
+	public boolean equals(Object obj){ 
+		if(this == obj)  //如果引用相等，那么堆空间中的内容一定相等
+			return true;
+		else{
+			boolean con = obj instanceof Student; 
+			if(con){  // 属于同一类，才有比较的必要
+				//父类引用实际指向的是子类引用，可以将父类引用强制转化为子类引用而不出错
+				//父类引用不能访问子类所特有的成员，因此要将父类引用转化为子类引用
+				Student s = (Student)obj;
+				if(this.age == s.age && this.name.equals(s.name)) //String类型已经重写了equals方法
+					return true;
+				else
+					return false;
+			}
+			else
+				return false;
+		}
+	}// 有返回值的方法要保证每个逻辑单元有返回值
+}
+class ArrPrint{
+	public static void print(List c){  //
+		for(int i = 0;i < c.size() - 1;i ++){
+			for(int j = i + 1;j < c.size();j ++){
+				if(c.get(i).equals(c.get(j))){
+					c.remove(j); // c.remove(c.get(j));
+					j --;
+				}
+			}
+		}
+		System.out.println(c);
+	}
+}
+

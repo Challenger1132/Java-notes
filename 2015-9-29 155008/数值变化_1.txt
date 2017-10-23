@@ -1,0 +1,59 @@
+/*
+类的属性值和局部变量值是不一样的，类的属性值属于类的成员，如果不进行初始化，
+系统会自动进行初始化，类的属性如何进行初始化？
+凡数值类型初始化为0；凡引用类型，初始化为NULL，凡布尔类型
+初始化为false；如果定义是赋予了值，就以赋予的值为准；如果赋予了值，且在构造函数
+中进行了值得修改，则以构造函数的修改后的值为准
+类的属性值，有类A 类对象aa----->未进行初始化，系统自动初始化赋值，aa.i输出是初始化的值；
+在类中进行了赋值，aa.i输出是在类中赋予的值；类中进行了赋值，类的外部也进行了赋值，aa.i输出
+类外部赋予的值；类中进行了赋值，通过构造函数修改了类中赋予的值，则aa.i输出的是修改后的值
+局部变量值属于函数的局部变量，局部变量是不会自动进行初始化的，使用时要先进行初始化，
+不进行初始化编译会报错
+*/
+class A
+{
+	public int i;
+	public boolean flag;
+	public float f;
+	public char ch;
+	public String str;
+	public void show()
+	{
+		System.out.println("i = "+ i);
+		System.out.println("flag = "+ flag);
+		System.out.println("ch = "+ ch);
+		System.out.println("f = "+ f);
+		System.out.println("str = "+ str);
+	}//类的属性值未进行初始化的输出结果
+}
+class B
+{
+	public int i = 1;
+	public boolean flag = true;	
+	public B(int i,boolean flag)//构造函数
+	{
+		this.i = i;
+		this.flag = flag;
+	}
+}
+class Testvalue_1
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		aa.show();
+		B bb = new B(12,true);
+		System.out.printf("i = %d\n",bb.i);
+		System.out.printf("falg = %b\n",bb.flag);
+		bb.i = 11;
+		bb.flag = false;
+		System.out.printf("i = %d\n",bb.i);
+		System.out.printf("falg = %b\n",bb.flag);
+	}
+}
+
+
+
+
+
+

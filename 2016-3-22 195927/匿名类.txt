@@ -1,0 +1,27 @@
+interface A 
+{
+	public void doSomething();
+}
+class B 
+{
+	public void fun(A aa)  //fun()函数需要接口A的实现类的类对象
+	{
+		aa.doSomething();
+	}
+}
+class Test_In
+{
+	public static void main(String[] args)
+	{
+		B bb = new B();
+		bb.fun(new A()
+		//下面是对接口A中抽象方法的实现
+		{
+			public void doSomething()
+			{
+				System.out.println("hello world");
+			}
+		}
+		);
+	}
+}

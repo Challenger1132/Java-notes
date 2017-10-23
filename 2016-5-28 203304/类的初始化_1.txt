@@ -1,0 +1,39 @@
+
+public class Test_7 {
+
+	public static void main(String[] args) {
+		S s = new S();
+	}
+
+}
+class P{
+	Q q = new Q();
+	public P(){
+		System.out.println("P");
+	}
+	public P(int i){  //父类有参数的构造方法  并未进行初始化？？？
+		System.out.println("ppppppp");
+	}
+}
+class Q{
+	public Q(){
+		System.out.println("Q");
+	}
+}
+class R extends P{
+	Q q = new Q();
+	public R(){
+		System.out.println("R");
+	}
+}
+class S extends R{
+	Q q = new Q();
+	public S(){
+		System.out.println("S");
+	}
+}
+/* 难道只会对父类无参的构造方法进行初始化，有参数的构造方法不会初始化？
+ * 按照分层初始化的理解，R继承P，因此生成R对象的时候先对父类P进行初始化，(先成员变量的初始化，再进行构造方法的初始化)
+ * 对P类中成员变量q进行初始化，输出Q，接着对P的构造方法初始化输出P，父类初始化完成接着对子类进行初始化，
+ * 先对R的成员变量q进行初始化，输出Q，接着对构造方法进行初始化，输出R，因此输出顺序为    QPQRQS
+ * */

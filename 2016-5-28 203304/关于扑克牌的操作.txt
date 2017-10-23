@@ -1,0 +1,68 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+
+public class PokerDemo {
+	public static void checkPoker(Map<Integer,String> map){
+		Set<Integer> set = map.keySet();
+		for(Integer num : set){
+			System.out.print(map.get(num) + " ");
+		}
+	}
+	
+	public static void main(String[] args) {
+		List<Integer> pokernumber = new ArrayList<Integer>();  //存储编号
+		Map<Integer,String> pokermap = new HashMap<Integer,String>(); //存储牌
+		//装牌
+		String[] colors = {"?","?","?","?"};  
+		String[] numbers = {"3","4","5","6","7","8","9","10","J","Q","K","A","2"};
+		int index = 0;
+		for(String number : numbers){
+		for(String color : colors){
+				String pokeritem = color.concat(number);
+				pokermap.put(index, pokeritem);  //放到容器中
+				pokernumber.add(index);
+				index ++;
+			}
+		}
+		pokermap.put(index, "king");
+		pokernumber.add(index);
+		pokermap.put(index + 1, "KING");
+		pokernumber.add(index + 1);
+		//洗牌
+		Collections.shuffle(pokernumber);
+		//发牌
+		Map<Integer,String> player1 = new TreeMap<Integer,String>();
+		Map<Integer,String> player2 = new TreeMap<Integer,String>();
+		Map<Integer,String> player3 = new TreeMap<Integer,String>();
+		Map<Integer,String> dipai = new TreeMap<Integer,String>();
+		
+		for(int i = 0;i < pokernumber.size();i ++){
+			int key = pokernumber.get(i);  //key取得打乱顺序后的标号
+			if(i >= pokernumber.size() - 3)
+				dipai.put(key, pokermap.get(key));
+			else if(i % 3 == 0)
+				player1.put(key, pokermap.get(key));
+			else if(i % 3 == 1)
+				player2.put(key, pokermap.get(key));
+			else if(i % 3 == 2)
+				player3.put(key, pokermap.get(key));				
+		}
+		System.out.println("player1的牌是 :");
+		PokerDemo.checkPoker(player1);
+		System.out.println();
+		System.out.println("player2的牌是 :");
+		PokerDemo.checkPoker(player2);
+		System.out.println();
+		System.out.println("player3的牌是 :");
+		PokerDemo.checkPoker(player3);
+		System.out.println();
+		System.out.println("底牌是 :");
+		PokerDemo.checkPoker(dipai);
+	}
+}

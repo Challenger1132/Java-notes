@@ -1,0 +1,23 @@
+
+import java.io.*;
+class TestFileReader
+{
+	public static void main(String[] args) throws Exception
+	{
+		FileReader fis = new FileReader("C:/Users/dell/Desktop/practice\\TestFileReader.java");
+		int ch;
+		ch = fis.read(); 
+		while(-1 != ch)
+		{
+			System.out.printf("%c",ch);
+			ch = fis.read();
+		}
+		// do
+		// {
+			// ch = fis.read();
+			// System.out.printf("%c",ch);
+		// }while(-1 != ch);
+		fis.close();
+	}
+}
+//´ó¼ÒºÃ

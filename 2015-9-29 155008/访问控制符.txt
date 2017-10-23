@@ -1,0 +1,38 @@
+/*
+访问控制符public  protected privata
+访问控制符是对类的外部而言的,在类的内部访问控制符是透明的，可以相互访问
+类的外部访问  通过类对象名访问  通过类名访问
+在类的外部是不能访问类的私有成员的
+*/
+class A
+{
+	private int i;
+	protected int j;
+	public int k;
+	private void f()
+	{
+		System.out.printf("大家好i = %d\n",i);
+	}
+	protected void g()
+	{
+		System.out.printf("大家好i = %d\n",i);
+	}
+	public void k()
+	{
+		System.out.printf("大家好j = %d\n",j);
+	}
+}
+class Testcontrol
+{
+	public static void main(String[] args)
+	{
+		A aa = new A();
+		//aa.i = 10;//error 因为i是私有的
+		//System.out.printf("i = %d\n",aa.i);
+		aa.j = 20;// ok 在类的外部可以访问类中被protected修饰的成员
+		System.out.printf("i = %d\n",aa.j);
+		//aa.f();  //error 因为f方法是私有的
+		aa.g();  //OK  在类的外部可以访问被protected修饰的g方法
+		aa.k();  // OK 非私有的
+	}	
+}

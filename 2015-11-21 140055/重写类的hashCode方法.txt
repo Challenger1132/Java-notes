@@ -1,0 +1,58 @@
+import java.util.*;
+class TestHashCode
+{
+	public static void main(String[] args)
+	{
+		System.out.println("new Integer(1).hashCode() = " + new Integer(1).hashCode());
+		System.out.println("new Integer(1).hashCode() = " + new Integer(1).hashCode());
+		System.out.println("new String(\"哈哈\").hashCode() = " + new String("哈哈").hashCode());
+		System.out.println("new Integer(\"哈哈\").hashCode() = " + new String("哈哈").hashCode());
+		System.out.println("new A(1).hashCode() = " + new A(1).hashCode());
+		System.out.println("new A(1).hashCode() = " + new A(1).hashCode());
+		System.out.println("new B(1).hashCode() = " + new B(1).hashCode());
+		System.out.println("new B(1).hashCode() = " + new B(1).hashCode());
+		System.out.println("new Stu(\"张三\",1001).hashCode() = " + new Stu("张三",1001).hashCode());
+		System.out.println("new Stu(\"张三\",1001).hashCode() = " + new Stu("张三",1001).hashCode());
+	}
+}
+class A  
+{
+	public int i;
+	public A(int i)
+	{
+		this.i = i;
+	}
+}
+class B  
+{
+	public int i;
+	public B(int i)
+	{
+		this.i = i;
+	}
+	@Override
+	public int hashCode() //hashCode()方法和属性i在同类中可以相互访问
+	{
+		return new Integer(i).hashCode()*10;//乘以10hashcode值是10，没有*10返回值是1
+	}
+}
+class Stu
+{
+	public int id;
+	public String name;
+	public Stu(String name,int id)
+	{
+		this.name = name;
+		this.id = id;
+	}
+	@Override
+	public int hashCode()
+	{
+		return (name + id).hashCode();
+	}
+	
+}
+/*
+hashCode()是方法，要类对象调用
+*/
+

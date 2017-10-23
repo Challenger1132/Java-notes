@@ -1,0 +1,39 @@
+/*
+无论是Thread类中的run()方法还是Runnable接口中的run()方法，都没有抛出异常
+因此一个类继承了Thread类，或者是实现了Runnable借口，该类中的方法都不能抛出异常
+如果run()方法内要进行异常处理，要在run()方法内部进行异常的捕获处理
+*/
+class ThreadTesterA implements Runnable
+{
+	public void run()
+	{
+		System.out.println(Thread.currentThread().getName() + "Thread start");
+		try
+		{
+			Thread.sleep(5000);
+		}
+		catch(InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		System.out.println(Thread.currentThread().getName() + "Thread end");
+	}
+}
+class TestJoin
+{
+	public static void main(String[] args) throws InterruptedException
+	{  									//这里调用join()方法要抛出异常，可以直接抛给被调用者
+		ThreadTesterA threadtestera = new ThreadTesterA();
+		Thread tha = new Thread(threadtestera);
+		tha.start();  //调用start()方法创建一个新的线程，其实就是执行run()方法中的代码
+		tha.join(1000); //在main线程中有改行代码，代表主线程等待tha所代表的线程1000毫秒，
+						//主线程只等待1000毫秒，而不管tha所代表的线程什么时候结束
+		System.out.println(Thread.currentThread().getName() + "hello world");
+	}
+}
+/*
+执行tha所代表的线程，在main线程中有tha.jion(1000);代表主线程等待tha所代表的线程1000毫秒，
+而不管tha所代表的线程是否已经执行完毕，是否执行多长的时间，就会接着执行main线程
+因此运行结果是先输出  tha线程中的Thread start----->然后主线程中的hello world----->tha线程中的Thread end
+
+*/

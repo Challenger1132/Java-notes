@@ -1,0 +1,148 @@
+/*系统的指令可以在任何的文件目录下运行，
+用户当运行自定义的指令时，会在当前目录下寻找是否有该文件，
+当找不到的时候会在系统环境变量下指定的路径下寻找，环境变量找不到，执行就会异常
+systeminfo、ping等DOS命令无法运行的情况可能是系统环境变量下没有包含相应的路径
+将路径"C:\Windows\System32"添加到环境变量下即可
+2、多尝试
+
+3、无论是Thread类中的run()方法还是Runnable接口中的run()方法，都没有抛出异常
+因此一个类继承了Thread类，或者是实现了Runnable借口，该类中的方法都不能抛出异常
+如果run()方法内要进行异常处理，要在run()方法内部进行异常的捕获处理
+class ThreadTesterA implements Runnable
+{
+	public void run()
+	{
+		System.out.println(Thread.currentThread().getName() + "Thread start");
+		try
+		{
+			Thread.sleep(5000);
+		}
+		catch(InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		System.out.println(Thread.currentThread().getName() + "Thread end");
+	}
+}
+class TestJoin
+{
+	public static void main(String[] args) throws InterruptedException
+	{  									//这里调用join()方法要抛出异常，可以直接抛给被调用者
+		ThreadTesterA threadtestera = new ThreadTesterA();
+		Thread tha = new Thread(threadtestera);
+		tha.start();  //调用start()方法创建一个新的线程，其实就是执行run()方法中的代码
+		tha.join(1000); //在main线程中有改行代码，代表主线程等待tha所代表的线程1000毫秒，
+						//主线程只等待1000毫秒，而不管tha所代表的线程什么时候结束
+		System.out.println(Thread.currentThread().getName() + "hello world");
+	}
+}
+
+执行tha所代表的线程，在main线程中有tha.join(1000);代表主线程等待tha所代表的线程1000毫秒，
+而不管tha所代表的线程是否已经执行完毕，是否执行多长的时间，就会接着执行main线程
+
+5、在一个类中生成另一个类的类对象，该类对象属于该类的成员
+在一个类的方法中生成另一个类的类对象，该类对象属于该类方法中的局部变量
+
+基本数据类型预计构造器类型
+Integer 类在对象中包装了一个基本类型 int 的值。Integer 类型的对象包含一个 int 类型的字段。 
+此外，该类提供了多个方法，能在 int 类型和 String 类型之间互相转换，还提供了处理 int 类型时非常有用的其他一些常量和方法
+构造方法：  
+Integer(int value)  作用是构造一个新分配的 Integer 对象，它表示指定的 int 值。
+Integer(String s)   作用是构造一个新分配的 Integer 对象，它表示 String 参数所指示的 int 值。
+static int parseInt(String s, int radix) 使用第二个参数指定的基数，将字符串参数解析为有符号的整数
+static Integer valueOf(String s)
+
+7、所有的细节都封装在函数中
+launch()方法中的这些text1、label、bn等属于局部变量，不是类的属性，
+属于在一个类的方法中定义另一个类的类对象,不能在另一个类的方法中访问
+因为在另一个类的方法中要访问text1,text2,text3,因此将其定义为类的属性
+
+Listener ll = new Listener(this);
+在创建类对象的时候自动调用有参数的构造方法，完成类对象的初始化
+this指向当前正在调用(该语句所在的方法)launch()的类的类对象，也就是TF类对象
+而在Listener类的构造方法中，this传给构造方法的形参aa，
+构造方法将形参aa赋予类的属性aa,这样保证是一个TF类对象
+
+8、在类B中访问类A的成员，要在类B中生成类A的类对象，通过该类对象进行访问，
+若类A中的成员是静态的，在类B中可以直接通过A类类名进行访问，不用在类B中生成类A的类对象
+关于两个类都要访问同一个类A的问题，还可以在一个类中生成另一个类的类对象，通过类对象访问类A中的成员
+另一个类访问类A，不生成类A的类对象，通过类A类名的方式进行访问，前提是访问的成员必须是静态的	
+
+9、关于某个类继承父类具有父类的性质的问题
+class TF extends Frame {
+	public TextField text1,text2,text3;
+	public TF()	{
+		super("hello");
+	}
+	public void launch(){
+		text1 = new TextField(15); 
+		text2 = new TextField(15);
+		text3 = new TextField(15);
+		Button bn = new Button("=");
+		Label label = new Label("+");
+		setLayout(new FlowLayout());
+		add(text1);
+		add(label);
+		add(text2);
+		add(bn);
+		add(text3);
+		setVisible(true);
+		Listener ll = new Listener(this);
+		addWindowListener(ll);
+		bn.addActionListener(ll);
+	}
+}
+//TF类继承了Frame类就具有了Frame类的性质，在该类的方法中可以直接调用相应地方法
+*** TF类继承了Frame类，TF本身就是Frame类，在类中，当然可以直接访问类中的成员
+
+但是Button类并没有继承某个类，因此不能直接调用某个方法，必须用类对象名点方法的方式进行访问
+
+java 序列化，将类对象写到文件中或者网络中的过程
+反序列化，从文件中或者网络IO流中重建类对象的过程
+类要想实现序列化就要实现Serilizable接口，这是一个标记接口
+java的transient关键字为我们提供了便利，你只需要实现Serilizable接口
+将不需要序列化的属性前添加关键字transient，序列化对象的时候，这个属性就不会序列化到指定的目的地中。
+们都知道一个对象只要实现了Serilizable接口，这个对象就可以被序列化，
+java的这种序列化模式为开发者提供了很多便利，我们可以不必关系具体序列化的过程，
+只要这个类实现了Serilizable接口，这个类的所有属性和方法都会自动序列化
+
+String nextLine()方法
+next(),nextByte(),nextDouble(),nextFloat,nextInt(),nextLine(),nextLong(),nextShot()
+使用nextLine()方法输入行原样输出，可包含空格  返回enter键之前的所有输入内容
+next()方法如果输入中有空格，则不能完整输出 返回空格 tab或enter键之前的所有输入内容
+
+我们可以考虑使用BufferedReader类取得输入
+BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));  //数据来源是键盘录入
+System.in是System类下面的静态字段  InputStream in = System.in;
+BufferedReader br = new BufferedReader(new FileReader(""));  //数据来源是文本文件
+BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(""))));  //数据来源是文件
+String text = buffer.readLine();
+readLine()方法会返回用户在按下Enter键之前的所有字符输入,不包括最后按下的Enter返回字符---->整行读取功能
+BufferedWriter类下面的方法void newLine() 写入一个换行符
+
+14、static void setOut(PrintStream out)   重新分配“标准”输出流
+	static void setErr(PrintStream err)   重新分配“标准”错误输出流 
+15、对于自定义的类对象，若将其放到容器中，输出的是类对象的地址
+对于用户自定义的类对象，要重写里面的toString()方法，输出的才不至于是类对象的地址
+
+重写equals方法的先判断调用equals方法的引用和该方法的形参是否是同一类型，是-->堆空间里面的内容肯定相等
+不是-->判断两个引用是否是同种类型，是---->判断里面的内容是否相等，不是---->引用不是同种类型，没有比较的必要
+基本数据类型 == 比较的是值是否相等
+引用数据类型中 == 是比较双等号两端是否指向的是堆内存中的同一块儿存储空间，是否是堆内存中的同一个对象
+
+指针变量也是一种变量，他存储的是其他变量的地址(该指针所指向变量的地址) 指针变量本身也有地址
+
+21、public static long currentTimeMillis()		返回以毫秒为单位的当前时间,当返回值的时间单位是毫秒时，
+值的粒度取决于基础操作系统，并且粒度可能更大 
+
+22、接口的出现在与增加了许多类都需要实现的功能，只定义里面的抽象方法，把方法的具体实现交给子类来完成
+定义了一个接口，许多类都实现了这个接口，在这些类中要重写接口中的抽象方法，再构造另外一个类A，在类A中调用
+实现了接口的类中的共有的方法也可以说子类从父类继承改写后的方法，我们只生成接口的实现类的类对象，只将接口
+的实现类的类对象传递给类A中的某个方法，根据传递的参数的不同，执行实现了接口的不同的类中的方法
+
+定义一个打印机接口，佳能打印机类，惠普打印机类都实现了这个接口，可以将佳能打印机类，惠普打印机类的类对象
+赋予打印机这个接口的引用，通过该引用可以调用佳能打印机类，惠普打印机类中的方法，
+一个接口,许多类都实现了这个接口，可以将这些实现了接口的实现类的对象赋予接口的引用，通过传递的实现类的类对象的不同
+通过接口的引用调用不同的实现类中的方法
+一个打印机接口,许多类都实现了这个接口，将生成实现类类对象的代码封装在打印机工厂这个类的getprinter()这个方法中，
+该方法会根据传递的参数的不同，返回相应地实现类的类对象，调用getprinter()这个方法就会得到不同的打印机

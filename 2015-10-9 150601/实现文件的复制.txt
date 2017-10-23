@@ -1,0 +1,54 @@
+/*
+		利用流实现文件的复制
+  字符流只能复制文本文件，不能复制其他格式的文件
+  字节流不但可以复制文本文件，还可以复制音频、图片等格式的文件
+  字节流可以实现任何格式文件的复制
+	缺点：不带缓冲区，执行速度慢，得频繁访问计算机的硬盘
+*/
+import java.io.*;
+class TestCopy
+{
+	public static void main(String[] args) throws Exception
+	{
+		FileInputStream fis = new FileInputStream("C:\\Users\\dell\\Desktop\\practice\\不是为寂寞才想你.mp3");
+		FileOutputStream fos = new FileOutputStream("C:\\Users\\dell\\Desktop\\practice\\hello.mp3");
+		int temp;
+		temp = fis.read();//从fis所关联的文件中读取一个字节，并返回读取的字节
+		while(-1 != temp)
+		{
+			fos.write(temp);//将读取的字节写入fos输出流中，写入fos所关联的文件中
+			temp = fis.read();
+		}
+		fos.flush();//只有outputstream类中有该方法，
+		//刷新输出流，并强制写出所有缓冲区中的字节
+		fis.close();
+		fos.close();
+	}
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*
+  字符流只能复制文本文件，不能复制其他格式的文件
+  字节流不但可以复制文本文件，还可以复制音频、图片等格式的文件
+  字节流可以实现任何格式文件的复制
+	缺点：不带缓冲区，执行速度慢，得频繁访问计算机的硬盘
+*/
+import java.io.*;
+class TestCopy_1
+{
+	public static void main(String[] args) throws Exception
+	{
+		FileReader fr = new FileReader("C:\\Users\\dell\\Desktop\\practice\\不是为寂寞才想你.mp3");
+		FileWriter fw = new FileWriter("C:\\Users\\dell\\Desktop\\practice\\hello.mp3");
+		int temp;
+		temp = fr.read();//从fis所关联的文件中读取一个字节，并 返回读取的字节
+		while(-1 != temp)
+		{
+			fw.write(temp);//将读取的字节写入fos输出流中，写入fos所关联的文件中
+			temp = fr.read();
+		}
+		fw.flush();//只有outputstream类中有该方法，
+		//刷新输出流，并强制写出所有缓冲区中的字节
+		fr.close();
+		fw.close();
+	}
+}

@@ -1,0 +1,33 @@
+
+public class VariableP {
+	public static int sum(int... a){  //a是一个数组
+		int sum = 0;
+		for(int ele : a){
+			sum = sum + ele;
+		}
+		return sum;
+	}
+	public static void main(String[] args) {
+		int a = 1;
+		int b = 1;
+		int c = 1;
+		int d = 1;
+		int e = 1;
+		int f = 1;
+		int g = 1;
+		int result0 = VariableP.sum(a);
+		int result1 = VariableP.sum(a,b);
+		int result2 = VariableP.sum(a,b,c);
+		int result3 = VariableP.sum(a,b,c,d);
+		int result4 = VariableP.sum(a,b,c,d,e);
+		int result5 = VariableP.sum(a,b,c,d,e,f);
+		int result6 = VariableP.sum(a,b,c,d,e,f,g);
+		System.out.println(result0);
+		System.out.println(result1);
+		System.out.println(result2);
+		System.out.println(result3);
+		System.out.println(result4);
+		System.out.println(result5);
+		System.out.println(result6);
+	}
+}

@@ -1,0 +1,62 @@
+/*
+System.out和System.err默认关联的是显示器，可以通过setOut()以及setErr()
+修改其显示的地方
+*/
+import java.io.*;
+import java.util.Scanner;
+class TestSetOut
+{
+	public static void main(String[] args)
+	{
+		int num = 0;
+		try
+		{
+			PrintStream psOut = new PrintStream("C:\\Users\\dell\\Desktop\\practice\\11111.java");
+			PrintStream psErr = new PrintStream("C:\\Users\\dell\\Desktop\\practice\\22222.java");
+			System.out.printf("请输入整型数据：\n");//提示内容在屏幕上显示
+			System.setOut(psOut);//将输出的数据和print流关联的文件相连
+			System.setErr(psErr);//将输出的错误信息和print流关联的文件相连
+			System.out.printf("请输入整型数据：\n");//提示内容在文件中显示
+			Scanner sc = new Scanner(System.in);
+			while(true)
+			{
+				num = sc.nextInt();
+				System.out.println(num);			
+			}			
+		}
+		catch(Exception e)
+		{
+			System.err.printf("异常的具体信息是：\n");
+			e.printStackTrace();
+			System.err.printf("异常处理方法是：\n");
+			System.err.printf("输入的内容不能为菲整型数据\n");
+		}
+	}
+}
+----------------------------------------
+/*
+System.out和System.err默认关联的是显示器，可以通过setOut()以及setErr()
+修改其显示的地方
+将从键盘上输入的字符串输出到指定的位置
+*/
+import java.io.*;
+import java.util.Scanner;
+class TestSetOut_1
+{
+	public static void main(String[] args)
+	{
+		PrintStream psOut = new PrintStream("C:\\Users\\dell\\Desktop\\practice\\1111.java");
+		PrintStream psErr = new PrintStream("C:\\Users\\dell\\Desktop\\practice\\2222.java");
+		System.setOut(psOut);//将输出的数据和print流关联的文件相连
+		System.setErr(psErr);//将输出的错误信息和print流关联的文件相连
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		//BufferedReader是reader流System.in属于InputStream流，所以需要转换流
+		String str = null;
+		str = br.readLine();
+		System.out.println(str);
+		bw.newLine();
+		str = br.readLine();
+		System.out.println(str);
+	}
+}

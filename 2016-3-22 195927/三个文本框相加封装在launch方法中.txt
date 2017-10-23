@@ -1,0 +1,69 @@
+/*
+实现三个文本框相加
+所有的细节都封装在函数中
+launch()方法中的这些text1、label、bn等属于局部变量，不是类的属性，
+属于在一个类的方法中定义另一个类的类对象,不能在另一个类的方法中访问
+因为在另一个类的方法要访问text1,text2,text3,因此将其定义为类的属性
+
+在创建类对象的时候自动调用有参数的构造方法，完成类对象的初始化
+this指向当前正在调用(该语句所在的方法)launch()的类的类对象，也就是TF类对象
+而在Listener类的构造方法中，this传给构造方法的形参aa，
+构造方法将形参aa赋予类的属性aa,这样保证是一个TF类对象
+*/
+import java.awt.*;
+import java.awt.event.*;
+class GUI_3 
+{
+	public static void main(String[] args)
+	{
+		TF tf = new TF();  //所有的细节都封装在函数中
+		tf.launch();
+	}
+}
+class TF
+{
+	public TextField text1,text2,text3;
+	public void launch()
+	{
+		Frame f = new Frame("三个文本框相加");
+		text1 = new TextField(15); 
+		text2 = new TextField(15);
+		text3 = new TextField(15);
+		Button bn = new Button("=");
+		Label label = new Label("+");
+		f.setLayout(new FlowLayout());
+		f.add(text1);
+		f.add(label);
+		f.add(text2);
+		f.add(bn);
+		f.add(text3);
+		f.setVisible(true);
+		Listener ll = new Listener(this); //在创建类对象的时候自动调用有参数的构造方法，完成类对象的初始化
+										//this指向当前正在调用(该语句所在的方法)launch()的类的类对象，也就是TF类对象
+										//而在Listener类的构造方法中，this传给构造方法的形参aa，
+										//构造方法将形参aa赋予类的属性aa,这样保证是一个TF类对象
+		f.addWindowListener(ll);
+		bn.addActionListener(ll);
+	}
+}
+class Listener extends WindowAdapter implements ActionListener
+{
+	TF aa = new TF();
+	public Listener(TF aa)  //构造方法将形参aa赋予类的属性aa
+	{
+		this.aa = aa;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		int num1 = Integer.parseInt(aa.text1.getText());
+		int num2 = Integer.parseInt(aa.text2.getText());
+		int num3 = num1 + num2;
+		aa.text3.setText(num3 + "");
+	}
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		System.exit(-1);
+	}
+}

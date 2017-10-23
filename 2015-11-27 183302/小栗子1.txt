@@ -1,0 +1,21 @@
+class TestB
+{
+	public static void main(String[] args)
+	{
+		Tank t1 = new Tank();
+		Tank t2 = new Tank();
+		t1.level = 10;
+		t2.level = 100;
+		System.out.println("1: t1.level = " + t1.level + "   " + "t2.level = " + t1.level); // 10  100
+		t1 = t2;
+		System.out.println("2: t1.level = " + t1.level + "   " + "t2.level = " + t1.level); // 100  100
+		t1.level = 27;
+		System.out.println("3: t1.level = " + t1.level + "   " + "t2.level = " + t1.level); // 27  27
+		t2.level = 27;
+		System.out.println("4: t1.level = " + t1.level + "   " + "t2.level = " + t1.level); // 27  27
+	}
+}
+class Tank
+{
+	public int level;
+}

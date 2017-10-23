@@ -1,0 +1,29 @@
+
+public class Test_6 {
+
+	public static void main(String[] args) {
+		Z z = new Z();
+	}
+
+}
+class X{
+	Y y = new Y();
+	public X(){
+		System.out.println("X");
+	}
+}
+class Y{
+	public Y(){
+		System.out.println("Y");
+	}
+}
+class Z extends X{
+	Y y = new Y();
+	public Z(){
+		System.out.println("Z");
+	}
+}
+/*按照分层初始化的理解，Z继承X，因此生成Z对象的时候先对父类X进行初始化，(先成员变量的初始化，再进行构造方法的初始化)
+ * 对X类中成员变量y进行初始化，输出Y，接着对X的构造方法初始化输出X，接着对子类进行初始化，先对Z的成员变量y进行初始化，
+ * 输出Y，接着对构造方法进行初始化，输出Z，因此输出顺序为    YXYZ
+ * */

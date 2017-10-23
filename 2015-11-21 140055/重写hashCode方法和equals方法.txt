@@ -1,0 +1,72 @@
+/*
+1、Set里面的数据是无序的，不允许重复，且元素没有固定的位置，
+没有下标，因此没有set()、get()等方法
+2、容器Set里面的元素不允许重复，但是要重写equals()方法和HashCode()方法，
+否则无法实现元素不重复
+3、类对象放到容器中，会计算出元素的hashCode值，根据值找要到存放该元素的地址
+不同类对象的hashCode值是不一样的，
+因此要重写hashCode()方法，该地址后面是元素连接，比如存放了new A(1)对象，可能
+new A(1)对象已将存在，为类保证不存放重复的new A(1)，因此要重写equals()方法
+4、对象放到以哈希表为存储内核的容器hashSet、hashTable、hashMap，要保证容器中没有重复的元素，
+必须要同时重写hashCode()方法和equalsO()方法，放到其他类型容器中如，放到TreeSet、TreeMap
+容器中的元素，则不需要重写hashCode()和equalsO()方法
+5、每个类中都默认有hashCode()和compareTo()方法，因为所有类都继承自Object类，
+并不是所有的类都要重写这两个方法，当要用到时，且提供的方法不满足要求时就要重写这两个方法
+6、Object类的hashCode()方法会返回该对象内存真实地址的整数化表示，
+这种不是真正地址的整数值就是哈希码
+向hashSet中添加元素的时候，先通过该对型的hashCode()方法计算出相应的桶，然后根据equals()方法
+找到相应的元素，如果该元素已经存在，则不添加到容器中，反之，添加到容器中
+因此要重写hashCode()方法，保证一个类new出的对象hashCode()方法返回值是一样的，
+即哈希码指向同一块空间，通过重写equals()方法保证这个空间中不存在相同的元素，不重写
+hashCode()方法，new出一个对象会根据返回的哈希码指向一个的存储空间，不同对象指向不同的
+空间，即使equals()方法判断成功也不能保证元素不重复，同样只重写hashCode()方法，虽然同一个类
+new出的对象在同一个空间，但是由于没有equals()方法，也不能保证这一块空间没有重复元素
+
+*/
+import java.util.*;
+class TestComparable_1
+{
+	public static void main(String[] args)
+	{
+		Set set = new HashSet();
+		set.add(new Stud("张三",10004));
+		set.add(new Stud("李四",10003));
+		set.add(new Stud("王五",10002));
+		set.add(new Stud("孙六",10005));
+		set.add(new Stud("小七",10001));
+		set.add(new Stud("小七",10001));
+		set.add(new Stud("小七",10001));
+		set.add(new Stud("小七",10001));
+		set.add(new Stud("小七",10001));
+		System.out.println(set);
+
+	}
+}
+class Stud
+{
+	public int id;
+	public String name;
+	public Stud(String name,int id)
+	{
+		this.name = name;
+		this.id = id;
+	}
+	public String toString()
+	{
+		return name + " " + id;
+	}
+	@Override
+	public boolean equals(Object obj)
+	{
+		Stud ss = (Stud)obj;
+		return this.id == ss.id && this.name == ss.name;
+	}
+	@Override
+	public int hashCode()//重写hashCode()方法，保证相同类对象调用hashCode()方法返回值是相同的即可
+ 	{					 //重写hashCode()方法的方式不止一种
+		return new String(name + id).hashCode();
+		//return (name + id).hashCode();
+		//return id * name.hashCode();
+		//return name.hashCode() + Integer.toString(id).hashCode();
+	}
+}
