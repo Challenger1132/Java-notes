@@ -234,7 +234,7 @@ fix:取离0最近的整数
 ans =
     -2    -1    -1    -1    -1     1     1     1     1     1     2
 
-length计算素组的长度，矩阵的行和列中最大值
+length计算数组的长度，矩阵的行和列中最大值
 size 返回行和列
 
 row 是横向的， 排的意思
@@ -266,10 +266,37 @@ m =
 n =
      4     4     4     4     4     4     4     4     4     4
      5     5     5     5     5     5     5     5     5     5
-meshgrid 函数的作用是取格点，x的坐标是1到10，y的坐标是4到5，在x和y规定的区域划格点
-反映在m和n中，注意坐标元素对应
-注意矩阵是先行再列，正好和常规坐标轴y轴和x轴相对应，而meshgrid第一个参数是x,第二个参数是y，
-这里要注意
+1、meshgrid 函数的作用是取格点，x的坐标是1到10，y的坐标是4到5，在x和y规定的区域划格点
+反映在m和n中，注意坐标元素对应,注意矩阵是先行再列，正好和常规坐标轴y轴和x轴相对应
+而meshgrid第一个参数是x,第二个参数是y，这里要注意
+2、meshgrid函数第一个参数是x轴坐标，和m对应，反映在图形上是从左向右的轴
+3、meshgrid函数第二个参数是y轴坐标，和n对应，反映在图形上是从下向上的轴
+4、MATLAB绘图从左向右呈现的是x轴，从下到上呈现的y轴，想要哪个数据作为x轴
+	就放在meshgrid的x的位置，作为y轴数据就放在参数y的位置
+5、meshgrid返回矩阵的维度是一样的
+6、交换mesh(xx, yy, zz); 中xx和yy的位置，就交换了x轴和y轴数据，zz数据不用发生变化
+一下三种方式等效：
+	%% MUSIC_AOA_TOF可视化
+	hMUSIC = figure('Name', 'MUSIC_AOA_TOF1', 'NumberTitle', 'off');
+	[meshAoA,meshToF] = meshgrid(aoa,tof);
+	mesh(meshAoA, meshToF*1e9, Pmusic');
+	xlabel('X Angle of Arrival in degrees[deg]');
+	ylabel('Y Time of Flight[ns]')
+	zlabel('Z Spectrum Peaks[dB]')
+
+	hMUSIC = figure('Name', 'MUSIC_AOA_TOF2', 'NumberTitle', 'off');
+	[meshAoA, meshToF] = meshgrid(aoa, tof);
+	mesh(meshToF*1e9, meshAoA, Pmusic');
+	ylabel('Y Angle of Arrival in degrees[deg]');
+	xlabel('X Time of Flight[ns]')
+	zlabel('Z Spectrum Peaks[dB]')
+
+	hMUSIC = figure('Name', 'MUSIC_AOA_TOF3', 'NumberTitle', 'off');
+	[meshToF, meshAoA] = meshgrid(tof, aoa);
+	mesh(meshToF*1e9, meshAoA, Pmusic);
+	ylabel('Y Angle of Arrival in degrees[deg]');
+	xlabel('X Time of Flight[ns]')
+	zlabel('Z Spectrum Peaks[dB]')
 
 MATLAB中的reshape函数对矩阵进行变形是按照列进行的，无论源数据是一个行向量还是列向量
 都是源数据先满足第一列，而后满足第二列进行，在必要的时候需要进行转置
@@ -574,13 +601,9 @@ y =
      0     0     0     1
 就是将x的元素作为y的主对角线元素，并将对角阵返回
 
-
-
-
-
 关于CSI数据的处理
 csi_trace = read_bf_file('cai_5.dat');  % 返回的是一个N*1的cell，其中每个cell是一个struct
-csi_retry = csi_trace{index}; % 每一个cell是一个struct，包含了各种信息
+csi_entry = csi_trace{index}; % 每一个cell是一个struct，包含了各种信息
 csi = get_scaled_csi(csi_entry);  % 得到struct里面的CSI数据是一个Ntx * Nrx * 30的 complex double矩阵
 	csi也就是csi_entry.csi
 	csi = csi(1, :, :); 取出发端一天线的数据 1*3*30 	squeeze(csi).' 	30*3
